@@ -66,7 +66,7 @@ public class main_GUI  {
 			
 		}
 		);
-		mainWindow.addWindowListener(new WindowAdapter() {
+		mainFrame.addWindowListener(new WindowAdapter() {
 			  public void windowClosing(WindowEvent we){
 			  System.exit(0);
 			    }
@@ -77,10 +77,8 @@ public class main_GUI  {
 		
 	private void initComponents(){
 		
-		mainFrame1 = new JFrame();
-		mainFrame2 = new JFrame();
-		mainWindow = new JWindow();
-		
+		mainFrame = new JFrame();
+
 		matrixSize = new JLabel("Matrix Size");
 		sizeInput = new JTextField("",10);
 		
@@ -95,32 +93,22 @@ public class main_GUI  {
 		modeOne = new Button("Mode 1");
 		modeTwo = new Button("Mode 2");
 			
-		mainFrame1.setLayout(new GridLayout(3,2));
-		mainFrame1.add(matrixSize);
-		mainFrame1.add(sizeInput);
-		mainFrame1.add(commitSize);
-		mainFrame1.add(modeOne);
-		mainFrame1.add(modeTwo);
-		mainFrame1.setBounds(100, 100, 100, 200);
+		mainFrame.setLayout(new GridLayout(3,2));
+		mainFrame.add(matrixSize);
+		mainFrame.add(sizeInput);
+		mainFrame.add(commitSize);
+		mainFrame.add(modeOne);
+		mainFrame.add(modeTwo);
 		
-		mainFrame2.setLayout(new GridLayout(1,1));
-		mainFrame2.add(scrollPane);
-		mainFrame2.setBounds(100, 100, 100, 200);
+		mainFrame.add(scrollPane);
+		mainFrame.setBounds(100, 100, 100, 200);
+		mainFrame.setVisible(true);
 
-		mainWindow.setLayout(new GridLayout(2,1));
-		mainWindow.add(mainFrame1);
-		mainWindow.add(mainFrame2);
-		
-		mainWindow.setBackground(Color.gray);
-		mainWindow.setBounds(100, 100, 200, 200);
-		mainWindow.setVisible(true);
 	}
 
 	private static JLabel matrixSize;
 	private static JTable inputMatrix;
-	private static JWindow mainWindow;
-	private static JFrame mainFrame1;
-	private static JFrame mainFrame2;
+	private static JFrame mainFrame;
 	private static JTextField sizeInput;
 	private static int matrixsize;
 	private static Button commitSize;
