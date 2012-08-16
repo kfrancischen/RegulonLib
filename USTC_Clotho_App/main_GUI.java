@@ -5,6 +5,8 @@ import java.awt.event.*;
 import java.io.IOException;
 
 import javax.swing.*;
+
+import java.util.List;
 import java.util.Vector;
 public class main_GUI  {
 
@@ -93,15 +95,17 @@ public class main_GUI  {
 		modeOne = new Button("Mode 1");
 		modeTwo = new Button("Mode 2");
 			
-		mainFrame.setLayout(new GridLayout(3,2));
+		GridLayout Layout = new GridLayout(3,2);
+		mainFrame.setLayout(Layout);
 		mainFrame.add(matrixSize);
 		mainFrame.add(sizeInput);
 		mainFrame.add(commitSize);
-		mainFrame.add(modeOne);
-		mainFrame.add(modeTwo);
+
 		
 		mainFrame.add(scrollPane);
-		mainFrame.setBounds(100, 100, 100, 200);
+		mainFrame.add(modeOne);
+		mainFrame.add(modeTwo);
+		mainFrame.setBounds(100, 100, 400, 800);
 		mainFrame.setVisible(true);
 
 	}
