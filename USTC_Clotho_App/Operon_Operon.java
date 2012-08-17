@@ -18,8 +18,6 @@ public class Operon_Operon {
 	//number of proper choice
 	public int[] numberPossibleChoices = new int[1];
 	
-	//parts data base path
-	private static final String PATH = "F:/programs/java/";
 	
 	//database matrix
 	public static int[][] database;
@@ -31,40 +29,34 @@ public class Operon_Operon {
 	public static Vector<String> operonNames;
 	
 	//constructor of class Operon_Operon
-	public Operon_Operon(int size,int[][] Matrix) throws IOException{
-		matrixSize= size;
-		targetMatrix = new int[size][size];
-		for(int i = 0; i < size ; i++){
-			for(int j = 0; j < size; j++){
+	public Operon_Operon(int Size,int[][] Matrix,int[][] DataBase,int NumOfOperons,Vector<String> OperonNames) throws IOException{
+		/*------initializing target Matrix-----*/
+		matrixSize= Size;
+		targetMatrix = new int[Size][Size];
+		for(int i = 0; i < Size ; i++){
+			for(int j = 0; j < Size; j++){
 				targetMatrix[i][j] = Matrix[i][j];
 			}
 		}
 		
-		/*-----------------read file-----------------------*/
-		String filePath = PATH + "USTC_SOFTWARE_PARTS_DATA.txt";
-		FileReader infile = new FileReader(filePath);
-		BufferedReader in = new BufferedReader(infile);
+		
+		/*-------initializing operon numbers------*/
+		numOfOperons = NumOfOperons;
 		
 		
-		/*------ initializing numOfOperons-----------*/
-		numOfOperons = Integer.parseInt(in.readLine());
-		
-		
-		/*--------------initializing operonNames-----*/
-		operonNames = new Vector<String>();
-		for(int i = 0;i < numOfOperons; i++){
-			operonNames.add(in.readLine());
-		}
-		
-				
-		/*---------------------generate database------------------*/
+		/*-------initializing database -------*/
 		database = new int[numOfOperons][numOfOperons];
 		for(int i = 0;i < numOfOperons; i++){
-			for(int j = 0;j < numOfOperons;j++){
-				database[i][j] = Integer.parseInt(in.readLine());
+			for(int j = 0; j < numOfOperons; j++){
+				database[i][j] = DataBase[i][j];
 			}
 		}
 		
+		/*--------initializing operon names------*/
+		operonNames = new Vector<String>();
+		for(int i = 0;i < numOfOperons; i++){
+			operonNames.add(OperonNames.get(i));
+		}
 		
 		/*---------initializing choicePool-------*/
 		int[] choicesPool = new int[numOfOperons];
