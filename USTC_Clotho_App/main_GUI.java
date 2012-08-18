@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import javax.swing.*;
 import javax.swing.event.*;
+import javax.swing.table.TableModel;
 
 import com.sun.corba.se.impl.ior.NewObjectKeyTemplateBase;
 
@@ -72,14 +73,14 @@ public class main_GUI{
 		
 		/*------initializing JMenu "File"----*/
 		File = new JMenu("File");
-		New = new JMenuItem("New");
-		save = new JMenuItem("Save");
-		clear = new JMenuItem("Clear");
-		close = new JMenuItem("Exit");
+		New = new JMenuItem("New",'N');
+		save = new JMenuItem("Save",'S');
+		clear = new JMenuItem("Clear",'C');
+		exit = new JMenuItem("Exit",'E');
 		File.add(New);
 		File.add(save);
 		File.add(clear);
-		File.add(close);
+		File.add(exit);
 		
 		/*------initializing JMenu "OpenDataBase"----*/
 		OpenDataBase = new JMenu("Database");
@@ -172,7 +173,7 @@ public class main_GUI{
 				operonDataBase[i][j] = Integer.parseInt(in.readLine());
 			}
 		}
-		
+		in.close();
 		
 		/*---------Second part: Loading Gene_Promoter Database------*/
 		//to be continued
@@ -311,8 +312,62 @@ public class main_GUI{
 	/*--------method to initiate file menu events-------*/
 	public void initFileMenuEvents(){
 		
-		//initial JMenuItem "New"
+		//initiate JMenuItem "New"
+		New.addMouseListener(new MouseAdapter(){
+			public void mousePressed(MouseEvent e){
+				sizeInput.setText(null);
+				int numRow = inputMatrixTable.getRowCount();
+				int numColumn = inputMatrixTable.getColumnCount();
+				for(int i = 0; i < numRow; i++){
+					for(int j = 0; j < numColumn; j++){
+						inputMatrixTable.setValueAt(null,i, j);
+					}
+				}
+			}
+			
+		});
 		
+		//initiate JMenuItem "Save"
+		
+		save.addMouseListener(new MouseAdapter(){
+			public void mousePressed(MouseEvent e){
+				
+				
+				
+			}
+		});
+		
+		//initiate JMenuItem "clear"
+		clear.addMouseListener(new MouseAdapter(){
+			public void mousePressed(MouseEvent e){
+				sizeInput.setText(null);
+				index = 1;
+				int numRow = inputMatrixTable.getRowCount();
+				int numColumn = inputMatrixTable.getColumnCount();
+				for(int i = 0; i < numRow; i++){
+					for(int j = 0; j < numColumn; j++){
+						inputMatrixTable.setValueAt(null,i, j);
+					}
+				}
+				int numOfTabs = mainTabbedPane.getTabCount();
+				if(numOfTabs <= 1)
+					return;
+				else{
+					for(int i = 1; i < numOfTabs; i++){
+						mainTabbedPane.remove(i);
+					}
+				}
+				
+			}
+			
+		});
+		
+		//initiate JMenuItem "Exit"
+		exit.addMouseListener(new MouseAdapter(){
+			public void mousePressed(MouseEvent e){
+				System.exit(0);
+			}
+		});
 	}
 	
 	/*---------method to initiate database menu events----*/
@@ -352,7 +407,7 @@ public class main_GUI{
 	private static JMenuItem New;
 	private static JMenuItem save;
 	private static JMenuItem clear;
-	private static JMenuItem close;
+	private static JMenuItem exit;
 	
 	
 	//JMenuItems for Menu "Database"
