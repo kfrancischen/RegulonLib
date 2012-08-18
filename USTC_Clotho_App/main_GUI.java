@@ -3,10 +3,13 @@ package USTC_Clotho_App;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.BufferedReader;
+
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.File;
 import javax.swing.*;
-import javax.swing.event.*;
+
 
 
 import java.util.Vector;
@@ -175,7 +178,7 @@ public class main_GUI{
 		mainTabbedPane = new JTabbedPane();
 		mainTabbedPane.setTabPlacement(JTabbedPane.TOP);
 		//mainTabbedPane.addChangeListener(this);
-		mainTabbedPane.addTab("main panel", panel_1);
+		mainTabbedPane.addTab("Main Page", panel_1);
 	
 		//JButton newButton = new JButton("a New Tab");
 		//newButton.addActionListener(this);
@@ -185,6 +188,11 @@ public class main_GUI{
 		mainFrame.setSize(600,400);
 		mainFrame.pack();
 		mainFrame.setVisible(true);
+		
+		outPutBuffers = new Vector<StringBuffer>();
+		for(int i = 0; i < 1000; i++){
+			outPutBuffers.add(null);
+		}
 	}
 	
 	
@@ -311,10 +319,12 @@ public class main_GUI{
 														operonDataBase,
 														numOfOperons,
 														operonNames);
+					StringBuffer aBuffer = new StringBuffer();
 					JTextPane newTextPanel = new JTextPane();
 					JScrollPane newScrollPane = new JScrollPane(newTextPanel);
 					System.out.println("There are "+aTest.numberPossibleChoices[0]+" possible choices\n");
 					newTextPanel.replaceSelection("Mode 1 is used:\n All these data are from Operon-Operon database.\n\n");
+					aBuffer.append("Mode 1 is used:\n All these data are from Operon_Operon database.\n\n");
 					String result = "";
 					switch(aTest.numberPossibleChoices[0]){
 					case 0:
@@ -326,23 +336,27 @@ public class main_GUI{
 					default:
 						result = "There are "+aTest.numberPossibleChoices[0]+" possible choices\n\n";
 					}
-					
+					aBuffer.append(result);
 					newTextPanel.replaceSelection(result);
 					for(int i = 0;i < aTest.numberPossibleChoices[0]; i++){
 						System.out.print(i+"\n");
 						newTextPanel.replaceSelection("choice "+(i+1)+":\n");
+						aBuffer.append("Choice"+(i+1)+"\n");
 						for(int j = 0;j<matrixsize ; j++){
 							System.out.print(aTest.result[i][j]+"\t");
 							System.out.println(operonNames.get(aTest.result[i][j])+"\t");
 							newTextPanel.replaceSelection(aTest.result[i][j]+"\t"+operonNames.get(aTest.result[i][j])+"\n");
+							aBuffer.append(aTest.result[i][j]+"\t"+operonNames.get(aTest.result[i][j])+"\n");
 						}
 						System.out.print("\n\n");
 						newTextPanel.replaceSelection("\n");
+						aBuffer.append("\n");
 					}
 
 					mainTabbedPane.addTab("Result"+index,newScrollPane);
 					mainTabbedPane.setSelectedComponent(newScrollPane);
 					save.setEnabled(true);
+					outPutBuffers.setElementAt(aBuffer, index);  //buffer index is the same with the tab index
 					index++;
 				} 
 	
@@ -394,10 +408,12 @@ public class main_GUI{
 															numOfPromoters,
 															geneNames,
 															promoterNames);
+					StringBuffer aBuffer = new StringBuffer();
 					JTextPane newTextPanel = new JTextPane();
 					JScrollPane newScrollPane = new JScrollPane(newTextPanel);
 					System.out.println("There are "+aTest.numberPossibleChoices[0]+" possible choices\n");
 					newTextPanel.replaceSelection("Mode 2 is used:\n All these data are from Gene_Promoter database.\n\n");
+					aBuffer.append("Mode 2 is used:\n All these data are from Gene_Promoter database.\n\n");
 					String result = "";
 					switch(aTest.numberPossibleChoices[0]){
 					case 0:
@@ -409,24 +425,29 @@ public class main_GUI{
 					default:
 						result = "There are "+aTest.numberPossibleChoices[0]+" possible choices\n\n";
 					}
+					aBuffer.append(result);
 					newTextPanel.replaceSelection(result);
 					for(int i = 0; i < aTest.numberPossibleChoices[0];i++){
 						System.out.print(i+"\n");
 						newTextPanel.replaceSelection("choice "+(i+1)+":\n");
+						aBuffer.append("Choice"+(i+1)+"\n");
 						for(int j = 0; j < matrixsize; j++){
 							System.out.println(aTest.result[i][0][j]+"\t"+promoterNames.get(aTest.result[i][0][j])+"\n");
 							System.out.println(aTest.result[i][1][j]+"\t"+geneNames.get(aTest.result[i][1][j])+"\n");
 							newTextPanel.replaceSelection(aTest.result[i][0][j]+"\t"+promoterNames.get(aTest.result[i][0][j])+"\n");
+							aBuffer.append(aTest.result[i][0][j]+"\t"+promoterNames.get(aTest.result[i][0][j])+"\n");
 							newTextPanel.replaceSelection(aTest.result[i][1][j]+"\t"+geneNames.get(aTest.result[i][1][j])+"\n");
+							aBuffer.append(aTest.result[i][1][j]+"\t"+geneNames.get(aTest.result[i][1][j])+"\n");
 						}
 						System.out.print("\n\n");
 						newTextPanel.replaceSelection("\n");
+						aBuffer.append("\n");
 					}
 					mainTabbedPane.addTab("Result"+index,newScrollPane);
 					mainTabbedPane.setSelectedComponent(newScrollPane);
 					save.setEnabled(true);
+					outPutBuffers.setElementAt(aBuffer, index);  //buffer index is the same with the tab index
 					index++;
-					
 				}
 				catch(IOException e2){
 					JOptionPane.showMessageDialog(null,"Cannot Open Gene_Promoter Database!\n","Error!",JOptionPane.ERROR_MESSAGE);
@@ -456,6 +477,7 @@ public class main_GUI{
 				int tabIndex = mainTabbedPane.indexAtLocation(e.getX(), e.getY());
 				if(e.getClickCount() == 2 && tabIndex != -1 && tabIndex != 0){
 					mainTabbedPane.remove(tabIndex);
+					outPutBuffers.remove(tabIndex);   //when close the tab, remove its buffer
 				}
 				int numOfTabs = mainTabbedPane.getTabCount();
 				if(numOfTabs == 1){
@@ -530,10 +552,29 @@ public class main_GUI{
 				}
 				
 				//mainTabbedPane.getComponent(tabIndex).getComponentAt(0, 0).get;
-				JFileChooser saveFile = new JFileChooser();
-				saveFile.showDialog(null, "Save");
+			
+
+				String currentTitle = mainTabbedPane.getTitleAt(currentTab);
+				String temp = String.valueOf(currentTitle.charAt(currentTitle.length()-1));
+				int currentIndex = Integer.parseInt(temp);
 				
-				//to be continued
+				JFileChooser saveFile = new JFileChooser();
+				saveFile.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+				saveFile.showSaveDialog(null);
+				File targetFile=saveFile.getSelectedFile(); 
+				String path=targetFile.getPath(); 
+				String fileName = currentTitle+".txt";
+				File newFile = new File(path + "/" + fileName);
+				try {
+					FileWriter out = new FileWriter(newFile);
+					out.write(outPutBuffers.get(currentIndex).toString());
+					out.close();
+				}
+				catch (IOException e1) {
+					// TODO Auto-generated catch block
+					JOptionPane.showMessageDialog(null,"Failed to save the file!","Error!",JOptionPane.ERROR_MESSAGE);
+				}
+				
 			}
 		});
 		
@@ -543,6 +584,7 @@ public class main_GUI{
 				sizeInput.setText(null);
 				save.setEnabled(false);
 				index = 1;
+				outPutBuffers.removeAllElements(); //remove all the string buffers
 				int numRow = inputMatrixTable.getRowCount();
 				int numColumn = inputMatrixTable.getColumnCount();
 				for(int i = 0; i < numRow; i++){
@@ -695,4 +737,6 @@ public class main_GUI{
 	public static int numOfGenes;
 	public static Vector<String> geneNames;
 	public static Vector<String> promoterNames;
+	
+	public static Vector<StringBuffer> outPutBuffers;
 }
