@@ -20,123 +20,21 @@ public class main_GUI{
 			JOptionPane.showMessageDialog(null,"Unable To Load The Database","Error!",JOptionPane.ERROR_MESSAGE);
 		}
 		initComponents();
+		initFrameEvents();
+		initTabEvents();
+		initButtonEvents();
+		initFileMenuEvents();
+		initDatabaseMenuEvents();
+		initHelpMenuEvents();
+		initAboutMenuEvents();
 	}
 
+	
+	/*-----main function of the class------*/
 	public static void main(String args[]){
 
 		new main_GUI();
-		System.out.print("Enter the Matrix size:\n");
-		
-		commitSizeBt.addMouseListener(new MouseAdapter(){
-			public void mousePressed(MouseEvent e){
-				if(sizeInput.getText().equals("")){
-					System.out.print("Please Input The Matrix Size And Press Commit.\n");
-					return;
-				}
-				matrixsize = Integer.parseInt(sizeInput.getText());
-				System.out.print(matrixsize+"\n\n");
-			}
-		});
-		 
-		modeOneBt.addMouseListener(new MouseAdapter(){
-			public void mousePressed(MouseEvent e){
-	
-				if(matrixsize == 0){
-					System.out.println("Please Input Matrix Size First!\n");
-					JOptionPane.showMessageDialog(null,"Please Input Matrix Size First!\n","Error!",JOptionPane.ERROR_MESSAGE);
-					return;
-				}
-				final int[][] TargetMatrix = new int[matrixsize][matrixsize];
-				matrixBreakPoint:
-				for(int i = 0; i < matrixsize;i++){
-					for(int j = 0;j < matrixsize;j++){
-						String element = (String)inputMatrixTable.getValueAt(i,j);
-						if(element == "+"){
-							TargetMatrix[i][j] = 1;
-						}
-						else if(element == "-"){
-							TargetMatrix[i][j] = -1;
-						}
-						else if(element == "0"){
-							TargetMatrix[i][j] = 0;
-						}
-						else{
-							JOptionPane.showMessageDialog(null,"Please Enter Matrix In The Right Place!\n","Error!",JOptionPane.ERROR_MESSAGE);
-							continue matrixBreakPoint;
-						}
-						System.out.print(TargetMatrix[i][j]+"\t");
-						
-					}
-					System.out.print("\n");
-				}
-				try {
-					Operon_Operon aTest = new Operon_Operon(matrixsize,TargetMatrix,operonDataBase,numOfOperons,operonNames);
-					JTextPane newTextPanel = new JTextPane();
-					JScrollPane newScrollPane = new JScrollPane(newTextPanel);
-					System.out.println("There are "+aTest.numberPossibleChoices[0]+" possible choices\n");
-					newTextPanel.replaceSelection("Mode 1 is used: All these data are from Operon-Operon database.\n\n");
-					String result = "";
-					switch(aTest.numberPossibleChoices[0]){
-					case 0:
-						result = "There is no possible choice\n\n";
-						break;
-					case 1:
-						result = "There is only one possible choice\n\n";
-						break;
-					default:
-						result = "There are "+aTest.numberPossibleChoices[0]+" possible choices\n\n";
-					}
-					
-					newTextPanel.replaceSelection(result);
-					for(int i = 0;i < aTest.numberPossibleChoices[0]; i++){
-						System.out.print(i+"\n");
-						newTextPanel.replaceSelection("choice "+(i+1)+":\n");
-						for(int j = 0;j<matrixsize ; j++){
-							System.out.print(aTest.result[i][j]+"\t");
-							System.out.println(Operon_Operon.operonNames.get(aTest.result[i][j])+"\t");
-							newTextPanel.replaceSelection(aTest.result[i][j]+"\t"+Operon_Operon.operonNames.get(aTest.result[i][j])+"\n");
-						}
-						System.out.print("\n\n");
-						newTextPanel.replaceSelection("\n");
-					}
-
-					mainTabbedPane.addTab("Result"+index,newScrollPane);
-					mainTabbedPane.setSelectedComponent(newScrollPane);
-					index++;
-				} 
-	
-				catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}	
-			}
-			
-		});
-		
-		modeTwoBt.addMouseListener(new MouseAdapter(){
-			
-		}
-		);
-		
-		
-		mainTabbedPane.addMouseListener(new MouseAdapter(){
-			public void mousePressed(MouseEvent e) {
-				int tabIndex = mainTabbedPane.indexAtLocation(e.getX(), e.getY());
-				if(e.getClickCount() == 2 && tabIndex != -1){
-					mainTabbedPane.remove(tabIndex);
-				}
-			}
-			
-		}
-		);
-		
-		/*-----when press X, close the frame -------*/
-		mainFrame.addWindowListener(new WindowAdapter() {
-			  public void windowClosing(WindowEvent we){
-			  System.exit(0);
-			    }
-			 }
-		);
+		System.out.print("Enter the Matrix size:\n");	
 	}
 
 		
@@ -174,7 +72,7 @@ public class main_GUI{
 		File = new JMenu("File");
 		JMenuItem New = new JMenuItem("New");
 		JMenuItem save = new JMenuItem("Save");
-		JMenuItem clear = new JMenuItem("Clear workspace");
+		JMenuItem clear = new JMenuItem("Clear");
 		JMenuItem close = new JMenuItem("Exit");
 		File.add(New);
 		File.add(save);
@@ -247,38 +145,186 @@ public class main_GUI{
 
 		/*---------First Part: Loading Operon_Operon Database-------*/
 		
-		/*-----------------read file-----------------------*/
+		//-----------------read file-----------------------//
 		String filePath = PATH + "USTC_SOFTWARE_PARTS_DATA.txt";
 		FileReader infile = new FileReader(filePath);
 		BufferedReader in = new BufferedReader(infile);
 		
 		
-		/*------ initializing numOfOperons-----------*/
+		//----- initializing numOfOperons-----------//
 		numOfOperons = Integer.parseInt(in.readLine());
 		
 		
-		/*--------------initializing operonNames-----*/
+		//--------------initializing operonNames-----//
 		operonNames = new Vector<String>();
 		for(int i = 0;i < numOfOperons; i++){
 			operonNames.add(in.readLine());
 		}
 		
 				
-		/*---------------------generate database------------------*/
+		//---------------------generate database------------------//
 		operonDataBase = new int[numOfOperons][numOfOperons];
 		for(int i = 0;i < numOfOperons; i++){
 			for(int j = 0;j < numOfOperons;j++){
 				operonDataBase[i][j] = Integer.parseInt(in.readLine());
 			}
-		}	
+		}
+		
+		
+		/*---------Second part: Loading Gene_Promoter Database------*/
+		//to be continued
 	}
 	
 	
-	/*------------method to load the Gene_Promoter database---------*/
-	public void loadDataBaseGene_Promoter(){
+	/*------------method to initiate button events---------*/
+	public void initButtonEvents(){
+		 
+		//initiate commit size button, press it to enter the matrix size//
+		commitSizeBt.addMouseListener(new MouseAdapter(){
+			public void mousePressed(MouseEvent e){
+				if(sizeInput.getText().equals("")){
+					System.out.print("Please Input The Matrix Size And Press Commit.\n");
+					return;
+				}
+				matrixsize = Integer.parseInt(sizeInput.getText());
+				System.out.print(matrixsize+"\n\n");
+			}
+		});
+		
+		
+		//initiate mode One button, press it to use mode one//
+		modeOneBt.addMouseListener(new MouseAdapter(){
+			public void mousePressed(MouseEvent e){
+	
+				if(matrixsize == 0){
+					System.out.println("Please Input Matrix Size First!\n");
+					JOptionPane.showMessageDialog(null,"Please Input Matrix Size First!\n","Error!",JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				final int[][] TargetMatrix = new int[matrixsize][matrixsize];
+				matrixBreakPoint:
+				for(int i = 0; i < matrixsize;i++){
+					for(int j = 0;j < matrixsize;j++){
+						String element = (String)inputMatrixTable.getValueAt(i,j);
+						if(element == "+"){
+							TargetMatrix[i][j] = 1;
+						}
+						else if(element == "-"){
+							TargetMatrix[i][j] = -1;
+						}
+						else if(element == "0"){
+							TargetMatrix[i][j] = 0;
+						}
+						else{
+							JOptionPane.showMessageDialog(null,"Please Enter Matrix In The Right Place!\n","Error!",JOptionPane.ERROR_MESSAGE);
+							continue matrixBreakPoint;
+						}
+						System.out.print(TargetMatrix[i][j]+"\t");
+						
+					}
+					System.out.print("\n");
+				}
+				try {
+					Operon_Operon aTest = new Operon_Operon(matrixsize,TargetMatrix,operonDataBase,numOfOperons,operonNames);
+					JTextPane newTextPanel = new JTextPane();
+					JScrollPane newScrollPane = new JScrollPane(newTextPanel);
+					System.out.println("There are "+aTest.numberPossibleChoices[0]+" possible choices\n");
+					newTextPanel.replaceSelection("Mode 1 is used:\n All these data are from Operon-Operon database.\n\n");
+					String result = "";
+					switch(aTest.numberPossibleChoices[0]){
+					case 0:
+						result = "There is no possible choice\n\n";
+						break;
+					case 1:
+						result = "There is only one possible choice\n\n";
+						break;
+					default:
+						result = "There are "+aTest.numberPossibleChoices[0]+" possible choices\n\n";
+					}
+					
+					newTextPanel.replaceSelection(result);
+					for(int i = 0;i < aTest.numberPossibleChoices[0]; i++){
+						System.out.print(i+"\n");
+						newTextPanel.replaceSelection("choice "+(i+1)+":\n");
+						for(int j = 0;j<matrixsize ; j++){
+							System.out.print(aTest.result[i][j]+"\t");
+							System.out.println(Operon_Operon.operonNames.get(aTest.result[i][j])+"\t");
+							newTextPanel.replaceSelection(aTest.result[i][j]+"\t"+Operon_Operon.operonNames.get(aTest.result[i][j])+"\n");
+						}
+						System.out.print("\n\n");
+						newTextPanel.replaceSelection("\n");
+					}
+
+					mainTabbedPane.addTab("Result"+index,newScrollPane);
+					mainTabbedPane.setSelectedComponent(newScrollPane);
+					index++;
+				} 
+	
+				catch (IOException e1) {
+					// TODO Auto-generated catch block
+					JOptionPane.showMessageDialog(null,"Cannot Open Operon_Operon Database!\n","Error!",JOptionPane.ERROR_MESSAGE);
+				}	
+			}
+			
+		});
+		
+		
+		//initiate mode two button, press it to use mode two------*/
+		modeTwoBt.addMouseListener(new MouseAdapter(){
+			
+		}
+		);
 		
 	}
 	
+	
+	/*--------method to initiate frame close events-----*/
+	public void initFrameEvents(){
+		/*-----when press X, close the frame -------*/
+		mainFrame.addWindowListener(new WindowAdapter() {
+			  public void windowClosing(WindowEvent we){
+			  System.exit(0);
+			    }
+			 }
+		);
+	}
+	
+	/*---------method to initiate tab events----------*/
+	public void initTabEvents(){
+		
+		//if double click the tab, it will close-----*/
+		mainTabbedPane.addMouseListener(new MouseAdapter(){
+			public void mousePressed(MouseEvent e) {
+				int tabIndex = mainTabbedPane.indexAtLocation(e.getX(), e.getY());
+				if(e.getClickCount() == 2 && tabIndex != -1){
+					mainTabbedPane.remove(tabIndex);
+				}
+			}
+			
+		}
+		);
+	}
+	
+	/*--------method to initiate file menu events-------*/
+	public void initFileMenuEvents(){
+		
+	}
+	
+	/*---------method to initiate database menu events----*/
+	public void initDatabaseMenuEvents(){
+		
+	}
+	
+	
+	/*-------method to initiate help menu events----*/
+	public void initHelpMenuEvents(){
+		
+	}
+	
+	/*------method to initiate about menu events-----*/
+	public void initAboutMenuEvents(){
+		
+	}
  /*------    variables in the program --------*/
 	private static JLabel matrixSizeLabel;
 	private static JTable inputMatrixTable;
@@ -312,29 +358,4 @@ public class main_GUI{
 	public static int numOfGenes;
 	public static Vector<String> geneNames;
 	public static Vector<String> promoterNames;
-	/* 
-	@Override
-
-	public void stateChanged(ChangeEvent e) {
-		// TODO Auto-generated method stub
-		 if (index!=mainTabbedPane.getSelectedIndex()){
-	         if(index<mainTabbedPane.getTabCount()-1)
-	        	 mainTabbedPane.setEnabledAt(index+1,true);
-	     }
-	     index=mainTabbedPane.getSelectedIndex();
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		JPanel panel=new JPanel();
-	      JLabel label=new JLabel("Result"+newNumber,JLabel.CENTER);
-	      label.setOpaque(true);
-	      panel.add(label);
-	      mainTabbedPane.addTab("new Tab"+newNumber,panel);
-	      mainTabbedPane.setEnabledAt(newNumber,true);
-	      newNumber++;
-	      mainTabbedPane.validate();
-	}
-	*/
 }
