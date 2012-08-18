@@ -195,6 +195,20 @@ public class main_GUI{
 			}
 		});
 		
+		commitSizeBt.addKeyListener(new KeyAdapter(){
+			public void keyReleased(KeyEvent I){
+				if(I.getKeyCode() == KeyEvent.VK_SHIFT){
+					if(sizeInput.getText().equals("")){
+						System.out.print("Please Input The Matrix Size And Press Commit.\n");
+						return;
+					}
+					matrixsize = Integer.parseInt(sizeInput.getText());
+					System.out.print(matrixsize+"\n\n");
+				}
+			}
+		}
+		);
+		
 		
 		//initiate mode One button, press it to use mode one//
 		modeOneBt.addMouseListener(new MouseAdapter(){
