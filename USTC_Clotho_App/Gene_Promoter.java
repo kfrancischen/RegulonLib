@@ -1,6 +1,5 @@
 package USTC_Clotho_App;
 import java.io.*;
-import java.util.Collection;
 import java.util.Vector;
 
 

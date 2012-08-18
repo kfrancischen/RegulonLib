@@ -457,6 +457,10 @@ public class main_GUI{
 				if(e.getClickCount() == 2 && tabIndex != -1 && tabIndex != 0){
 					mainTabbedPane.remove(tabIndex);
 				}
+				int numOfTabs = mainTabbedPane.getTabCount();
+				if(numOfTabs == 1){
+					save.setEnabled(false);
+				}
 			}
 			
 		}
@@ -568,6 +572,23 @@ public class main_GUI{
 	/*---------method to initiate database menu events----*/
 	public void initDatabaseMenuEvents(){
 		
+		//initializing JMenuItem "Operon_Operon"
+		Operon_Operon.addMouseListener(new MouseAdapter(){
+			public void mousePressed(MouseEvent e){
+				JOptionPane.showMessageDialog(null,"These database is mainly about operons\n" +
+						"it is a matrix with elements + - or 0","How To Use",JOptionPane.PLAIN_MESSAGE);
+			}
+		}
+		);
+		
+		//initializing JMenuItem "Gene_Promoter"
+		Gene_Promoter.addMouseListener(new MouseAdapter(){
+			public void mousePressed(MouseEvent e){
+				JOptionPane.showMessageDialog(null,"These database is mainly about operons\n"
+						+"it is a matrix with elements + / - / +- / 0","How To Use",JOptionPane.PLAIN_MESSAGE);
+			}
+		}
+		);
 	}
 	
 	
@@ -577,7 +598,7 @@ public class main_GUI{
 		//initiate JMenuItem "how to use" 
 		howToUse.addMouseListener(new MouseAdapter(){
 			public void	mousePressed(MouseEvent e){ 
-				JOptionPane.showMessageDialog(null,"How To Use This App\n","How To Use",JOptionPane.PLAIN_MESSAGE);
+				JOptionPane.showMessageDialog(null,"\n","How To Use",JOptionPane.PLAIN_MESSAGE);
 			}
 		}
 		);
