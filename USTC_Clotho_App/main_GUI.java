@@ -7,11 +7,54 @@ import java.io.FileReader;
 import java.io.IOException;
 import javax.swing.*;
 import javax.swing.event.*;
-import javax.swing.table.TableModel;
 
-import com.sun.corba.se.impl.ior.NewObjectKeyTemplateBase;
 
 import java.util.Vector;
+
+class LinkLabel extends JLabel {  
+    private String text, url;  
+    private boolean isSupported;  
+  
+    public LinkLabel(String text, String url) {  
+        this.text = text;  
+        this.url = url;  
+        try {  
+            this.isSupported = Desktop.isDesktopSupported()  
+            && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE);  
+        } catch (Exception e) {  
+            this.isSupported = false;  
+        }  
+        setText(false);  
+        addMouseListener(new MouseAdapter() {  
+            public void mouseEntered(MouseEvent e) {  
+                setText(isSupported);  
+                if (isSupported)  
+                    setCursor(new Cursor(Cursor.HAND_CURSOR));  
+            }  
+  
+            public void mouseExited(MouseEvent e) {  
+                setText(false);  
+            }  
+  
+            public void mouseClicked(MouseEvent e) {  
+                try {  
+                    Desktop.getDesktop().browse(  
+                            new java.net.URI(LinkLabel.this.url));  
+                } catch (Exception ex) {  
+                }  
+            }  
+        });  
+    }  
+  
+    private void setText(boolean b) {  
+        if (!b)  
+            setText("<html><font color=blue><u>" + text);  
+        else  
+            setText("<html><font color=red><u>" + text);  
+    }  
+  
+       
+}  
 
 public class main_GUI{
 
@@ -25,6 +68,7 @@ public class main_GUI{
 		initComponents();
 		initFrameEvents();
 		initTabEvents();
+		initTextEvents();
 		initButtonEvents();
 		initFileMenuEvents();
 		initDatabaseMenuEvents();
@@ -50,7 +94,7 @@ public class main_GUI{
 		Container contentPane = mainFrame.getContentPane();
 		
 		/*------Initializing main panel---------*/
-		JPanel panel_1 = new JPanel();
+		panel_1 = new JPanel();
 		matrixSizeLabel = new JLabel("Matrix Size:");
 		sizeInput = new JTextField(null,10);
 		verticalBox = Box.createVerticalBox();
@@ -75,6 +119,7 @@ public class main_GUI{
 		File = new JMenu("File");
 		New = new JMenuItem("New",'N');
 		save = new JMenuItem("Save",'S');
+		save.setEnabled(false);
 		clear = new JMenuItem("Clear",'C');
 		exit = new JMenuItem("Exit",'E');
 		File.add(New);
@@ -187,27 +232,13 @@ public class main_GUI{
 		commitSizeBt.addMouseListener(new MouseAdapter(){
 			public void mousePressed(MouseEvent e){
 				if(sizeInput.getText().equals("")){
-					System.out.print("Please Input The Matrix Size And Press Commit.\n");
+					System.out.print("Please Input The Matrix Size!\n");
 					return;
 				}
 				matrixsize = Integer.parseInt(sizeInput.getText());
 				System.out.print(matrixsize+"\n\n");
 			}
 		});
-		
-		commitSizeBt.addKeyListener(new KeyAdapter(){
-			public void keyReleased(KeyEvent I){
-				if(I.getKeyCode() == KeyEvent.VK_SHIFT){
-					if(sizeInput.getText().equals("")){
-						System.out.print("Please Input The Matrix Size And Press Commit.\n");
-						return;
-					}
-					matrixsize = Integer.parseInt(sizeInput.getText());
-					System.out.print(matrixsize+"\n\n");
-				}
-			}
-		}
-		);
 		
 		
 		//initiate mode One button, press it to use mode one//
@@ -220,7 +251,7 @@ public class main_GUI{
 					return;
 				}
 				final int[][] TargetMatrix = new int[matrixsize][matrixsize];
-				matrixBreakPoint:
+				
 				for(int i = 0; i < matrixsize;i++){
 					for(int j = 0;j < matrixsize;j++){
 						String element = (String)inputMatrixTable.getValueAt(i,j);
@@ -235,13 +266,13 @@ public class main_GUI{
 						}
 						else{
 							JOptionPane.showMessageDialog(null,"Please Enter Matrix In The Right Place!\n","Error!",JOptionPane.ERROR_MESSAGE);
-							continue matrixBreakPoint;
+							return;
 						}
-						System.out.print(TargetMatrix[i][j]+"\t");
-						
+						System.out.print(TargetMatrix[i][j]+"\t");	
 					}
 					System.out.print("\n");
 				}
+			
 				try {
 					Operon_Operon aTest = new Operon_Operon(matrixsize,TargetMatrix,operonDataBase,numOfOperons,operonNames);
 					JTextPane newTextPanel = new JTextPane();
@@ -275,6 +306,7 @@ public class main_GUI{
 
 					mainTabbedPane.addTab("Result"+index,newScrollPane);
 					mainTabbedPane.setSelectedComponent(newScrollPane);
+					save.setEnabled(true);
 					index++;
 				} 
 	
@@ -314,7 +346,7 @@ public class main_GUI{
 		mainTabbedPane.addMouseListener(new MouseAdapter(){
 			public void mousePressed(MouseEvent e) {
 				int tabIndex = mainTabbedPane.indexAtLocation(e.getX(), e.getY());
-				if(e.getClickCount() == 2 && tabIndex != -1){
+				if(e.getClickCount() == 2 && tabIndex != -1 && tabIndex != 0){
 					mainTabbedPane.remove(tabIndex);
 				}
 			}
@@ -323,12 +355,35 @@ public class main_GUI{
 		);
 	}
 	
+	/*--------method to initiate text events---------*/
+	public void initTextEvents(){
+		sizeInput.addKeyListener(new KeyAdapter(){
+			public void keyPressed(KeyEvent I){
+				if(I.getKeyCode() == KeyEvent.VK_ENTER){
+					if(sizeInput.getText().equals("")){
+						System.out.print("Please Input The Matrix Size!\n");
+						return;
+					}
+					matrixsize = Integer.parseInt(sizeInput.getText());
+					System.out.print(matrixsize+"\n\n");
+				}
+			}
+		}
+		);	
+	}
+	
+	
 	/*--------method to initiate file menu events-------*/
 	public void initFileMenuEvents(){
 		
 		//initiate JMenuItem "New"
 		New.addMouseListener(new MouseAdapter(){
 			public void mousePressed(MouseEvent e){
+				int numOfTabs = mainTabbedPane.getTabCount();
+				if(numOfTabs == 1){
+					save.setEnabled(false);
+				}
+				mainTabbedPane.setSelectedComponent(panel_1);
 				sizeInput.setText(null);
 				int numRow = inputMatrixTable.getRowCount();
 				int numColumn = inputMatrixTable.getColumnCount();
@@ -345,9 +400,28 @@ public class main_GUI{
 		
 		save.addMouseListener(new MouseAdapter(){
 			public void mousePressed(MouseEvent e){
+				int numOfTabs = mainTabbedPane.getTabCount();
+				int currentTab = 0;
+				for(int i = 0; i < numOfTabs; i++){
+					if(mainTabbedPane.getComponent(i) == mainTabbedPane.getSelectedComponent()){
+						currentTab = i;
+						break;
+					}
+				}
+				if(numOfTabs == 1){
+					JOptionPane.showMessageDialog(null,"No Result To Be Saved!\n","Warning!",JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+				if(currentTab == 0){
+					JOptionPane.showMessageDialog(null,"Please Turn To The Result Tab!\n","Warning!",JOptionPane.WARNING_MESSAGE);
+					return;
+				}
 				
+				//mainTabbedPane.getComponent(tabIndex).getComponentAt(0, 0).get;
+				JFileChooser saveFile = new JFileChooser();
+				saveFile.showDialog(null, "Save");
 				
-				
+				//to be continued
 			}
 		});
 		
@@ -355,6 +429,7 @@ public class main_GUI{
 		clear.addMouseListener(new MouseAdapter(){
 			public void mousePressed(MouseEvent e){
 				sizeInput.setText(null);
+				save.setEnabled(false);
 				index = 1;
 				int numRow = inputMatrixTable.getRowCount();
 				int numColumn = inputMatrixTable.getColumnCount();
@@ -370,10 +445,8 @@ public class main_GUI{
 					for(int i = 1; i < numOfTabs; i++){
 						mainTabbedPane.remove(i);
 					}
-				}
-				
-			}
-			
+				}	
+			}	
 		});
 		
 		//initiate JMenuItem "Exit"
@@ -393,13 +466,56 @@ public class main_GUI{
 	/*-------method to initiate help menu events----*/
 	public void initHelpMenuEvents(){
 		
+		//initiate JMenuItem "how to use" 
+		howToUse.addMouseListener(new MouseAdapter(){
+			public void	mousePressed(MouseEvent e){ 
+				JOptionPane.showMessageDialog(null,"How To Use This App\n","How To Use",JOptionPane.PLAIN_MESSAGE);
+			}
+		}
+		);
+		
+		//initiate JMenuItem "About DataBase"
+		aboutDatabase.addMouseListener(new MouseAdapter(){
+			public void mousePressed(MouseEvent e){
+				LinkLabel AboutDatabase= new LinkLabel("RegulonDB", "http://regulondb.ccg.unam.mx/");  
+				Object[] message = { "DataBases are from RegulonDB",AboutDatabase};
+				JOptionPane pane = new JOptionPane(message, JOptionPane.PLAIN_MESSAGE);
+				JDialog dialog = pane.createDialog(pane, "About Database");  
+                dialog.setVisible(true); 
+			}
+		}
+		);
+		
 	}
 	
 	/*------method to initiate about menu events-----*/
 	public void initAboutMenuEvents(){
+		//initiate JMenuItem "aboutUSTC_2012"
+		aboutUSTC_2012.addMouseListener(new MouseAdapter(){
+			public void mousePressed(MouseEvent e){
+				LinkLabel AboutUSTC_2012 = new LinkLabel("2012 USTC_SoftWare Wiki","http://2012.igem.org/Team:USTC-Software");
+				Object[] message = {"2012 USTC_Software Team consists of XX members,visit our wiki",AboutUSTC_2012};
+				JOptionPane pane = new JOptionPane(message,JOptionPane.PLAIN_MESSAGE);
+				JDialog dialog = pane.createDialog(pane, "About 2012 USTC-Software Team");
+				dialog.setVisible(true);
+			}
+		});
+		
+		//initiate JMenuItem "aboutUSTC"
+		aboutUSTC.addMouseListener(new MouseAdapter(){
+			public void mousePressed(MouseEvent e){
+				LinkLabel AboutUSTC = new LinkLabel("USTC Website","http://www.ustc.edu.cn/");
+				Object[] message = {"USTC, namely Univeristy of Science Technology.\n Visit the website",AboutUSTC};
+				JOptionPane pane = new JOptionPane(message,JOptionPane.PLAIN_MESSAGE);
+				JDialog dialog = pane.createDialog(pane,"About USTC");
+				dialog.setVisible(true);
+			}
+		}
+		);
 		
 	}
  /*------    variables in the program --------*/
+	private static JPanel panel_1;
 	private static JLabel matrixSizeLabel;
 	private static JTable inputMatrixTable;
 	private static JFrame mainFrame;
