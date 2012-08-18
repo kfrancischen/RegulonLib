@@ -8,6 +8,8 @@ import java.io.IOException;
 import javax.swing.*;
 import javax.swing.event.*;
 
+import com.sun.corba.se.impl.ior.NewObjectKeyTemplateBase;
+
 import java.util.Vector;
 
 public class main_GUI{
@@ -70,10 +72,10 @@ public class main_GUI{
 		
 		/*------initializing JMenu "File"----*/
 		File = new JMenu("File");
-		JMenuItem New = new JMenuItem("New");
-		JMenuItem save = new JMenuItem("Save");
-		JMenuItem clear = new JMenuItem("Clear");
-		JMenuItem close = new JMenuItem("Exit");
+		New = new JMenuItem("New");
+		save = new JMenuItem("Save");
+		clear = new JMenuItem("Clear");
+		close = new JMenuItem("Exit");
 		File.add(New);
 		File.add(save);
 		File.add(clear);
@@ -81,27 +83,28 @@ public class main_GUI{
 		
 		/*------initializing JMenu "OpenDataBase"----*/
 		OpenDataBase = new JMenu("Database");
-		JMenuItem Operon_Operon = new JMenuItem("Operon_Operon");
-		JMenuItem Gene_Promoter = new JMenuItem("Gene_Promoter");
+		Operon_Operon = new JMenuItem("Operon_Operon");
+		Gene_Promoter = new JMenuItem("Gene_Promoter");
 		OpenDataBase.add(Operon_Operon);
 		OpenDataBase.add(Gene_Promoter);
 		
 		/*-------initializing JMenu "Help"----*/
 		Help = new JMenu("Help");
-		JMenuItem howToUse = new JMenuItem("How To Use");
-		JMenuItem aboutDatabase = new JMenu("About Database");
+		howToUse = new JMenuItem("How To Use");
+		aboutDatabase = new JMenu("About Database");
 		Help.add(howToUse);
 		Help.add(aboutDatabase);
 		
 		/*------initializing JMenu "About"----*/
 		About = new JMenu("About");
-		JMenuItem aboutUSTC_2012 = new JMenuItem("About 2012 USTC-Software Team");
-		JMenuItem aboutUSTC = new JMenuItem("About USTC");
+		aboutUSTC_2012 = new JMenuItem("About 2012 USTC-Software Team");
+		aboutUSTC = new JMenuItem("About USTC");
 		About.add(aboutUSTC_2012);
 		About.add(aboutUSTC);
 		
 		/*------initializing JMenuBar mainMenu-------*/
 		mainMenu = new JMenuBar();
+		
 		mainMenu.add(File);
 		mainMenu.add(OpenDataBase);
 		mainMenu.add(Help);
@@ -248,8 +251,8 @@ public class main_GUI{
 						newTextPanel.replaceSelection("choice "+(i+1)+":\n");
 						for(int j = 0;j<matrixsize ; j++){
 							System.out.print(aTest.result[i][j]+"\t");
-							System.out.println(Operon_Operon.operonNames.get(aTest.result[i][j])+"\t");
-							newTextPanel.replaceSelection(aTest.result[i][j]+"\t"+Operon_Operon.operonNames.get(aTest.result[i][j])+"\n");
+							System.out.println(operonNames.get(aTest.result[i][j])+"\t");
+							newTextPanel.replaceSelection(aTest.result[i][j]+"\t"+operonNames.get(aTest.result[i][j])+"\n");
 						}
 						System.out.print("\n\n");
 						newTextPanel.replaceSelection("\n");
@@ -308,6 +311,8 @@ public class main_GUI{
 	/*--------method to initiate file menu events-------*/
 	public void initFileMenuEvents(){
 		
+		//initial JMenuItem "New"
+		
 	}
 	
 	/*---------method to initiate database menu events----*/
@@ -343,6 +348,24 @@ public class main_GUI{
 	private Box verticalBox;
 	private static final String PATH = "F:/programs/java/";
 	
+	//JMenuItems for Menu "File"
+	private static JMenuItem New;
+	private static JMenuItem save;
+	private static JMenuItem clear;
+	private static JMenuItem close;
+	
+	
+	//JMenuItems for Menu "Database"
+	private static JMenuItem Operon_Operon;
+	private static JMenuItem Gene_Promoter;
+	
+	//JMenuItems for Menu "Help"
+	private static JMenuItem howToUse;
+	private static JMenuItem aboutDatabase;
+	
+	//JMenuItems for Menu "About"
+	private static JMenuItem aboutUSTC_2012;
+	private static JMenuItem aboutUSTC;
 	
 	static int index = 1;    //tab index
 	
