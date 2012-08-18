@@ -195,19 +195,19 @@ public class main_GUI{
 		/*---------First Part: Loading Operon_Operon Database-------*/
 		
 		//-----------------read file-----------------------//
-		String filePath = PATH + "USTC_SOFTWARE_PARTS_DATA.txt";
-		FileReader infile = new FileReader(filePath);
-		BufferedReader in = new BufferedReader(infile);
+		String filePath1 = PATH + "USTC_SOFTWARE_PARTS_DATA.txt";
+		FileReader infile1 = new FileReader(filePath1);
+		BufferedReader in1 = new BufferedReader(infile1);
 		
 		
 		//----- initializing numOfOperons-----------//
-		numOfOperons = Integer.parseInt(in.readLine());
+		numOfOperons = Integer.parseInt(in1.readLine());
 		
 		
 		//--------------initializing operonNames-----//
 		operonNames = new Vector<String>();
 		for(int i = 0;i < numOfOperons; i++){
-			operonNames.add(in.readLine());
+			operonNames.add(in1.readLine());
 		}
 		
 				
@@ -215,13 +215,45 @@ public class main_GUI{
 		operonDataBase = new int[numOfOperons][numOfOperons];
 		for(int i = 0;i < numOfOperons; i++){
 			for(int j = 0;j < numOfOperons;j++){
-				operonDataBase[i][j] = Integer.parseInt(in.readLine());
+				operonDataBase[i][j] = Integer.parseInt(in1.readLine());
 			}
 		}
-		in.close();
+		in1.close();
 		
-		/*---------Second part: Loading Gene_Promoter Database------*/
-		//to be continued
+		
+		/*--------Second part: Loading Gene_Promoter Database------*/
+		
+		//-----------------read file-----------------------//
+		String filePath2 = PATH + "USTC_SOFTWARE_BIOBRICKS_DATA.txt";
+		FileReader infile2 = new FileReader(filePath2);
+		BufferedReader in2 = new BufferedReader(infile2);
+		
+		//------------- initializing numOfGenes and numOfPromoters-------//
+		numOfGenes = Integer.parseInt(in2.readLine());
+		numOfPromoters = Integer.parseInt(in2.readLine());
+		
+		
+		//------------------initializing geneNames--------------//
+		geneNames = new Vector<String>();
+		for(int i = 0;i < numOfGenes; i++){
+			geneNames.add(in2.readLine());
+		}
+		
+		
+		//------------------initializing promoterNames-------------//
+		promoterNames = new Vector<String>();
+		for(int i = 0;i < numOfPromoters;i++){
+			promoterNames.add(in2.readLine());
+		}
+		
+		//--------------------generate database------------------//
+		genepromoterDataBase = new int[numOfPromoters][numOfGenes];
+		for(int i = 0;i < numOfPromoters; i++){
+			for(int j = 0;j < numOfGenes;j++){
+				genepromoterDataBase[i][j] = Integer.parseInt(in2.readLine());
+			}
+		}
+		in2.close();
 	}
 	
 	
@@ -274,7 +306,11 @@ public class main_GUI{
 				}
 			
 				try {
-					Operon_Operon aTest = new Operon_Operon(matrixsize,TargetMatrix,operonDataBase,numOfOperons,operonNames);
+					Operon_Operon aTest = new Operon_Operon(matrixsize,
+														TargetMatrix,
+														operonDataBase,
+														numOfOperons,
+														operonNames);
 					JTextPane newTextPanel = new JTextPane();
 					JScrollPane newScrollPane = new JScrollPane(newTextPanel);
 					System.out.println("There are "+aTest.numberPossibleChoices[0]+" possible choices\n");
@@ -321,10 +357,82 @@ public class main_GUI{
 		
 		//initiate mode two button, press it to use mode two------*/
 		modeTwoBt.addMouseListener(new MouseAdapter(){
-			
-		}
-		);
-		
+			public void mousePressed(MouseEvent e){
+				
+				if(matrixsize == 0){
+					System.out.println("Please Input Matrix Size First!\n");
+					JOptionPane.showMessageDialog(null,"Please Input Matrix Size First!\n","Error!",JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				final int[][] TargetMatrix = new int[matrixsize][matrixsize];
+				
+				for(int i = 0; i < matrixsize;i++){
+					for(int j = 0;j < matrixsize;j++){
+						String element = (String)inputMatrixTable.getValueAt(i,j);
+						if(element == "+"){
+							TargetMatrix[i][j] = 1;
+						}
+						else if(element == "-"){
+							TargetMatrix[i][j] = -1;
+						}
+						else if(element == "0"){
+							TargetMatrix[i][j] = 0;
+						}
+						else{
+							JOptionPane.showMessageDialog(null,"Please Enter Matrix In The Right Place!\n","Error!",JOptionPane.ERROR_MESSAGE);
+							return;
+						}
+						System.out.print(TargetMatrix[i][j]+"\t");	
+					}
+					System.out.print("\n");
+				}
+				try{
+					Gene_Promoter aTest = new Gene_Promoter(matrixsize,
+															TargetMatrix,
+															genepromoterDataBase,
+															numOfGenes,
+															numOfPromoters,
+															geneNames,
+															promoterNames);
+					JTextPane newTextPanel = new JTextPane();
+					JScrollPane newScrollPane = new JScrollPane(newTextPanel);
+					System.out.println("There are "+aTest.numberPossibleChoices[0]+" possible choices\n");
+					newTextPanel.replaceSelection("Mode 2 is used:\n All these data are from Gene_Promoter database.\n\n");
+					String result = "";
+					switch(aTest.numberPossibleChoices[0]){
+					case 0:
+						result = "There is no possible choice\n\n";
+						break;
+					case 1:
+						result = "There is only one possible choice\n\n";
+						break;
+					default:
+						result = "There are "+aTest.numberPossibleChoices[0]+" possible choices\n\n";
+					}
+					newTextPanel.replaceSelection(result);
+					for(int i = 0; i < aTest.numberPossibleChoices[0];i++){
+						System.out.print(i+"\n");
+						newTextPanel.replaceSelection("choice "+(i+1)+":\n");
+						for(int j = 0; j < matrixsize; j++){
+							System.out.println(aTest.result[i][0][j]+"\t"+promoterNames.get(aTest.result[i][0][j])+"\n");
+							System.out.println(aTest.result[i][1][j]+"\t"+geneNames.get(aTest.result[i][1][j])+"\n");
+							newTextPanel.replaceSelection(aTest.result[i][0][j]+"\t"+promoterNames.get(aTest.result[i][0][j])+"\n");
+							newTextPanel.replaceSelection(aTest.result[i][1][j]+"\t"+geneNames.get(aTest.result[i][1][j])+"\n");
+						}
+						System.out.print("\n\n");
+						newTextPanel.replaceSelection("\n");
+					}
+					mainTabbedPane.addTab("Result"+index,newScrollPane);
+					mainTabbedPane.setSelectedComponent(newScrollPane);
+					save.setEnabled(true);
+					index++;
+					
+				}
+				catch(IOException e2){
+					JOptionPane.showMessageDialog(null,"Cannot Open Gene_Promoter Database!\n","Error!",JOptionPane.ERROR_MESSAGE);
+				}
+			}	
+		});
 	}
 	
 	

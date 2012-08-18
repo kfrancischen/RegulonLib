@@ -5,101 +5,96 @@ import java.util.Vector;
 
 
 public class Gene_Promoter {
-	//Database path
-	public static final String PATH = "F:/programs/java/";
+
 	//user's matrix size
-	public static final int matrixSize = 3;
-    //static integer 
-	public static int numberPossibleChoices = 0;
+	private int matrixSize;
+	
+	//user's matrix
+	private int[][] targetMatrix;
+	
+	//result matrix;
+	public int[][][] result;
+	
+    //number of proper choice
+	public int[] numberPossibleChoices = new int[1];
+	
+	//database matrix
+	public static int[][] database;
+	
+	//number of genes
+	public static int numOfGenes;
+	
+	//number of promoters
+	public static int numOfPromoters;
+	
+	//gene names
+	public static Vector<String> geneNames;
+	
+	//promoter names
+	public static Vector<String> promoterNames;
+	
 	// main function of the class Gene_Promoter
-	public static void main(String args[]) throws IOException{
-		
-		/*-----------------read file-----------------------*/
-		String filePath = PATH + "USTC_SOFTWARE_BIOBRICKS_DATA.txt";
-		FileReader infile = new FileReader(filePath);
-		BufferedReader in = new BufferedReader(infile);
-		
-		
-		/*------------- initializing numOfGenes and numOfPromoters-------*/
-		int numOfGenes = Integer.parseInt(in.readLine());
-		int numOfPromoters = Integer.parseInt(in.readLine());
-		
-		
-		/*------------------initializing geneNames--------------*/
-		Vector<String> geneNames = new Vector<String>();
-		for(int i = 0;i < numOfGenes; i++){
-			geneNames.add(in.readLine());
-		}
-		
-		
-		/*------------------initializing promoterNames-------------*/
-		Vector<String> promoterNames = new Vector<String>();
-		for(int i = 0;i < numOfPromoters;i++){
-			promoterNames.add(in.readLine());
-		}
-		
-		
-		/*---------------------generate database------------------/
-		int[][] database = new int[numOfGenes][numOfPromoters];
-		for(int i = 0;i < numOfGenes; i++){
-			for(int j = 0;j < numOfPromoters;j++){
-				database[i][j] = Integer.parseInt(in.readLine());
+	public Gene_Promoter(int Size,
+						int[][] Matrix,
+						int[][] DataBase,
+						int NumOfGenes,
+						int NumOfPromoters,
+						Vector<String> GeneNames,
+						Vector<String> PromoterNames)
+						throws IOException{
+		/*--------initializing target matrix---------*/
+		matrixSize = Size;
+		targetMatrix = new int[Size][Size];
+		for(int i = 0; i < Size; i++){
+			for(int j = 0; j < Size ; j++){
+				targetMatrix[i][j] = Matrix[i][j];
 			}
 		}
-		*/
-		int[][] database = new int[5][5];
-		for(int i = 0;i < 5; i++){
-			for(int j = 0;j < 5;j++){
-				database[i][j] = ((int)(10*Math.random()))%3-1;
-				System.out.print(database[i][j]+"\t");
+		
+		/*------initializing gene numbers and promoter numbers----*/
+		numOfGenes = NumOfGenes;
+		numOfPromoters = NumOfPromoters;
+		
+		/*------initializing database--------*/
+		database = new int[numOfPromoters][numOfGenes];
+		for(int i = 0; i < numOfPromoters; i++){
+			for(int j = 0;j < numOfGenes; j++){
+				database[i][j] = DataBase[i][j];
 			}
-			System.out.print("\n");
 		}
 		
+		/*-------initializing promoter names------*/
+		promoterNames = new Vector<String>();
+		for(int i = 0; i < numOfPromoters; i++){
+			promoterNames.add(PromoterNames.get(i));
+		}
+		
+		/*-------initializing gene names--------*/
+		geneNames = new Vector<String>();
+		for(int i = 0; i < numOfGenes; i++){
+			geneNames.add(GeneNames.get(i));
+		}
+	
 		/*---------initializing choicesPoolOfRows and choicesPoolOfColumns--*/
-		int[] choicesPoolOfRows = new int[numOfGenes];
-		for(int i = 0;i < numOfGenes;i++){
+		int[] choicesPoolOfRows = new int[numOfPromoters];
+		for(int i = 0;i <  numOfPromoters;i++){
 			choicesPoolOfRows[i] = i;
 		}
-		int[] choicesPoolOfColumns = new int[numOfPromoters];
-		for(int i = 0; i < numOfPromoters; i++){
+		int[] choicesPoolOfColumns = new int[numOfGenes];
+		for(int i = 0; i < numOfGenes; i++){
 			choicesPoolOfColumns[i] = i;
 		}
 	
 		
 		/*------------initializing some parameters------------------*/		
-		int numberOfRowChoicesInPool = 5; 
-		int numberOfColmunsChoicesInPool = 5;
+		int numberOfRowChoicesInPool = numOfPromoters; 
+		int numberOfColmunsChoicesInPool = numOfGenes;
 		int numberOfChoicesToBeChosen = matrixSize;
-		int[] numberOfPossibleChoices = new int[1];
-		numberOfPossibleChoices[0] = 0;
+		numberPossibleChoices[0] = 0;
 		
-		
-		/*------------initializing targetMatrix------------------*/
-		int[][] targetMatrix = new int[matrixSize][matrixSize];
-		for(int i = 0;i < matrixSize;i++){
-			for(int j = 0;j < matrixSize; j++){
-				targetMatrix[i][j] =  ((int)(10*Math.random()))%3-1;
-				System.out.print(targetMatrix[i][j]+"\t");
-			}
-			System.out.print("\n");
-		}
-
 		
 		/*----------------------generate result matrix------------------*/
-		int[][][] result = findMatrixRecursion2(database,targetMatrix,choicesPoolOfRows,choicesPoolOfColumns,numberOfRowChoicesInPool,numberOfColmunsChoicesInPool,numberOfChoicesToBeChosen,numberOfPossibleChoices);
-		System.out.print(numberPossibleChoices+"\n\n");
-		for(int i = 0;i < numberPossibleChoices; i++){
-			System.out.print(i+"\n");
-			for(int j = 0;j < matrixSize ; j++){
-				System.out.print(result[i][0][j]+"\t");
-			}
-			System.out.print("\n");
-			for(int j = 0;j < matrixSize;j++){
-				System.out.print(result[i][1][j]+"\t");
-			}
-			System.out.print("\n\n");
-		}
+		result = findMatrixRecursion2(database,targetMatrix,choicesPoolOfRows,choicesPoolOfColumns,numberOfRowChoicesInPool,numberOfColmunsChoicesInPool,numberOfChoicesToBeChosen,numberPossibleChoices);
 	}
 
 

@@ -9,7 +9,7 @@ public class Operon_Operon {
 	//user's matrix size
 	private int matrixSize;
 		
-	//user/s matrix
+	//user's matrix
 	private int[][] targetMatrix;
 		
 	//result matrix
@@ -29,7 +29,12 @@ public class Operon_Operon {
 	public static Vector<String> operonNames;
 	
 	//constructor of class Operon_Operon
-	public Operon_Operon(int Size,int[][] Matrix,int[][] DataBase,int NumOfOperons,Vector<String> OperonNames) throws IOException{
+	public Operon_Operon(int Size,
+						int[][] Matrix,
+						int[][] DataBase,
+						int NumOfOperons,
+						Vector<String> OperonNames) 
+						throws IOException{
 		/*------initializing target Matrix-----*/
 		matrixSize= Size;
 		targetMatrix = new int[Size][Size];
