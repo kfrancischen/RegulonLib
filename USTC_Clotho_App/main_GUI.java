@@ -13,14 +13,13 @@ import java.util.Vector;
 public class main_GUI{
 
 	public main_GUI(){
-		initComponents();
 		try {
-			loadDataBaseOperon_Operon();
-			loadDataBaseGene_Promoter();
+			loadDataBase();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			JOptionPane.showMessageDialog(null,"Unable To Load The Database","Error!",JOptionPane.ERROR_MESSAGE);
 		}
+		initComponents();
 	}
 
 	public static void main(String args[]){
@@ -75,11 +74,23 @@ public class main_GUI{
 					JTextPane newTextPanel = new JTextPane();
 					JScrollPane newScrollPane = new JScrollPane(newTextPanel);
 					System.out.println("There are "+aTest.numberPossibleChoices[0]+" possible choices\n");
-					String result = "There are "+aTest.numberPossibleChoices[0]+" possible choices\n\n";
+					newTextPanel.replaceSelection("Mode 1 is used: All these data are from Operon-Operon database.\n\n");
+					String result = "";
+					switch(aTest.numberPossibleChoices[0]){
+					case 0:
+						result = "There is no possible choice\n\n";
+						break;
+					case 1:
+						result = "There is only one possible choice\n\n";
+						break;
+					default:
+						result = "There are "+aTest.numberPossibleChoices[0]+" possible choices\n\n";
+					}
+					
 					newTextPanel.replaceSelection(result);
 					for(int i = 0;i < aTest.numberPossibleChoices[0]; i++){
 						System.out.print(i+"\n");
-						newTextPanel.replaceSelection(i+1+"th choice:\n");
+						newTextPanel.replaceSelection("choice "+(i+1)+":\n");
 						for(int j = 0;j<matrixsize ; j++){
 							System.out.print(aTest.result[i][j]+"\t");
 							System.out.println(Operon_Operon.operonNames.get(aTest.result[i][j])+"\t");
@@ -161,9 +172,11 @@ public class main_GUI{
 		
 		/*------initializing JMenu "File"----*/
 		File = new JMenu("File");
+		JMenuItem New = new JMenuItem("New");
 		JMenuItem save = new JMenuItem("Save");
-		JMenuItem close = new JMenuItem("Close");
 		JMenuItem clear = new JMenuItem("Clear workspace");
+		JMenuItem close = new JMenuItem("Exit");
+		File.add(New);
 		File.add(save);
 		File.add(clear);
 		File.add(close);
@@ -230,8 +243,10 @@ public class main_GUI{
 	
 	/*-------------method to load the Operon_Operon database-------*/
 	
-	public void loadDataBaseOperon_Operon() throws IOException{
+	public void loadDataBase() throws IOException{
 
+		/*---------First Part: Loading Operon_Operon Database-------*/
+		
 		/*-----------------read file-----------------------*/
 		String filePath = PATH + "USTC_SOFTWARE_PARTS_DATA.txt";
 		FileReader infile = new FileReader(filePath);
