@@ -3,8 +3,11 @@ import java.awt.*;
 import java.awt.event.*;
 
 import javax.swing.*;
+import javax.swing.table.*;
+
 import java.util.Vector;
 
+@SuppressWarnings("serial")
 public class Search_Database extends JFrame{
 	
 	public static Vector<String> regulatorNames;
@@ -71,7 +74,7 @@ public class Search_Database extends JFrame{
 	
 	
 	/*---------------method to initiate all the components--*/
-	@SuppressWarnings("serial")
+
 	public void initComponents(){
 		regulatorTable = new JTable(numOfRegulator,1){
 			public boolean isCellEditable(int row, int column) { return false; }
@@ -83,11 +86,11 @@ public class Search_Database extends JFrame{
 		};
 		regulateeScrollPane = new JScrollPane(regulateeTable);
 		
-		regulateeCandidates = new JTable(15,2){
+		regulateeCandidates = new JTable(20,2){
 			public boolean isCellEditable(int row, int column) { return false; }
 		};
 		regulateeCanScrollPane = new JScrollPane(regulateeCandidates);
-		regulatorCandidates = new JTable(15,2){
+		regulatorCandidates = new JTable(20,2){
 			public boolean isCellEditable(int row, int column) { return false; }
 		};
 		regulatorCanScrollPane = new JScrollPane(regulatorCandidates);
@@ -140,7 +143,7 @@ public class Search_Database extends JFrame{
 		
 		//initiate regulator table events
 		regulatorTable.addMouseListener(new MouseAdapter(){
-			@SuppressWarnings("serial")
+	
 			public void mousePressed(MouseEvent e){
 				int numRow = regulateeCandidates.getRowCount();
 				for(int i = 0;i < numRow;i++){
@@ -155,10 +158,10 @@ public class Search_Database extends JFrame{
 					if(temp == 1 || temp == -1 || temp == 2)
 						allRegulateeCanRow++;
 				}
-				if(allRegulateeCanRow > 15)
-					regulateeCandidates = new JTable(allRegulateeCanRow,2){
-					public boolean isCellEditable(int row, int column) { return false; }
-				};
+				if(allRegulateeCanRow > 15){
+					DefaultTableModel aNewModel = new DefaultTableModel(allRegulateeCanRow,2);
+					regulateeCandidates.setModel(aNewModel);
+				}
 				int newRegulateeCanRow = 0;
 				for(int i = 0;i < numOfRegulatee; i++){
 					int temp = database[i][rowPoint];
@@ -188,21 +191,172 @@ public class Search_Database extends JFrame{
 		
 		//initiate regulatee table events
 		regulateeTable.addMouseListener(new MouseAdapter(){
-			
+		
+			public void mousePressed(MouseEvent e){
+				int numRow = regulatorCandidates.getRowCount();
+				for(int i = 0;i < numRow;i++){
+					regulatorCandidates.setValueAt(null, i, 0);
+					regulatorCandidates.setValueAt(null, i, 1);
+				}
+				int rowPoint = regulateeTable.rowAtPoint(e.getPoint());
+				regulateeName.setText((String) regulateeTable.getValueAt(rowPoint,0));
+				int allRegulatorCanRow = 0;
+				for(int i = 0;i < numOfRegulator; i++){
+					int temp = database[rowPoint][i];
+					if(temp == 1 || temp == -1 || temp == 2)
+						allRegulatorCanRow++;
+				}
+				if(allRegulatorCanRow > 15){
+					DefaultTableModel aNewModel = new DefaultTableModel(allRegulatorCanRow,2);
+					regulatorCandidates.setModel(aNewModel);
+				};
+				int newRegulatorCanRow = 0;
+				for(int i = 0;i < numOfRegulator; i++){
+					int temp = database[rowPoint][i];
+					switch(temp){
+					case 1: 
+						regulatorCandidates.setValueAt(regulatorNames.get(i), newRegulatorCanRow, 0);
+						regulatorCandidates.setValueAt("+", newRegulatorCanRow, 1);
+						newRegulatorCanRow ++;
+						break;
+					case -1:
+						regulatorCandidates.setValueAt(regulatorNames.get(i), newRegulatorCanRow, 0);
+						regulatorCandidates.setValueAt("-", newRegulatorCanRow, 1);
+						newRegulatorCanRow ++;
+						break;
+					case 2:
+						regulatorCandidates.setValueAt(regulatorNames.get(i), newRegulatorCanRow, 0);
+						regulatorCandidates.setValueAt("+-", newRegulatorCanRow, 1);
+						newRegulatorCanRow ++;
+						break;
+					default:
+						break;
+					}
+				}
+			}
 		}
 		);
 		
 		//initiate regulator candidates table events
 		regulatorCandidates.addMouseListener(new MouseAdapter(){
-			
+			public void mousePressed(MouseEvent e){
+				int numRow = regulateeCandidates.getRowCount();
+				int numColumn = regulateeCandidates.getColumnCount();
+				for(int i = 0;i < numRow;i++){
+					for(int j = 0;j < numColumn;j++){
+						regulateeCandidates.setValueAt(null, i, j);
+					}
+				}
+				int rowPoint = regulatorCandidates.rowAtPoint(e.getPoint());
+				if(regulatorCandidates.getValueAt(rowPoint, 0)==null)
+					return;
+				String selectedRegulator = (String) regulatorCandidates.getValueAt(rowPoint, 0);
+				regulatorName.setText(selectedRegulator);
+				int itsPosition = 0;
+				for(int i = 0;i < numOfRegulator;i++){
+					if(selectedRegulator == regulatorNames.get(i)){
+						itsPosition = i;
+						break;
+					}
+				}
+				int allRegulateeCanRow = 0;
+				for(int i = 0;i < numOfRegulatee; i++){
+					int temp = database[i][itsPosition];
+					if(temp == 1 || temp == -1 || temp == 2)
+						allRegulateeCanRow++;
+				}
+				if(allRegulateeCanRow > 15){
+					DefaultTableModel aNewModel = new DefaultTableModel(allRegulateeCanRow,2);
+					regulateeCandidates.setModel(aNewModel);
+				}
+				int newRegulateeCanRow = 0;
+				for(int i = 0;i < numOfRegulatee;i++){
+					int temp = database[i][itsPosition];
+					switch(temp){
+					case 1: 
+						regulateeCandidates.setValueAt(regulateeNames.get(i), newRegulateeCanRow, 0);
+						regulateeCandidates.setValueAt("+", newRegulateeCanRow, 1);
+						newRegulateeCanRow ++;
+						break;
+					case -1:
+						regulateeCandidates.setValueAt(regulateeNames.get(i), newRegulateeCanRow, 0);
+						regulateeCandidates.setValueAt("-", newRegulateeCanRow, 1);
+						newRegulateeCanRow ++;
+						break;
+					case 2:
+						regulateeCandidates.setValueAt(regulateeNames.get(i), newRegulateeCanRow, 0);
+						regulateeCandidates.setValueAt("+-", newRegulateeCanRow, 1);
+						newRegulateeCanRow ++;
+						break;
+					default:
+						break;
+					}
+				}
+			}
 		}
 		);
 		
 		//initiate regulatee candidates table events
 		regulateeCandidates.addMouseListener(new MouseAdapter(){
-			
+			public void mousePressed(MouseEvent e){
+				int numRow = regulatorCandidates.getRowCount();
+				int numColumn = regulatorCandidates.getColumnCount();
+				for(int i = 0;i < numRow; i++){
+					for(int j =0 ;j < numColumn; j++){
+						regulatorCandidates.setValueAt(null, i, j);
+					}
+				}
+				int rowPoint = regulateeCandidates.rowAtPoint(e.getPoint());
+				if(regulateeCandidates.getValueAt(rowPoint, 0)==null)
+					return;
+				String selectedRegulatee = (String) regulateeCandidates.getValueAt(rowPoint, 0);
+				regulateeName.setText(selectedRegulatee);
+				int itsPosition = 0;
+				for(int i = 0;i < numOfRegulatee;i++){
+					if(selectedRegulatee == regulateeNames.get(i)){
+						itsPosition = i;
+						break;
+					}
+				}
+				int allRegulatorCanRow = 0;
+				for(int i = 0;i < numOfRegulator; i++){
+					int temp = database[itsPosition][i];
+					if(temp == 1 || temp == -1 || temp == 2)
+						allRegulatorCanRow++;
+				}
+				if(allRegulatorCanRow > 15){
+					DefaultTableModel aNewModel = new DefaultTableModel(allRegulatorCanRow,2);
+					regulatorCandidates.setModel(aNewModel);
+				}
+				int newRegulatorCanRow = 0;
+				for(int i = 0;i < numOfRegulator;i++){
+					int temp = database[itsPosition][i];
+					switch(temp){
+					case 1: 
+						regulatorCandidates.setValueAt(regulatorNames.get(i), newRegulatorCanRow, 0);
+						regulatorCandidates.setValueAt("+", newRegulatorCanRow, 1);
+						newRegulatorCanRow ++;
+						break;
+					case -1:
+						regulatorCandidates.setValueAt(regulatorNames.get(i), newRegulatorCanRow, 0);
+						regulatorCandidates.setValueAt("-", newRegulatorCanRow, 1);
+						newRegulatorCanRow ++;
+						break;
+					case 2:
+						regulatorCandidates.setValueAt(regulatorNames.get(i), newRegulatorCanRow, 0);
+						regulatorCandidates.setValueAt("+-", newRegulatorCanRow, 1);
+						newRegulatorCanRow ++;
+						break;
+					default:
+						break;
+					}
+				}
+			}
 		}
 		);
+		//end of the function
+		
+		
 	}
 
 }

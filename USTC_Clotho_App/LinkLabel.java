@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.JLabel;
 
+@SuppressWarnings("serial")
 class LinkLabel extends JLabel {  
     private String text, url;  
     private boolean isSupported;  
