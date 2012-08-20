@@ -305,7 +305,7 @@ public class main_GUI{
 						newTextPanel.replaceSelection("\n");
 						aBuffer.append("\n");
 					}
-
+					newTextPanel.setEditable(false);
 					mainTabbedPane.addTab("Result"+index,newScrollPane);
 					mainTabbedPane.setSelectedComponent(newScrollPane);
 					save.setEnabled(true);
@@ -396,6 +396,7 @@ public class main_GUI{
 						newTextPanel.replaceSelection("\n");
 						aBuffer.append("\n");
 					}
+					newTextPanel.setEditable(false);
 					mainTabbedPane.addTab("Result"+index,newScrollPane);
 					mainTabbedPane.setSelectedComponent(newScrollPane);
 					save.setEnabled(true);
@@ -430,7 +431,7 @@ public class main_GUI{
 				int tabIndex = mainTabbedPane.indexAtLocation(e.getX(), e.getY());
 				if(e.getClickCount() == 2 && tabIndex != -1 && tabIndex != 0){
 					mainTabbedPane.remove(tabIndex);
-					outPutBuffers.remove(tabIndex);   //when close the tab, remove its buffer
+					outPutBuffers.setElementAt(null, tabIndex);   //when close the tab, remove its buffer
 				}
 				int numOfTabs = mainTabbedPane.getTabCount();
 				if(numOfTabs == 1){
@@ -575,7 +576,7 @@ public class main_GUI{
 																operonNames,
 																operonNames,
 																operonDataBase);
-				searchInO_O.setVisible(true);
+				//searchInO_O.setVisible(true);
 			}
 		}
 		);
@@ -588,7 +589,7 @@ public class main_GUI{
 																geneNames,
 																promoterNames,
 																genepromoterDataBase);
-				searchInG_P.setVisible(true);
+				//searchInG_P.setVisible(true);
 			}
 		}
 		);
