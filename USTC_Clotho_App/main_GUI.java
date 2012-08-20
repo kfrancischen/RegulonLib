@@ -83,12 +83,12 @@ public class main_GUI{
 		File.add(clear);
 		File.add(exit);
 		
-		/*------initializing JMenu "OpenDataBase"----*/
-		OpenDataBase = new JMenu("Database");
-		Operon_Operon = new JMenuItem("Operon_Operon");
-		Gene_Promoter = new JMenuItem("Gene_Promoter");
-		OpenDataBase.add(Operon_Operon);
-		OpenDataBase.add(Gene_Promoter);
+		/*------initializing JMenu "Search"----*/
+		Search = new JMenu("Search");
+		Operon_Operon = new JMenuItem("Search in Operon-Operon");
+		Gene_Promoter = new JMenuItem("Search in Gene-Promoter");
+		Search.add(Operon_Operon);
+		Search.add(Gene_Promoter);
 		
 		/*-------initializing JMenu "Help"----*/
 		Help = new JMenu("Help");
@@ -108,7 +108,7 @@ public class main_GUI{
 		mainMenu = new JMenuBar();
 		
 		mainMenu.add(File);
-		mainMenu.add(OpenDataBase);
+		mainMenu.add(Search);
 		mainMenu.add(Help);
 		mainMenu.add(About);
 		
@@ -650,7 +650,7 @@ public class main_GUI{
 	private static Button modeTwoBt;
 	private static JMenuBar mainMenu; 
 	private static JMenu File;
-	private static JMenu OpenDataBase;
+	private static JMenu Search;
 	private static JMenu Help;
 	private static JMenu About;
 	private static JTabbedPane mainTabbedPane;
