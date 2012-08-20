@@ -564,14 +564,18 @@ public class main_GUI{
 		});
 	}
 	
-	/*---------method to initiate database menu events----*/
+	/*---------method to initiate Search menu events----*/
 	public void initDatabaseMenuEvents(){
 		
 		//initializing JMenuItem "Operon_Operon"
 		Operon_Operon.addMouseListener(new MouseAdapter(){
 			public void mousePressed(MouseEvent e){
-				JOptionPane.showMessageDialog(null,"These database is mainly about operons\n" +
-						"it is a matrix with elements + - or 0","How To Use",JOptionPane.PLAIN_MESSAGE);
+				Search_Database searchInO_O = new Search_Database(numOfOperons,
+																numOfOperons,
+																operonNames,
+																operonNames,
+																operonDataBase);
+				searchInO_O.setVisible(true);
 			}
 		}
 		);
@@ -579,8 +583,12 @@ public class main_GUI{
 		//initializing JMenuItem "Gene_Promoter"
 		Gene_Promoter.addMouseListener(new MouseAdapter(){
 			public void mousePressed(MouseEvent e){
-				JOptionPane.showMessageDialog(null,"These database is mainly about operons\n"
-						+"it is a matrix with elements + / - / +- / 0","How To Use",JOptionPane.PLAIN_MESSAGE);
+				Search_Database searchInG_P = new Search_Database(numOfGenes,
+																numOfPromoters,
+																geneNames,
+																promoterNames,
+																genepromoterDataBase);
+				searchInG_P.setVisible(true);
 			}
 		}
 		);

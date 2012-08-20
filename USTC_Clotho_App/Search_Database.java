@@ -25,16 +25,16 @@ public class Search_Database extends JFrame{
 	private Box boxOfRegulator;
 	private Box boxOfRegulatee;
 	
-	/*public Search_Database(int numOfRegulator,
+	public Search_Database(int numOfRegulator,
 						int numOfRegulatee,
 						Vector<String>regulatorNames,
 						Vector<String>regulateeNames,
-						int[][] database)*/
-	public Search_Database(int numOfRegulator,int numOfRegulatee)
+						int[][] database)
+
 	{
 		regulator = new JTable(numOfRegulator,1);
 		regulatorScrollPane = new JScrollPane(regulator);
-		regulatorScrollPane.setBounds(20, 20, 40, 40);
+		regulatorScrollPane.setBounds(10, 10, 100, 100);
 		regulatee = new JTable(numOfRegulatee,1);
 		regulateeScrollPane = new JScrollPane(regulatee);
 		
@@ -70,10 +70,6 @@ public class Search_Database extends JFrame{
 		Container contentPane = searchFrame.getContentPane();
 		contentPane.add(searchPanel);
 		searchFrame.setSize(600,400);
-		searchFrame.setVisible(true);
-	}
-	public static void main(String args[]){
-		Search_Database aTest = new Search_Database(100,100);
 	}
 
 }
