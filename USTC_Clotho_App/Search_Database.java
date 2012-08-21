@@ -156,247 +156,332 @@ public class Search_Database extends JFrame{
 		}
 	}
 	
+////////////////////////////////////////////////////////////////////////////////	
+	/*-----triggering functions: for regulator table------*/
+	public static void triggerRegulatorEvents(int RowPoint){
+		int numRow = regulateeCandidates.getRowCount();
+		regulatorName.setText(null);
+		
+		for(int i = 0;i < numRow;i++){
+			regulateeCandidates.setValueAt(null, i, 0);
+			regulateeCandidates.setValueAt(null, i, 1);
+		}
+		DefaultTableModel refreshModel = new DefaultTableModel(20,2);
+		regulateeCandidates.setModel(refreshModel);
+		
+		int rowPoint = RowPoint;
+		regulatorName.setText((String) regulatorTable.getValueAt(rowPoint,0));
+		int allRegulateeCanRow = 0;
+		for(int i = 0;i < numOfRegulatee; i++){
+			int temp = database[i][rowPoint];
+			if(temp == 1 || temp == -1 || temp == 2)
+				allRegulateeCanRow++;
+		}
+		if(allRegulateeCanRow > 20){
+			DefaultTableModel aNewModel = new DefaultTableModel(allRegulateeCanRow,2);
+			regulateeCandidates.setModel(aNewModel);
+		}
+		int newRegulateeCanRow = 0;
+		for(int i = 0;i < numOfRegulatee; i++){
+			int temp = database[i][rowPoint];
+			switch(temp){
+			case 1: 
+				regulateeCandidates.setValueAt(regulateeNames.get(i), newRegulateeCanRow, 0);
+				regulateeCandidates.setValueAt("+", newRegulateeCanRow, 1);
+				newRegulateeCanRow ++;
+				break;
+			case -1:
+				regulateeCandidates.setValueAt(regulateeNames.get(i), newRegulateeCanRow, 0);
+				regulateeCandidates.setValueAt("-", newRegulateeCanRow, 1);
+				newRegulateeCanRow ++;
+				break;
+			case 2:
+				regulateeCandidates.setValueAt(regulateeNames.get(i), newRegulateeCanRow, 0);
+				regulateeCandidates.setValueAt("+-", newRegulateeCanRow, 1);
+				newRegulateeCanRow ++;
+				break;
+			default:
+				break;
+			}
+		}		
+	}
 	
+	/*------triggering functions: for regulatee table ----*/
+	public static void triggerRegulateeEvents(int RowPoint){
+		int numRow = regulatorCandidates.getRowCount();
+		for(int i = 0;i < numRow;i++){
+			regulatorCandidates.setValueAt(null, i, 0);
+			regulatorCandidates.setValueAt(null, i, 1);
+		}
+		DefaultTableModel refreshModel = new DefaultTableModel(20,2);
+		regulatorCandidates.setModel(refreshModel);
+		regulateeName.setText(null);
+		
+		int rowPoint = RowPoint;
+		regulateeName.setText((String) regulateeTable.getValueAt(rowPoint,0));
+		int allRegulatorCanRow = 0;
+		for(int i = 0;i < numOfRegulator; i++){
+			int temp = database[rowPoint][i];
+			if(temp == 1 || temp == -1 || temp == 2)
+				allRegulatorCanRow++;
+		}
+		if(allRegulatorCanRow > 20){
+			DefaultTableModel aNewModel = new DefaultTableModel(allRegulatorCanRow,2);
+			regulatorCandidates.setModel(aNewModel);
+		};
+		int newRegulatorCanRow = 0;
+		for(int i = 0;i < numOfRegulator; i++){
+			int temp = database[rowPoint][i];
+			switch(temp){
+			case 1: 
+				regulatorCandidates.setValueAt(regulatorNames.get(i), newRegulatorCanRow, 0);
+				regulatorCandidates.setValueAt("+", newRegulatorCanRow, 1);
+				newRegulatorCanRow ++;
+				break;
+			case -1:
+				regulatorCandidates.setValueAt(regulatorNames.get(i), newRegulatorCanRow, 0);
+				regulatorCandidates.setValueAt("-", newRegulatorCanRow, 1);
+				newRegulatorCanRow ++;
+				break;
+			case 2:
+				regulatorCandidates.setValueAt(regulatorNames.get(i), newRegulatorCanRow, 0);
+				regulatorCandidates.setValueAt("+-", newRegulatorCanRow, 1);
+				newRegulatorCanRow ++;
+				break;
+			default:
+				break;
+			}
+		}
+	}
+	
+	
+	/*-----triggering function: regulator candidates table-------*/
+	
+	public static void triggerRegulatorCanEvents(int RowPoint){
+		int rowPoint = RowPoint;
+		if(regulatorCandidates.getValueAt(rowPoint, 0)==null)
+			return;
+		
+		int numRow = regulateeCandidates.getRowCount();
+		for(int i = 0;i < numRow;i++){
+			regulateeCandidates.setValueAt(null, i, 0);
+			regulateeCandidates.setValueAt(null, i ,1);
+		}
+		regulatorName.setText(null);
+		DefaultTableModel refreshModel = new DefaultTableModel(20,2);
+		regulateeCandidates.setModel(refreshModel);
+		
+		String selectedRegulator = (String) regulatorCandidates.getValueAt(rowPoint, 0);
+		regulatorName.setText(selectedRegulator);
+		int itsPosition = 0;
+		for(int i = 0;i < numOfRegulator;i++){
+			if(selectedRegulator == regulatorNames.get(i)){
+				itsPosition = i;
+				break;
+			}
+		}
+		int allRegulateeCanRow = 0;
+		for(int i = 0;i < numOfRegulatee; i++){
+			int temp = database[i][itsPosition];
+			if(temp == 1 || temp == -1 || temp == 2)
+				allRegulateeCanRow++;
+		}
+		if(allRegulateeCanRow > 20){
+			DefaultTableModel aNewModel = new DefaultTableModel(allRegulateeCanRow,2);
+			regulateeCandidates.setModel(aNewModel);
+		}
+		int newRegulateeCanRow = 0;
+		for(int i = 0;i < numOfRegulatee;i++){
+			int temp = database[i][itsPosition];
+			switch(temp){
+			case 1: 
+				regulateeCandidates.setValueAt(regulateeNames.get(i), newRegulateeCanRow, 0);
+				regulateeCandidates.setValueAt("+", newRegulateeCanRow, 1);
+				newRegulateeCanRow ++;
+				break;
+			case -1:
+				regulateeCandidates.setValueAt(regulateeNames.get(i), newRegulateeCanRow, 0);
+				regulateeCandidates.setValueAt("-", newRegulateeCanRow, 1);
+				newRegulateeCanRow ++;
+				break;
+			case 2:
+				regulateeCandidates.setValueAt(regulateeNames.get(i), newRegulateeCanRow, 0);
+				regulateeCandidates.setValueAt("+-", newRegulateeCanRow, 1);
+				newRegulateeCanRow ++;
+				break;
+			default:
+				break;
+			}
+		}
+	}
+	
+	/*------triggering function: regulatee candidates table------*/
+	public static void triggerRegulateeCanEvents(int RowPoint){
+		int rowPoint = RowPoint;
+		if(regulateeCandidates.getValueAt(rowPoint, 0)==null)
+			return;
+		
+		int numRow = regulatorCandidates.getRowCount();
+		regulateeName.setText(null);
+		for(int i = 0;i < numRow; i++){
+			regulatorCandidates.setValueAt(null, i, 0);
+			regulatorCandidates.setValueAt(null, i, 1);
+		}
+		DefaultTableModel refreshModel = new DefaultTableModel(20,2);
+		regulatorCandidates.setModel(refreshModel);
+		
+		String selectedRegulatee = (String) regulateeCandidates.getValueAt(rowPoint, 0);
+		regulateeName.setText(selectedRegulatee);
+		int itsPosition = 0;
+		for(int i = 0;i < numOfRegulatee;i++){
+			if(selectedRegulatee == regulateeNames.get(i)){
+				itsPosition = i;
+				break;
+			}
+		}
+		int allRegulatorCanRow = 0;
+		for(int i = 0;i < numOfRegulator; i++){
+			int temp = database[itsPosition][i];
+			if(temp == 1 || temp == -1 || temp == 2)
+				allRegulatorCanRow++;
+		}
+		if(allRegulatorCanRow > 20){
+			DefaultTableModel aNewModel = new DefaultTableModel(allRegulatorCanRow,2);
+			regulatorCandidates.setModel(aNewModel);
+		}
+		int newRegulatorCanRow = 0;
+		for(int i = 0;i < numOfRegulator;i++){
+			int temp = database[itsPosition][i];
+			switch(temp){
+			case 1: 
+				regulatorCandidates.setValueAt(regulatorNames.get(i), newRegulatorCanRow, 0);
+				regulatorCandidates.setValueAt("+", newRegulatorCanRow, 1);
+				newRegulatorCanRow ++;
+				break;
+			case -1:
+				regulatorCandidates.setValueAt(regulatorNames.get(i), newRegulatorCanRow, 0);
+				regulatorCandidates.setValueAt("-", newRegulatorCanRow, 1);
+				newRegulatorCanRow ++;
+				break;
+			case 2:
+				regulatorCandidates.setValueAt(regulatorNames.get(i), newRegulatorCanRow, 0);
+				regulatorCandidates.setValueAt("+-", newRegulatorCanRow, 1);
+				newRegulatorCanRow ++;
+				break;
+			default:
+				break;
+			}
+		}
+	}
+////////////////////////////////////////////////////////////////////////////////////////////	
 	/*------method to initiate all the table events----*/
 	public void initTableEvents(){
 		
-		//initiate regulator table events
-		//ListSelectionModel modeForRegulatorTable = regulatorTable.getSelectionModel();
-		//modeForRegulatorTable.addListSelectionListener(new ListSelectionListener(){
+	/*--------initializing regulator table events---------------*/	
+		//1、initiate regulator table mouse events
 		regulatorTable.addMouseListener(new MouseAdapter(){
+			public void mousePressed(MouseEvent e){
+				triggerRegulatorEvents(regulatorTable.getSelectedRow());
+			}
+		});
+		
+		//2、initiate regulator table key events
+		regulatorTable.addKeyListener(new KeyAdapter(){
+			public void keyPressed(KeyEvent I){
+				if(I.getKeyCode() != KeyEvent.VK_UP && I.getKeyCode() != KeyEvent.VK_DOWN)
+					return;
+				int rowPoint = regulatorTable.getSelectedRow();
+				if(I.getKeyCode() == KeyEvent.VK_UP && rowPoint >= 1){
+					triggerRegulatorEvents(regulatorTable.getSelectedRow() - 1);
+				}
+				else if(I.getKeyCode() == KeyEvent.VK_DOWN && rowPoint < numOfRegulator - 1){
+					triggerRegulatorEvents(regulatorTable.getSelectedRow() + 1);
+				}
+			}
+		});
+		
+	/*--------initializing regulatee table events---------------*/	
+		//1、initiate regulatee mouse table events
+		regulateeTable.addMouseListener(new MouseAdapter(){
 			//public void valueChanged(ListSelectionEvent e){
 			public void mousePressed(MouseEvent e){
-				int numRow = regulateeCandidates.getRowCount();
-				regulatorName.setText(null);
-				
-				for(int i = 0;i < numRow;i++){
-					regulateeCandidates.setValueAt(null, i, 0);
-					regulateeCandidates.setValueAt(null, i, 1);
+				triggerRegulateeEvents(regulateeTable.getSelectedRow());
+			}
+		}
+		);
+		
+		
+		//2、initiate regulatee table key events
+		regulateeTable.addKeyListener(new KeyAdapter(){
+			public void keyPressed(KeyEvent I){
+				if(I.getKeyCode() != KeyEvent.VK_UP && I.getKeyCode() != KeyEvent.VK_DOWN)
+					return;
+				int rowPoint = regulateeTable.getSelectedRow();
+				if(I.getKeyCode() == KeyEvent.VK_UP && rowPoint >= 1){
+					triggerRegulateeEvents(rowPoint - 1);
 				}
-				DefaultTableModel refreshModel = new DefaultTableModel(20,2);
-				regulateeCandidates.setModel(refreshModel);
-				
-				int rowPoint = regulatorTable.getSelectedRow();
-				regulatorName.setText((String) regulatorTable.getValueAt(rowPoint,0));
-				int allRegulateeCanRow = 0;
-				for(int i = 0;i < numOfRegulatee; i++){
-					int temp = database[i][rowPoint];
-					if(temp == 1 || temp == -1 || temp == 2)
-						allRegulateeCanRow++;
-				}
-				if(allRegulateeCanRow > 20){
-					DefaultTableModel aNewModel = new DefaultTableModel(allRegulateeCanRow,2);
-					regulateeCandidates.setModel(aNewModel);
-				}
-				int newRegulateeCanRow = 0;
-				for(int i = 0;i < numOfRegulatee; i++){
-					int temp = database[i][rowPoint];
-					switch(temp){
-					case 1: 
-						regulateeCandidates.setValueAt(regulateeNames.get(i), newRegulateeCanRow, 0);
-						regulateeCandidates.setValueAt("+", newRegulateeCanRow, 1);
-						newRegulateeCanRow ++;
-						break;
-					case -1:
-						regulateeCandidates.setValueAt(regulateeNames.get(i), newRegulateeCanRow, 0);
-						regulateeCandidates.setValueAt("-", newRegulateeCanRow, 1);
-						newRegulateeCanRow ++;
-						break;
-					case 2:
-						regulateeCandidates.setValueAt(regulateeNames.get(i), newRegulateeCanRow, 0);
-						regulateeCandidates.setValueAt("+-", newRegulateeCanRow, 1);
-						newRegulateeCanRow ++;
-						break;
-					default:
-						break;
-					}
+				else if(I.getKeyCode() == KeyEvent.VK_DOWN && rowPoint < numOfRegulatee - 1){
+					triggerRegulateeEvents(rowPoint + 1);
 				}
 			}
 		});
 		
 		
-		//initiate regulatee table events
-		//ListSelectionModel modeForRegulateeTable = regulateeTable.getSelectionModel();
-		//modeForRegulateeTable.addListSelectionListener(new ListSelectionListener(){
-		regulateeTable.addMouseListener(new MouseAdapter(){
-			//public void valueChanged(ListSelectionEvent e){
-			public void mousePressed(MouseEvent e){
-				int numRow = regulatorCandidates.getRowCount();
-				for(int i = 0;i < numRow;i++){
-					regulatorCandidates.setValueAt(null, i, 0);
-					regulatorCandidates.setValueAt(null, i, 1);
-				}
-				DefaultTableModel refreshModel = new DefaultTableModel(20,2);
-				regulatorCandidates.setModel(refreshModel);
-				regulateeName.setText(null);
-				
-				int rowPoint = regulateeTable.getSelectedRow();
-				regulateeName.setText((String) regulateeTable.getValueAt(rowPoint,0));
-				int allRegulatorCanRow = 0;
-				for(int i = 0;i < numOfRegulator; i++){
-					int temp = database[rowPoint][i];
-					if(temp == 1 || temp == -1 || temp == 2)
-						allRegulatorCanRow++;
-				}
-				if(allRegulatorCanRow > 20){
-					DefaultTableModel aNewModel = new DefaultTableModel(allRegulatorCanRow,2);
-					regulatorCandidates.setModel(aNewModel);
-				};
-				int newRegulatorCanRow = 0;
-				for(int i = 0;i < numOfRegulator; i++){
-					int temp = database[rowPoint][i];
-					switch(temp){
-					case 1: 
-						regulatorCandidates.setValueAt(regulatorNames.get(i), newRegulatorCanRow, 0);
-						regulatorCandidates.setValueAt("+", newRegulatorCanRow, 1);
-						newRegulatorCanRow ++;
-						break;
-					case -1:
-						regulatorCandidates.setValueAt(regulatorNames.get(i), newRegulatorCanRow, 0);
-						regulatorCandidates.setValueAt("-", newRegulatorCanRow, 1);
-						newRegulatorCanRow ++;
-						break;
-					case 2:
-						regulatorCandidates.setValueAt(regulatorNames.get(i), newRegulatorCanRow, 0);
-						regulatorCandidates.setValueAt("+-", newRegulatorCanRow, 1);
-						newRegulatorCanRow ++;
-						break;
-					default:
-						break;
-					}
-				}
-			}
-		}
-		);
-		
-		//initiate regulator candidates table events
-		//ListSelectionModel modeForRegulatorCanTable = regulatorCandidates.getSelectionModel();
-		//regulatorCandidates.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-		//modeForRegulatorCanTable.addListSelectionListener(new ListSelectionListener(){
+	/*-----------initiating regulator candidates table events---------*/
+		//1、initiate regulator candidates table mouse events
 		regulatorCandidates.addMouseListener(new MouseAdapter(){
-			//public void valueChanged(ListSelectionEvent e){
 			public void mousePressed(MouseEvent e){
-				int rowPoint = regulatorCandidates.getSelectedRow();
-				if(regulatorCandidates.getValueAt(rowPoint, 0)==null)
+				triggerRegulatorCanEvents(regulatorCandidates.getSelectedRow());
+			}
+		}
+		);
+		//2、initiate regulator candidates table key events
+		regulatorCandidates.addKeyListener(new KeyAdapter(){
+			public void keyPressed(KeyEvent I){
+				if(I.getKeyCode() != KeyEvent.VK_UP && I.getKeyCode() != KeyEvent.VK_DOWN)
 					return;
-				
-				int numRow = regulateeCandidates.getRowCount();
-				for(int i = 0;i < numRow;i++){
-					regulateeCandidates.setValueAt(null, i, 0);
-					regulateeCandidates.setValueAt(null, i ,1);
+				int rowPoint = regulatorCandidates.getSelectedRow();
+				if(I.getKeyCode() == KeyEvent.VK_UP && rowPoint >= 1){
+					triggerRegulatorCanEvents(rowPoint - 1);
 				}
-				regulatorName.setText(null);
-				DefaultTableModel refreshModel = new DefaultTableModel(20,2);
-				regulateeCandidates.setModel(refreshModel);
-				
-				String selectedRegulator = (String) regulatorCandidates.getValueAt(rowPoint, 0);
-				regulatorName.setText(selectedRegulator);
-				int itsPosition = 0;
-				for(int i = 0;i < numOfRegulator;i++){
-					if(selectedRegulator == regulatorNames.get(i)){
-						itsPosition = i;
-						break;
-					}
-				}
-				int allRegulateeCanRow = 0;
-				for(int i = 0;i < numOfRegulatee; i++){
-					int temp = database[i][itsPosition];
-					if(temp == 1 || temp == -1 || temp == 2)
-						allRegulateeCanRow++;
-				}
-				if(allRegulateeCanRow > 20){
-					DefaultTableModel aNewModel = new DefaultTableModel(allRegulateeCanRow,2);
-					regulateeCandidates.setModel(aNewModel);
-				}
-				int newRegulateeCanRow = 0;
-				for(int i = 0;i < numOfRegulatee;i++){
-					int temp = database[i][itsPosition];
-					switch(temp){
-					case 1: 
-						regulateeCandidates.setValueAt(regulateeNames.get(i), newRegulateeCanRow, 0);
-						regulateeCandidates.setValueAt("+", newRegulateeCanRow, 1);
-						newRegulateeCanRow ++;
-						break;
-					case -1:
-						regulateeCandidates.setValueAt(regulateeNames.get(i), newRegulateeCanRow, 0);
-						regulateeCandidates.setValueAt("-", newRegulateeCanRow, 1);
-						newRegulateeCanRow ++;
-						break;
-					case 2:
-						regulateeCandidates.setValueAt(regulateeNames.get(i), newRegulateeCanRow, 0);
-						regulateeCandidates.setValueAt("+-", newRegulateeCanRow, 1);
-						newRegulateeCanRow ++;
-						break;
-					default:
-						break;
-					}
+				else if(I.getKeyCode() == KeyEvent.VK_DOWN && rowPoint < regulatorCandidates.getRowCount() - 1){
+					if(regulatorCandidates.getValueAt(rowPoint+1, 0)==null){
+						regulatorName.setText(null);
+						DefaultTableModel refreshModel = new DefaultTableModel(20,2);
+						regulateeCandidates.setModel(refreshModel);
+						return;
+					}		
+					triggerRegulatorCanEvents(rowPoint + 1);
 				}
 			}
 		}
 		);
 		
-		//initiate regulatee candidates table events
-		//ListSelectionModel modeForRegulateeCanTable = regulateeCandidates.getSelectionModel();
-		//regulateeCandidates.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-		//modeForRegulateeCanTable.addListSelectionListener(new ListSelectionListener(){
+	/*-------------initiating regulatee candidates table events----------*/	
+		//1、initiate regulatee candidates table mouse events
 		regulateeCandidates.addMouseListener(new MouseAdapter(){
-		
-			//public void valueChanged(ListSelectionEvent e){
 			public void mousePressed(MouseEvent e){
-				int rowPoint = regulateeCandidates.getSelectedRow();
-				if(regulateeCandidates.getValueAt(rowPoint, 0)==null)
+				triggerRegulateeCanEvents(regulateeCandidates.getSelectedRow());
+			}
+		}
+		);
+		//2、initiate regulatee candidates table key events
+		regulateeCandidates.addKeyListener(new KeyAdapter(){
+			public void keyPressed(KeyEvent I){
+				if(I.getKeyCode() != KeyEvent.VK_UP && I.getKeyCode() != KeyEvent.VK_DOWN)
 					return;
-				
-				int numRow = regulatorCandidates.getRowCount();
-				regulateeName.setText(null);
-				for(int i = 0;i < numRow; i++){
-					regulatorCandidates.setValueAt(null, i, 0);
-					regulatorCandidates.setValueAt(null, i, 1);
+				int rowPoint = regulateeCandidates.getSelectedRow();
+				if(I.getKeyCode() == KeyEvent.VK_UP && rowPoint >= 1){
+					triggerRegulateeCanEvents(rowPoint - 1);
 				}
-				DefaultTableModel refreshModel = new DefaultTableModel(20,2);
-				regulatorCandidates.setModel(refreshModel);
-				
-				String selectedRegulatee = (String) regulateeCandidates.getValueAt(rowPoint, 0);
-				regulateeName.setText(selectedRegulatee);
-				int itsPosition = 0;
-				for(int i = 0;i < numOfRegulatee;i++){
-					if(selectedRegulatee == regulateeNames.get(i)){
-						itsPosition = i;
-						break;
+				else if(I.getKeyCode() == KeyEvent.VK_DOWN && rowPoint < regulateeCandidates.getRowCount() - 1){
+					if(regulateeCandidates.getValueAt(rowPoint+1, 0)==null){
+						regulateeName.setText(null);
+						DefaultTableModel refreshModel = new DefaultTableModel(20,2);
+						regulatorCandidates.setModel(refreshModel);
+						return;
 					}
-				}
-				int allRegulatorCanRow = 0;
-				for(int i = 0;i < numOfRegulator; i++){
-					int temp = database[itsPosition][i];
-					if(temp == 1 || temp == -1 || temp == 2)
-						allRegulatorCanRow++;
-				}
-				if(allRegulatorCanRow > 20){
-					DefaultTableModel aNewModel = new DefaultTableModel(allRegulatorCanRow,2);
-					regulatorCandidates.setModel(aNewModel);
-				}
-				int newRegulatorCanRow = 0;
-				for(int i = 0;i < numOfRegulator;i++){
-					int temp = database[itsPosition][i];
-					switch(temp){
-					case 1: 
-						regulatorCandidates.setValueAt(regulatorNames.get(i), newRegulatorCanRow, 0);
-						regulatorCandidates.setValueAt("+", newRegulatorCanRow, 1);
-						newRegulatorCanRow ++;
-						break;
-					case -1:
-						regulatorCandidates.setValueAt(regulatorNames.get(i), newRegulatorCanRow, 0);
-						regulatorCandidates.setValueAt("-", newRegulatorCanRow, 1);
-						newRegulatorCanRow ++;
-						break;
-					case 2:
-						regulatorCandidates.setValueAt(regulatorNames.get(i), newRegulatorCanRow, 0);
-						regulatorCandidates.setValueAt("+-", newRegulatorCanRow, 1);
-						newRegulatorCanRow ++;
-						break;
-					default:
-						break;
-					}
+					triggerRegulateeCanEvents(rowPoint + 1);
 				}
 			}
 		}
