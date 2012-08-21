@@ -3,7 +3,6 @@ import java.awt.*;
 import java.awt.event.*;
 
 import javax.swing.*;
-import javax.swing.event.*;
 import javax.swing.table.*;
 
 import java.util.Vector;
@@ -80,20 +79,39 @@ public class Search_Database extends JFrame{
 		regulatorTable = new JTable(numOfRegulator,1){
 			public boolean isCellEditable(int row, int column) { return false; }
 		};
+		Object[][] tableContents_1 = new Object[numOfRegulator][1]; 
+		regulatorTable.setModel(new DefaultTableModel(
+				tableContents_1,new String[]{"Regulator"}
+				));
 		regulatorScrollPane = new JScrollPane(regulatorTable);
 
+		
+		Object[][] tableContents_2 = new Object[numOfRegulatee][1];
 		regulateeTable = new JTable(numOfRegulatee,1){
 			public boolean isCellEditable(int row, int column) { return false; }
 		};
+		regulateeTable.setModel(new DefaultTableModel(
+				tableContents_2,new String[]{"Regulatee"}
+				));
 		regulateeScrollPane = new JScrollPane(regulateeTable);
 		
+		
+		//Object[][] tableContents_3 = new Object[20][2];
 		regulateeCandidates = new JTable(20,2){
 			public boolean isCellEditable(int row, int column) { return false; }
 		};
+		//regulateeCandidates.setModel(new DefaultTableModel(
+				//tableContents_3,new String[]{"Regulatee Candidates","Regulation"}
+				//));
 		regulateeCanScrollPane = new JScrollPane(regulateeCandidates);
+		
+		//Object[][] tableContents_4 = new Object[20][2];
 		regulatorCandidates = new JTable(20,2){
 			public boolean isCellEditable(int row, int column) { return false; }
 		};
+		//regulatorCandidates.setModel(new DefaultTableModel(
+			//	tableContents_4,new String[]{"Regulator Candidates","Regulation"}
+				//));
 		regulatorCanScrollPane = new JScrollPane(regulatorCandidates);
 		
 		regulatorName = new JTextField(null,10);
@@ -131,10 +149,10 @@ public class Search_Database extends JFrame{
 	/*------method to initiate regulator names and regulatee names--*/
 	public void initNames(){
 		for(int i = 0;i < numOfRegulator; i++){
-			regulatorTable.setValueAt(regulatorNames.get(i), i,0);
+			regulatorTable.setValueAt(regulatorNames.get(i), i, 0);
 		}
 		for(int i = 0;i < numOfRegulatee; i++){
-			regulateeTable.setValueAt(regulateeNames.get(i),i,0);
+			regulateeTable.setValueAt(regulateeNames.get(i), i, 0);
 		}
 	}
 	
@@ -143,15 +161,21 @@ public class Search_Database extends JFrame{
 	public void initTableEvents(){
 		
 		//initiate regulator table events
-		ListSelectionModel modeForRegulatorTable = regulatorTable.getSelectionModel();
-		modeForRegulatorTable.addListSelectionListener(new ListSelectionListener(){
-	
-			public void valueChanged(ListSelectionEvent e){
+		//ListSelectionModel modeForRegulatorTable = regulatorTable.getSelectionModel();
+		//modeForRegulatorTable.addListSelectionListener(new ListSelectionListener(){
+		regulatorTable.addMouseListener(new MouseAdapter(){
+			//public void valueChanged(ListSelectionEvent e){
+			public void mousePressed(MouseEvent e){
 				int numRow = regulateeCandidates.getRowCount();
+				regulatorName.setText(null);
+				
 				for(int i = 0;i < numRow;i++){
 					regulateeCandidates.setValueAt(null, i, 0);
 					regulateeCandidates.setValueAt(null, i, 1);
 				}
+				DefaultTableModel refreshModel = new DefaultTableModel(20,2);
+				regulateeCandidates.setModel(refreshModel);
+				
 				int rowPoint = regulatorTable.getSelectedRow();
 				regulatorName.setText((String) regulatorTable.getValueAt(rowPoint,0));
 				int allRegulateeCanRow = 0;
@@ -160,7 +184,7 @@ public class Search_Database extends JFrame{
 					if(temp == 1 || temp == -1 || temp == 2)
 						allRegulateeCanRow++;
 				}
-				if(allRegulateeCanRow > 15){
+				if(allRegulateeCanRow > 20){
 					DefaultTableModel aNewModel = new DefaultTableModel(allRegulateeCanRow,2);
 					regulateeCandidates.setModel(aNewModel);
 				}
@@ -192,15 +216,20 @@ public class Search_Database extends JFrame{
 		
 		
 		//initiate regulatee table events
-		ListSelectionModel modeForRegulateeTable = regulateeTable.getSelectionModel();
-		modeForRegulateeTable.addListSelectionListener(new ListSelectionListener(){
-		
-			public void valueChanged(ListSelectionEvent e){
+		//ListSelectionModel modeForRegulateeTable = regulateeTable.getSelectionModel();
+		//modeForRegulateeTable.addListSelectionListener(new ListSelectionListener(){
+		regulateeTable.addMouseListener(new MouseAdapter(){
+			//public void valueChanged(ListSelectionEvent e){
+			public void mousePressed(MouseEvent e){
 				int numRow = regulatorCandidates.getRowCount();
 				for(int i = 0;i < numRow;i++){
 					regulatorCandidates.setValueAt(null, i, 0);
 					regulatorCandidates.setValueAt(null, i, 1);
 				}
+				DefaultTableModel refreshModel = new DefaultTableModel(20,2);
+				regulatorCandidates.setModel(refreshModel);
+				regulateeName.setText(null);
+				
 				int rowPoint = regulateeTable.getSelectedRow();
 				regulateeName.setText((String) regulateeTable.getValueAt(rowPoint,0));
 				int allRegulatorCanRow = 0;
@@ -209,7 +238,7 @@ public class Search_Database extends JFrame{
 					if(temp == 1 || temp == -1 || temp == 2)
 						allRegulatorCanRow++;
 				}
-				if(allRegulatorCanRow > 15){
+				if(allRegulatorCanRow > 20){
 					DefaultTableModel aNewModel = new DefaultTableModel(allRegulatorCanRow,2);
 					regulatorCandidates.setModel(aNewModel);
 				};
@@ -241,19 +270,25 @@ public class Search_Database extends JFrame{
 		);
 		
 		//initiate regulator candidates table events
-		ListSelectionModel modeForRegulatorCanTable = regulatorCandidates.getSelectionModel();
-		modeForRegulatorCanTable.addListSelectionListener(new ListSelectionListener(){
-			public void valueChanged(ListSelectionEvent e){
-				int numRow = regulateeCandidates.getRowCount();
-				int numColumn = regulateeCandidates.getColumnCount();
-				for(int i = 0;i < numRow;i++){
-					for(int j = 0;j < numColumn;j++){
-						regulateeCandidates.setValueAt(null, i, j);
-					}
-				}
+		//ListSelectionModel modeForRegulatorCanTable = regulatorCandidates.getSelectionModel();
+		//regulatorCandidates.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+		//modeForRegulatorCanTable.addListSelectionListener(new ListSelectionListener(){
+		regulatorCandidates.addMouseListener(new MouseAdapter(){
+			//public void valueChanged(ListSelectionEvent e){
+			public void mousePressed(MouseEvent e){
 				int rowPoint = regulatorCandidates.getSelectedRow();
 				if(regulatorCandidates.getValueAt(rowPoint, 0)==null)
 					return;
+				
+				int numRow = regulateeCandidates.getRowCount();
+				for(int i = 0;i < numRow;i++){
+					regulateeCandidates.setValueAt(null, i, 0);
+					regulateeCandidates.setValueAt(null, i ,1);
+				}
+				regulatorName.setText(null);
+				DefaultTableModel refreshModel = new DefaultTableModel(20,2);
+				regulateeCandidates.setModel(refreshModel);
+				
 				String selectedRegulator = (String) regulatorCandidates.getValueAt(rowPoint, 0);
 				regulatorName.setText(selectedRegulator);
 				int itsPosition = 0;
@@ -269,7 +304,7 @@ public class Search_Database extends JFrame{
 					if(temp == 1 || temp == -1 || temp == 2)
 						allRegulateeCanRow++;
 				}
-				if(allRegulateeCanRow > 15){
+				if(allRegulateeCanRow > 20){
 					DefaultTableModel aNewModel = new DefaultTableModel(allRegulateeCanRow,2);
 					regulateeCandidates.setModel(aNewModel);
 				}
@@ -301,19 +336,26 @@ public class Search_Database extends JFrame{
 		);
 		
 		//initiate regulatee candidates table events
-		ListSelectionModel modeForRegulateeCanTable = regulateeCandidates.getSelectionModel();
-		modeForRegulateeCanTable.addListSelectionListener(new ListSelectionListener(){
-			public void valueChanged(ListSelectionEvent e){
-				int numRow = regulatorCandidates.getRowCount();
-				int numColumn = regulatorCandidates.getColumnCount();
-				for(int i = 0;i < numRow; i++){
-					for(int j =0 ;j < numColumn; j++){
-						regulatorCandidates.setValueAt(null, i, j);
-					}
-				}
+		//ListSelectionModel modeForRegulateeCanTable = regulateeCandidates.getSelectionModel();
+		//regulateeCandidates.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+		//modeForRegulateeCanTable.addListSelectionListener(new ListSelectionListener(){
+		regulateeCandidates.addMouseListener(new MouseAdapter(){
+		
+			//public void valueChanged(ListSelectionEvent e){
+			public void mousePressed(MouseEvent e){
 				int rowPoint = regulateeCandidates.getSelectedRow();
 				if(regulateeCandidates.getValueAt(rowPoint, 0)==null)
 					return;
+				
+				int numRow = regulatorCandidates.getRowCount();
+				regulateeName.setText(null);
+				for(int i = 0;i < numRow; i++){
+					regulatorCandidates.setValueAt(null, i, 0);
+					regulatorCandidates.setValueAt(null, i, 1);
+				}
+				DefaultTableModel refreshModel = new DefaultTableModel(20,2);
+				regulatorCandidates.setModel(refreshModel);
+				
 				String selectedRegulatee = (String) regulateeCandidates.getValueAt(rowPoint, 0);
 				regulateeName.setText(selectedRegulatee);
 				int itsPosition = 0;
@@ -329,7 +371,7 @@ public class Search_Database extends JFrame{
 					if(temp == 1 || temp == -1 || temp == 2)
 						allRegulatorCanRow++;
 				}
-				if(allRegulatorCanRow > 15){
+				if(allRegulatorCanRow > 20){
 					DefaultTableModel aNewModel = new DefaultTableModel(allRegulatorCanRow,2);
 					regulatorCandidates.setModel(aNewModel);
 				}

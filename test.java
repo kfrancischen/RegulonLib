@@ -3,6 +3,7 @@ import java.io.*;
 import javax.swing.*;
 
 import javax.swing.event.*;
+import javax.swing.table.DefaultTableModel;
 public class test {
 	public static void main(String[] args) {  
         // TODO Auto-generated method stub  
@@ -30,23 +31,27 @@ public class test {
 		}
 		);
 		*/
-		final Object[][] playerInfo = { { "王鹏", 91, 100, 191, true }, { "朱雪莲", 91, 100, 191, true } ,{ "朱雪莲", 91, 100, 191, true }};  
-        final String names[] = { "姓名", "语文", "数学", "总分", "及格" };  
-        final JTable table = new JTable(playerInfo, names);
-        JPanel testPanel = new JPanel();
-        JFrame testFrame = new JFrame();
-        testPanel.add(table);
-        testFrame.add(testPanel);
-        testFrame.setSize(400, 200);
-        final ListSelectionModel selectionModel = table.getSelectionModel();  
-        selectionModel.addListSelectionListener(new ListSelectionListener() { // 选取侦听器  
-            @Override  
-            public void valueChanged(ListSelectionEvent e) {  
-                  
-                System.out.println("happened"); 
-            }
-	});
-        testFrame.setVisible(true);
+		JTable aTest = new JTable(20,1);
+		int numRow = aTest.getRowCount();
+		//System.out.print(numRow+"\n");
+		for(int i = 0; i < numRow; i++){
+			aTest.setValueAt(i, i, 0);
+			System.out.print(aTest.getValueAt(i, 0)+"\n");
+		}
+		
+		for(int i = 0;i < numRow; i++){
+			aTest.setValueAt(null,i,0);
+		}
+		DefaultTableModel aNewModel = new DefaultTableModel(30,1);
+		aTest.setModel(aNewModel);
+		
+		int newRow = aTest.getRowCount();
+		for(int i = 0;i < newRow;i++){
+			aTest.setValueAt(i, i, 0);
+			System.out.print(aTest.getValueAt(i, 0)+"\n");
+		}
+		//System.out.print(newRow);
 	}
+		
 }
 
