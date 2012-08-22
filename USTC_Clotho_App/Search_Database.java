@@ -37,6 +37,9 @@ public class Search_Database extends JFrame{
 	private Box boxOfRegulator;
 	private Box boxOfRegulatee;
 	
+	private static JLabel regulatorNameLable;
+	private static JLabel regulateeNameLabel;
+	private static JLabel pictureLabel;
 	
 	/*------------constructor---------*/
 	public Search_Database(int NumOfRegulator,
@@ -70,6 +73,8 @@ public class Search_Database extends JFrame{
 		initNames();
 		//initiate all the table events
 		initTableEvents();
+		//initiate button events
+		initButtonEvents();
 	}
 	
 	
@@ -373,6 +378,64 @@ public class Search_Database extends JFrame{
 			}
 		}
 	}
+	
+	/*------triggering functions: search Button------------*/
+	public static void triggerSearchBt(){
+		String regulator = regulatorName.getText();
+		String regulatee = regulateeName.getText();
+		if(regulator == null){
+			JOptionPane.showMessageDialog(null,"Please Enter Regulator Name!\n","Warning!",JOptionPane.WARNING_MESSAGE);
+			return;
+		}
+		
+		if(regulatee == null){
+			JOptionPane.showMessageDialog(null,"Please Enter Regulatee Name!\n","Warning!",JOptionPane.WARNING_MESSAGE);
+			return;
+		}
+		int regulatorPosition = 0;
+		Boolean haveThisRegulator = false;
+		int regulateePosition = 0;
+		Boolean haveThisRegulatee = false;
+		for(int i = 0;i < numOfRegulator;i++){
+			if(regulator.equals(regulatorNames.get(i))){
+				regulatorPosition = i;
+				haveThisRegulator = true;
+				break;
+			}
+		}
+		for(int i = 0;i < numOfRegulatee;i++){
+			if(regulatee.equals(regulateeNames.get(i))){
+				regulateePosition = i;
+				haveThisRegulatee = true;
+				break;
+			}
+		}
+		
+		if(haveThisRegulator == false || haveThisRegulatee == false){
+			JOptionPane.showMessageDialog(null,"No Search Result In This Database!\n","Warning!",JOptionPane.WARNING_MESSAGE);
+			return;
+		}
+		
+		int temp = database[regulatorPosition][regulateePosition];
+		switch(temp){
+		case 1:
+			JOptionPane.showMessageDialog(null,"Positive Regulation","Result",JOptionPane.PLAIN_MESSAGE);
+			break;
+		case -1:
+			JOptionPane.showMessageDialog(null,"Negative Regulation","Result",JOptionPane.PLAIN_MESSAGE);
+			break;
+		case 2:
+			JOptionPane.showMessageDialog(null,"Positive&Negative Regulation","Result",JOptionPane.PLAIN_MESSAGE);
+			break;
+		case -2:
+			JOptionPane.showMessageDialog(null,"Unknown Regulation","Result",JOptionPane.PLAIN_MESSAGE);
+			break;
+		default:
+			JOptionPane.showMessageDialog(null,"No Regulation","Result",JOptionPane.PLAIN_MESSAGE);
+			break;
+		}
+		
+	}
 ////////////////////////////////////////////////////////////////////////////////////////////	
 	/*------method to initiate all the table events----*/
 	public void initTableEvents(){
@@ -489,6 +552,24 @@ public class Search_Database extends JFrame{
 		//end of the function
 		
 		
+	}
+	
+	public void initButtonEvents(){
+		searchBt.addMouseListener(new MouseAdapter(){
+			public void mousePressed(MouseEvent e){
+				triggerSearchBt();
+			}
+		}
+		);
+		
+		searchBt.addKeyListener(new KeyAdapter(){
+			public void keyPressed(KeyEvent I){
+				if(I.getKeyCode() != KeyEvent.VK_ENTER)
+					return;
+				triggerSearchBt();
+			}
+		}
+		);
 	}
 
 }
