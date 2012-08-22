@@ -1,3 +1,10 @@
+/*-----------------------------------------------------------*/
+// This java class is for USTC Clotho App                    //
+// Author: Francis Chen                                      //
+// Usage: This class is mainly for Searching in G_O database //
+// Copyrights Reserved                                      //
+/*-----------------------------------------------------------*/
+
 package USTC_Clotho_App;
 import java.io.*;
 import java.util.Vector;

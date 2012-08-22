@@ -1,3 +1,10 @@
+/*---------------------------------------------------*/
+// This java class is for USTC Clotho App            //
+// Author: Francis Chen                               //
+// Usage: This class is mainly for search database GUI//
+// Copyrights Reserved                                //
+/*----------------------------------------------------*/
+
 package USTC_Clotho_App;
 import java.awt.*;
 import java.awt.event.*;
@@ -10,27 +17,27 @@ import java.util.Vector;
 @SuppressWarnings("serial")
 public class Search_Database extends JFrame{
 	
-	public static Vector<String> regulatorNames;
-	public static Vector<String> regulateeNames;
-	public static int numOfRegulator;
-	public static int numOfRegulatee;
-	public static int[][] database;
+	private static Vector<String> regulatorNames;
+	private static Vector<String> regulateeNames;
+	private static int numOfRegulator;
+	private static int numOfRegulatee;
+	private static int[][] database;
 	
-	public static JTable regulatorTable;
-	public static JScrollPane regulatorScrollPane;
-	public static JTable regulateeTable;
-	public static JScrollPane regulateeScrollPane;
+	private static JTable regulatorTable;
+	private static JScrollPane regulatorScrollPane;
+	private static JTable regulateeTable;
+	private static JScrollPane regulateeScrollPane;
 	
-	public static JTable regulateeCandidates;
-	public static JScrollPane regulateeCanScrollPane;
-	public static JTable regulatorCandidates;
-	public static JScrollPane regulatorCanScrollPane;
+	private static JTable regulateeCandidates;
+	private static JScrollPane regulateeCanScrollPane;
+	private static JTable regulatorCandidates;
+	private static JScrollPane regulatorCanScrollPane;
 	
-	public static JTextField regulatorName;
-	public static JTextField regulateeName;
+	private static JTextField regulatorName;
+	private static JTextField regulateeName;
 	
 	//public static JButton searchBt;
-	private static JFrame searchFrame;
+	public JFrame searchFrame;
 	private static JPanel searchPanel;
 	
 	private static JButton searchBt;
@@ -78,7 +85,7 @@ public class Search_Database extends JFrame{
 	}
 	
 	
-	/*---------------method to initiate all the components--*/
+	/*---------------method to initiate all the components-------*/
 
 	public void initComponents(){
 		regulatorTable = new JTable(numOfRegulator,1){
@@ -554,14 +561,16 @@ public class Search_Database extends JFrame{
 		
 	}
 	
+	/*-------------------initializing button events---------*/
 	public void initButtonEvents(){
+		//1¡¢initializing search button mouse events
 		searchBt.addMouseListener(new MouseAdapter(){
 			public void mousePressed(MouseEvent e){
 				triggerSearchBt();
 			}
 		}
 		);
-		
+		//2¡¢initializing search button key events
 		searchBt.addKeyListener(new KeyAdapter(){
 			public void keyPressed(KeyEvent I){
 				if(I.getKeyCode() != KeyEvent.VK_ENTER)

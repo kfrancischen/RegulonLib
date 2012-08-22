@@ -1,4 +1,9 @@
-
+/*---------------------------------------------------*/
+// This java class is for USTC Clotho App            //
+// Author: Francis Chen                              //
+// Usage: This class is mainly for main GUI          //
+// Copyrights Reserved                               //
+/*---------------------------------------------------*/
 package USTC_Clotho_App;
 import java.awt.*;
 import java.awt.event.*;
@@ -576,7 +581,7 @@ public class main_GUI{
 																operonNames,
 																operonNames,
 																operonDataBase);
-				//searchInO_O.setVisible(true);
+				searchInO_O.searchFrame.setVisible(true);
 			}
 		}
 		);
@@ -589,7 +594,7 @@ public class main_GUI{
 																geneNames,
 																promoterNames,
 																genepromoterDataBase);
-				//searchInG_P.setVisible(true);
+				searchInG_P.searchFrame.setVisible(true);
 			}
 		}
 		);
