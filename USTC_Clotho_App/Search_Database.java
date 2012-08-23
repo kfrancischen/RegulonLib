@@ -118,7 +118,7 @@ public class Search_Database extends JFrame{
 		regulatorTable.setGridColor(new Color(204, 204, 204));
 		Object[][] tableContents_1 = new Object[numOfRegulator][1]; 
 		regulatorTable.setModel(new DefaultTableModel(
-				tableContents_1,new String[]{"Regulator"}
+				tableContents_1,new String[]{"RegulatorPool"}
 				));
 		regulatorScrollPane.setViewportView(regulatorTable);
 		
@@ -150,7 +150,7 @@ public class Search_Database extends JFrame{
 		regulateeTable.setGridColor(new Color(204, 204, 204));
 		Object[][] tableContents_2 = new Object[numOfRegulatee][1];
 		regulateeTable.setModel(new DefaultTableModel(
-				tableContents_2,new String[]{"Regulatee"}
+				tableContents_2,new String[]{"RegulateePool"}
 				));
 		regulateeScrollPane.setViewportView(regulateeTable);
 		
@@ -227,198 +227,198 @@ public class Search_Database extends JFrame{
 		
 		//initializing layout
 		layout.setHorizontalGroup(layout
-				.createParallelGroup(Alignment.LEADING)
+				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
 				.addGroup(
 						layout.createSequentialGroup()
 								.addContainerGap()
 								.addComponent(regulatorScrollPane,
-										GroupLayout.PREFERRED_SIZE,
+										javax.swing.GroupLayout.PREFERRED_SIZE,
 										121,
-										GroupLayout.PREFERRED_SIZE)
+										javax.swing.GroupLayout.PREFERRED_SIZE)
+								.addPreferredGap(
+										javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 								.addGroup(
 										layout.createParallelGroup(
-												GroupLayout.Alignment.LEADING,
+												javax.swing.GroupLayout.Alignment.LEADING,
 												false)
 												.addGroup(
 														layout.createSequentialGroup()
 																.addPreferredGap(
-																		LayoutStyle.ComponentPlacement.RELATED)
+																		javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 																.addGroup(
 																		layout.createParallelGroup(
-																				GroupLayout.Alignment.TRAILING)
+																				javax.swing.GroupLayout.Alignment.TRAILING)
 																				.addComponent(
 																						regulatorName,
-																						GroupLayout.PREFERRED_SIZE,
+																						javax.swing.GroupLayout.PREFERRED_SIZE,
 																						115,
-																						GroupLayout.PREFERRED_SIZE)
+																						javax.swing.GroupLayout.PREFERRED_SIZE)
 																				.addComponent(
 																						regulateeCanScrollPane,
-																						GroupLayout.PREFERRED_SIZE,
+																						javax.swing.GroupLayout.PREFERRED_SIZE,
 																						173,
-																						GroupLayout.PREFERRED_SIZE))
+																						javax.swing.GroupLayout.PREFERRED_SIZE))
 																.addGap(7, 7, 7))
 												.addGroup(
-														Alignment.TRAILING,
+														javax.swing.GroupLayout.Alignment.TRAILING,
 														layout.createSequentialGroup()
 																.addPreferredGap(
-																		LayoutStyle.ComponentPlacement.RELATED,
-																		GroupLayout.DEFAULT_SIZE,
+																		javax.swing.LayoutStyle.ComponentPlacement.RELATED,
+																		javax.swing.GroupLayout.DEFAULT_SIZE,
 																		Short.MAX_VALUE)
 																.addComponent(
 																		regulatorNameLabel,
-																		GroupLayout.PREFERRED_SIZE,
+																		javax.swing.GroupLayout.PREFERRED_SIZE,
 																		78,
-																		GroupLayout.PREFERRED_SIZE)
+																		javax.swing.GroupLayout.PREFERRED_SIZE)
 																.addGap(27, 27,
 																		27)))
 								.addGroup(
 										layout.createParallelGroup(
-												Alignment.LEADING)
+												javax.swing.GroupLayout.Alignment.LEADING)
 												.addGroup(
 														layout.createSequentialGroup()
 																.addComponent(
 																		searchBt,
-																		GroupLayout.DEFAULT_SIZE,
+																		javax.swing.GroupLayout.DEFAULT_SIZE,
 																		100,
 																		Short.MAX_VALUE)
 																.addPreferredGap(
-																		LayoutStyle.ComponentPlacement.RELATED))
+																		javax.swing.LayoutStyle.ComponentPlacement.RELATED))
 												.addComponent(
 														pictureLabel,
-														GroupLayout.PREFERRED_SIZE,
+														javax.swing.GroupLayout.PREFERRED_SIZE,
 														100,
-														GroupLayout.PREFERRED_SIZE))
+														javax.swing.GroupLayout.PREFERRED_SIZE))
 								.addGap(5, 5, 5)
 								.addGroup(
 										layout.createParallelGroup(
-												GroupLayout.Alignment.LEADING)
+												javax.swing.GroupLayout.Alignment.LEADING)
 												.addComponent(
 														regulatorCanScrollPane,
-														GroupLayout.PREFERRED_SIZE,
+														javax.swing.GroupLayout.PREFERRED_SIZE,
 														173,
-														GroupLayout.PREFERRED_SIZE)
+														javax.swing.GroupLayout.PREFERRED_SIZE)
 												.addComponent(
 														regulateeName,
-														GroupLayout.PREFERRED_SIZE,
+														javax.swing.GroupLayout.PREFERRED_SIZE,
 														115,
-														GroupLayout.PREFERRED_SIZE)
+														javax.swing.GroupLayout.PREFERRED_SIZE)
 												.addGroup(
-														GroupLayout.Alignment.TRAILING,
+														javax.swing.GroupLayout.Alignment.TRAILING,
 														layout.createSequentialGroup()
 																.addPreferredGap(
-																		LayoutStyle.ComponentPlacement.UNRELATED)
+																		javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
 																.addComponent(
 																		regulateeNameLabel,
-																		GroupLayout.PREFERRED_SIZE,
+																		javax.swing.GroupLayout.PREFERRED_SIZE,
 																		93,
-																		GroupLayout.PREFERRED_SIZE)
+																		javax.swing.GroupLayout.PREFERRED_SIZE)
 																.addGap(73, 73,
 																		73)))
 								.addPreferredGap(
-										LayoutStyle.ComponentPlacement.RELATED)
+										javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 								.addComponent(regulateeScrollPane,
-										GroupLayout.PREFERRED_SIZE,
+										javax.swing.GroupLayout.PREFERRED_SIZE,
 										114,
-										GroupLayout.PREFERRED_SIZE)
+										javax.swing.GroupLayout.PREFERRED_SIZE)
 								.addContainerGap(
-										GroupLayout.DEFAULT_SIZE,
+										javax.swing.GroupLayout.DEFAULT_SIZE,
 										Short.MAX_VALUE)));
 		layout.setVerticalGroup(layout
-				.createParallelGroup(Alignment.LEADING)
+				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
 				.addGroup(
-						layout.createSequentialGroup()
+						layout.createParallelGroup(
+								javax.swing.GroupLayout.Alignment.LEADING)
 								.addGroup(
-										layout.createParallelGroup(
-												Alignment.LEADING)
+										layout.createSequentialGroup()
+												.addGap(39, 39, 39)
+												.addComponent(
+														pictureLabel,
+														javax.swing.GroupLayout.PREFERRED_SIZE,
+														50,
+														javax.swing.GroupLayout.PREFERRED_SIZE)
+												.addPreferredGap(
+														javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+												.addComponent(searchBt)
+												.addContainerGap())
+								.addGroup(
+										layout.createSequentialGroup()
+												.addContainerGap()
 												.addGroup(
-														layout.createSequentialGroup()
-																.addContainerGap()
+														layout.createParallelGroup(
+																javax.swing.GroupLayout.Alignment.LEADING)
+																.addComponent(
+																		regulatorScrollPane,
+																		javax.swing.GroupLayout.DEFAULT_SIZE,
+																		385,
+																		Short.MAX_VALUE)
 																.addGroup(
-																		layout.createParallelGroup(
-																				Alignment.LEADING)
+																		layout.createSequentialGroup()
+																				.addGap(5,
+																						5,
+																						5)
 																				.addGroup(
-																						layout.createSequentialGroup()
-																								.addGap(5,
-																										5,
-																										5)
+																						layout.createParallelGroup(
+																								javax.swing.GroupLayout.Alignment.LEADING)
+																								.addComponent(
+																										regulateeNameLabel,
+																										javax.swing.GroupLayout.PREFERRED_SIZE,
+																										27,
+																										javax.swing.GroupLayout.PREFERRED_SIZE)
+																								.addComponent(
+																										regulatorNameLabel,
+																										javax.swing.GroupLayout.PREFERRED_SIZE,
+																										27,
+																										javax.swing.GroupLayout.PREFERRED_SIZE))
+																				.addGap(2,
+																						2,
+																						2)
+																				.addGroup(
+																						layout.createParallelGroup(
+																								javax.swing.GroupLayout.Alignment.LEADING)
 																								.addGroup(
-																										layout.createParallelGroup(
-																												Alignment.LEADING)
+																										layout.createSequentialGroup()
+																												.addGap(2,
+																														2,
+																														2)
 																												.addComponent(
-																														regulateeNameLabel,
-																														GroupLayout.PREFERRED_SIZE,
-																														27,
-																														GroupLayout.PREFERRED_SIZE)
+																														regulatorName,
+																														javax.swing.GroupLayout.PREFERRED_SIZE,
+																														29,
+																														javax.swing.GroupLayout.PREFERRED_SIZE)
+																												.addPreferredGap(
+																														javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
 																												.addComponent(
-																														regulatorNameLabel,
-																														GroupLayout.PREFERRED_SIZE,
-																														27,
-																														GroupLayout.PREFERRED_SIZE))
-																								.addGap(2,
-																										2,
-																										2)
+																														regulateeCanScrollPane,
+																														0,
+																														0,
+																														Short.MAX_VALUE))
 																								.addGroup(
-																										layout.createParallelGroup(
-																												Alignment.LEADING)
-																												.addGroup(
-																														layout.createSequentialGroup()
-																																.addGap(2,
-																																		2,
-																																		2)
-																																.addComponent(
-																																		regulatorName,
-																																		GroupLayout.PREFERRED_SIZE,
-																																		29,
-																																		GroupLayout.PREFERRED_SIZE)
-																																.addPreferredGap(
-																																		LayoutStyle.ComponentPlacement.UNRELATED)
-																																.addComponent(
-																																		regulateeCanScrollPane,
-																																		0,
-																																		0,
-																																		Short.MAX_VALUE))
-																												.addGroup(
-																														layout.createSequentialGroup()
-																																.addGap(1,
-																																		1,
-																																		1)
-																																.addComponent(
-																																		regulateeName,
-																																		GroupLayout.PREFERRED_SIZE,
-																																		28,
-																																		GroupLayout.PREFERRED_SIZE)
-																																.addGap(18,
-																																		18,
-																																		18)
-																																.addComponent(
-																																		regulatorCanScrollPane,
-																																		GroupLayout.DEFAULT_SIZE,
-																																		308,
-																																		Short.MAX_VALUE))))
-																				.addComponent(
-																						regulateeScrollPane,
-																						GroupLayout.DEFAULT_SIZE,
-																						389,
-																						Short.MAX_VALUE)
-																				.addComponent(
-																						regulatorScrollPane,
-																						GroupLayout.PREFERRED_SIZE,
-																						385,
-																						GroupLayout.PREFERRED_SIZE)))
-												.addGroup(
-														layout.createSequentialGroup()
-																.addGap(39, 39,
-																		39)
+																										layout.createSequentialGroup()
+																												.addGap(1,
+																														1,
+																														1)
+																												.addComponent(
+																														regulateeName,
+																														javax.swing.GroupLayout.PREFERRED_SIZE,
+																														28,
+																														javax.swing.GroupLayout.PREFERRED_SIZE)
+																												.addGap(18,
+																														18,
+																														18)
+																												.addComponent(
+																														regulatorCanScrollPane,
+																														javax.swing.GroupLayout.DEFAULT_SIZE,
+																														304,
+																														Short.MAX_VALUE))))
 																.addComponent(
-																		pictureLabel,
-																		GroupLayout.PREFERRED_SIZE,
-																		50,
-																		GroupLayout.PREFERRED_SIZE)
-																.addPreferredGap(
-																		LayoutStyle.ComponentPlacement.UNRELATED)
-																.addComponent(
-																		searchBt)))
-								.addContainerGap()));
+																		regulateeScrollPane,
+																		javax.swing.GroupLayout.DEFAULT_SIZE,
+																		385,
+																		Short.MAX_VALUE))
+												.addContainerGap())));
+
 		pack();
 	}
 	
@@ -884,12 +884,18 @@ public class Search_Database extends JFrame{
 		regulatorName.addKeyListener(new KeyAdapter(){
 			public void keyPressed(KeyEvent I){
 				pictureLabel.setIcon(null);
+				Object[][] tableContents = new Object[columnCount][2];
+				DefaultTableModel refreshModel = new DefaultTableModel(tableContents,new String[]{"Regulatees","Regulation"});
+				regulateeCandidates.setModel(refreshModel);
 			}
 		}
 		);
 		regulateeName.addKeyListener(new KeyAdapter(){
 			public void keyPressed(KeyEvent I){
 				pictureLabel.setIcon(null);
+				Object[][] tableContents = new Object[columnCount][2];
+				DefaultTableModel refreshModel = new DefaultTableModel(tableContents,new String[]{"Regulators","Regulation"});
+				regulatorCandidates.setModel(refreshModel);
 			}
 		}
 		);

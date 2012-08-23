@@ -582,7 +582,8 @@ public class main_GUI{
 																operonNames,
 																operonNames,
 																operonDataBase);
-				searchInO_O.setTitle("Search Page");
+				searchInO_O.setTitle("Search In Operon-Operon");
+				searchInO_O.setResizable(false);
 				searchInO_O.setVisible(true);
 			}
 		}
@@ -596,7 +597,8 @@ public class main_GUI{
 																geneNames,
 																promoterNames,
 																genepromoterDataBase);
-				searchInG_P.setTitle("Search Page");
+				searchInG_P.setTitle("Search In Gene-Promoter");
+				searchInG_P.setResizable(false);
 				searchInG_P.setVisible(true);
 			}
 		}

@@ -43,6 +43,7 @@ public class Interface extends javax.swing.JFrame {
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 		setBackground(new java.awt.Color(255, 255, 255));
+		setResizable(false);
 
 		regulatorScrollPane.setBackground(new java.awt.Color(255, 255, 255));
 		regulatorScrollPane.setBorder(javax.swing.BorderFactory
@@ -97,8 +98,6 @@ public class Interface extends javax.swing.JFrame {
 				204));
 		regulateeCanScrollPane.setViewportView(regulateeCandidates);
 
-		pictureLabel.setIcon(new javax.swing.ImageIcon(
-				"F:\\programs\\java\\images\\negtive.png")); // NOI18N
 		pictureLabel.setText("picture");
 
 		regulateeNameLabel.setFont(new java.awt.Font("Consolas", 1, 14));
@@ -165,6 +164,8 @@ public class Interface extends javax.swing.JFrame {
 										javax.swing.GroupLayout.PREFERRED_SIZE,
 										121,
 										javax.swing.GroupLayout.PREFERRED_SIZE)
+								.addPreferredGap(
+										javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 								.addGroup(
 										layout.createParallelGroup(
 												javax.swing.GroupLayout.Alignment.LEADING,
@@ -256,99 +257,96 @@ public class Interface extends javax.swing.JFrame {
 		layout.setVerticalGroup(layout
 				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
 				.addGroup(
-						layout.createSequentialGroup()
+						layout.createParallelGroup(
+								javax.swing.GroupLayout.Alignment.LEADING)
 								.addGroup(
-										layout.createParallelGroup(
-												javax.swing.GroupLayout.Alignment.LEADING)
+										layout.createSequentialGroup()
+												.addGap(39, 39, 39)
+												.addComponent(
+														pictureLabel,
+														javax.swing.GroupLayout.PREFERRED_SIZE,
+														50,
+														javax.swing.GroupLayout.PREFERRED_SIZE)
+												.addPreferredGap(
+														javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+												.addComponent(searchBt)
+												.addContainerGap())
+								.addGroup(
+										layout.createSequentialGroup()
+												.addContainerGap()
 												.addGroup(
-														layout.createSequentialGroup()
-																.addContainerGap()
+														layout.createParallelGroup(
+																javax.swing.GroupLayout.Alignment.LEADING)
+																.addComponent(
+																		regulatorScrollPane,
+																		javax.swing.GroupLayout.DEFAULT_SIZE,
+																		385,
+																		Short.MAX_VALUE)
 																.addGroup(
-																		layout.createParallelGroup(
-																				javax.swing.GroupLayout.Alignment.LEADING)
+																		layout.createSequentialGroup()
+																				.addGap(5,
+																						5,
+																						5)
 																				.addGroup(
-																						layout.createSequentialGroup()
-																								.addGap(5,
-																										5,
-																										5)
+																						layout.createParallelGroup(
+																								javax.swing.GroupLayout.Alignment.LEADING)
+																								.addComponent(
+																										regulateeNameLabel,
+																										javax.swing.GroupLayout.PREFERRED_SIZE,
+																										27,
+																										javax.swing.GroupLayout.PREFERRED_SIZE)
+																								.addComponent(
+																										regulatorNameLabel,
+																										javax.swing.GroupLayout.PREFERRED_SIZE,
+																										27,
+																										javax.swing.GroupLayout.PREFERRED_SIZE))
+																				.addGap(2,
+																						2,
+																						2)
+																				.addGroup(
+																						layout.createParallelGroup(
+																								javax.swing.GroupLayout.Alignment.LEADING)
 																								.addGroup(
-																										layout.createParallelGroup(
-																												javax.swing.GroupLayout.Alignment.LEADING)
+																										layout.createSequentialGroup()
+																												.addGap(2,
+																														2,
+																														2)
 																												.addComponent(
-																														regulateeNameLabel,
+																														regulatorName,
 																														javax.swing.GroupLayout.PREFERRED_SIZE,
-																														27,
+																														29,
 																														javax.swing.GroupLayout.PREFERRED_SIZE)
+																												.addPreferredGap(
+																														javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
 																												.addComponent(
-																														regulatorNameLabel,
-																														javax.swing.GroupLayout.PREFERRED_SIZE,
-																														27,
-																														javax.swing.GroupLayout.PREFERRED_SIZE))
-																								.addGap(2,
-																										2,
-																										2)
+																														regulateeCanScrollPane,
+																														0,
+																														0,
+																														Short.MAX_VALUE))
 																								.addGroup(
-																										layout.createParallelGroup(
-																												javax.swing.GroupLayout.Alignment.LEADING)
-																												.addGroup(
-																														layout.createSequentialGroup()
-																																.addGap(2,
-																																		2,
-																																		2)
-																																.addComponent(
-																																		regulatorName,
-																																		javax.swing.GroupLayout.PREFERRED_SIZE,
-																																		29,
-																																		javax.swing.GroupLayout.PREFERRED_SIZE)
-																																.addPreferredGap(
-																																		javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-																																.addComponent(
-																																		regulateeCanScrollPane,
-																																		0,
-																																		0,
-																																		Short.MAX_VALUE))
-																												.addGroup(
-																														layout.createSequentialGroup()
-																																.addGap(1,
-																																		1,
-																																		1)
-																																.addComponent(
-																																		regulateeName,
-																																		javax.swing.GroupLayout.PREFERRED_SIZE,
-																																		28,
-																																		javax.swing.GroupLayout.PREFERRED_SIZE)
-																																.addGap(18,
-																																		18,
-																																		18)
-																																.addComponent(
-																																		regulatorCanScrollPane,
-																																		javax.swing.GroupLayout.DEFAULT_SIZE,
-																																		308,
-																																		Short.MAX_VALUE))))
-																				.addComponent(
-																						regulateeScrollPane,
-																						javax.swing.GroupLayout.DEFAULT_SIZE,
-																						389,
-																						Short.MAX_VALUE)
-																				.addComponent(
-																						regulatorScrollPane,
-																						javax.swing.GroupLayout.PREFERRED_SIZE,
-																						385,
-																						javax.swing.GroupLayout.PREFERRED_SIZE)))
-												.addGroup(
-														layout.createSequentialGroup()
-																.addGap(39, 39,
-																		39)
+																										layout.createSequentialGroup()
+																												.addGap(1,
+																														1,
+																														1)
+																												.addComponent(
+																														regulateeName,
+																														javax.swing.GroupLayout.PREFERRED_SIZE,
+																														28,
+																														javax.swing.GroupLayout.PREFERRED_SIZE)
+																												.addGap(18,
+																														18,
+																														18)
+																												.addComponent(
+																														regulatorCanScrollPane,
+																														javax.swing.GroupLayout.DEFAULT_SIZE,
+																														304,
+																														Short.MAX_VALUE))))
 																.addComponent(
-																		pictureLabel,
-																		javax.swing.GroupLayout.PREFERRED_SIZE,
-																		50,
-																		javax.swing.GroupLayout.PREFERRED_SIZE)
-																.addPreferredGap(
-																		javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-																.addComponent(
-																		searchBt)))
-								.addContainerGap()));
+																		regulateeScrollPane,
+																		javax.swing.GroupLayout.DEFAULT_SIZE,
+																		385,
+																		Short.MAX_VALUE))
+												.addContainerGap())));
 
 		pack();
 	}// </editor-fold>
