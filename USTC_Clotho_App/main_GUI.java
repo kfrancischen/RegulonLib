@@ -14,6 +14,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.File;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+
 import java.util.Vector;
 
 
@@ -57,12 +59,31 @@ public class main_GUI{
 		
 		/*------Initializing main panel---------*/
 		panel_1 = new JPanel();
-		matrixSizeLabel = new JLabel("Matrix Size:");
-		sizeInput = new JTextField(null,10);
-		verticalBox = Box.createVerticalBox();
-		
+
 		/*-----Initializing JTable----------*/
-		inputMatrixTable = new JTable(10,10);
+		
+		inputMatrixTable = new JTable();
+		Object[][] tableContents = new Object[tableSize][tableSize];
+		for(int i = 0;i < tableSize; i++){
+			for(int j = 0;j < tableSize;j++){
+				tableContents[i][j] = null;
+			}
+		}
+		String[] tableColumnString = new String[tableSize];
+		for(int i = 0; i < tableSize; i++){
+			tableColumnString[i] = "regulator " + (i+1);
+		}
+		
+		//initiate inputMatrixTable
+		DefaultTableModel aNewTable = new DefaultTableModel(tableContents,tableColumnString);
+		inputMatrixTable.setModel(aNewTable);
+		inputMatrixTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		inputMatrixTable.setGridColor(new Color(204, 204, 204));
+		inputMatrixTable.setRowHeight(25);
+		for(int i = 0;i < inputMatrixTable.getColumnCount();i++){
+			inputMatrixTable.getColumnModel().getColumn(i).setPreferredWidth(80);
+		}
+		inputMatrixTable.setSelectionBackground(new Color(204, 204, 204));
 		JComboBox matrixElement = new JComboBox();
 		matrixElement.addItem("");
 		matrixElement.addItem("0");
@@ -74,8 +95,19 @@ public class main_GUI{
 		for(int i = 0; i < 10; i++){
 			inputMatrixTable.getColumnModel().getColumn(i).setCellEditor(new DefaultCellEditor(matrixElement));
 		}
-		JScrollPane scrollPane = new JScrollPane(inputMatrixTable); 
-		inputMatrixTable.setFillsViewportHeight(true); 
+
+		//initiate matrixScroll
+		matrixScrollPane = new JScrollPane(); 
+		matrixScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		matrixScrollPane.setViewportView(inputMatrixTable);
+		
+		//initiate matrixSizeLabel
+		matrixSizeLabel = new JLabel();
+		matrixSizeLabel.setText("Matrix Size");
+		
+		//initiate USTClogo label
+		USTClogo = new JLabel();
+		sizeInput = new JTextField();
 		
 		/*------initializing JMenu "File"----*/
 		File = new JMenu("File");
@@ -120,28 +152,187 @@ public class main_GUI{
 		
 		
 		/*-----initializing  Buttons---------*/
-		commitSizeBt = new Button("Commit");
-		modeOneBt = new Button("mode 1");
-		modeTwoBt = new Button("mode 2");
+		commitSizeBt = new JButton();
+		commitSizeBt.setText("confirm");
+		commitSizeBt.setFont(new java.awt.Font("Î¢ÈíÑÅºÚ", 1, 12));
+		commitSizeBt.setBorder(new javax.swing.border.LineBorder(
+				new Color(204, 204, 204), 1, true));
+		commitSizeBt.setToolTipText("Press it to confirm matrix size");
 		
-		/*------adding to veticalBox--------*/
-		verticalBox.add(matrixSizeLabel);
-		verticalBox.add(sizeInput);
-		verticalBox.add(commitSizeBt);
-		verticalBox.add(modeOneBt);
-		verticalBox.add(modeTwoBt);
-		panel_1.add(verticalBox);
-		panel_1.add(scrollPane);
+		modeOneBt = new JButton();
+		modeOneBt.setFont(new java.awt.Font("Î¢ÈíÑÅºÚ", 1, 12));
+		modeOneBt.setText("Mode 1");
+		modeOneBt.setToolTipText("Press it to search in Operon-Operon database");
 		
+		modeTwoBt = new JButton();
+		modeTwoBt.setFont(new java.awt.Font("Î¢ÈíÑÅºÚ", 1, 12));
+		modeTwoBt.setText("Mode 2");
+		modeTwoBt.setToolTipText("Press it to search in Gene-Promter database");
+		
+		/*------initializing labels--------*/
+		modeOneLabel = new JLabel();
+		modeOneLabel.setText("Using Operon-Operon");
+		modeTwoLabel = new JLabel();
+		modeTwoLabel.setText("Using Gene-Promoter");
+		USTClogo = new JLabel();
+		USTClogo.setIcon(new ImageIcon(USTCLOGO));
+
+		/*------adding to panel_1--------*/
+		GroupLayout layout = new GroupLayout(panel_1);
+		panel_1.setLayout(layout);
+		layout.setHorizontalGroup(layout
+				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(
+						layout.createSequentialGroup()
+								.addGroup(
+										layout.createParallelGroup(
+												javax.swing.GroupLayout.Alignment.LEADING)
+												.addGroup(
+														layout.createSequentialGroup()
+																.addGap(53, 53,
+																		53)
+																.addGroup(
+																		layout.createParallelGroup(
+																				javax.swing.GroupLayout.Alignment.LEADING)
+																				.addGroup(
+																						layout.createSequentialGroup()
+																								.addGap(37,
+																										37,
+																										37)
+																								.addComponent(
+																										matrixSizeLabel)
+																								.addPreferredGap(
+																										javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																								.addComponent(
+																										sizeInput,
+																										javax.swing.GroupLayout.PREFERRED_SIZE,
+																										83,
+																										javax.swing.GroupLayout.PREFERRED_SIZE)
+																								.addGap(18,
+																										18,
+																										18)
+																								.addComponent(
+																										commitSizeBt,
+																										javax.swing.GroupLayout.PREFERRED_SIZE,
+																										95,
+																										javax.swing.GroupLayout.PREFERRED_SIZE))
+																				.addComponent(
+																						USTClogo,
+																						javax.swing.GroupLayout.PREFERRED_SIZE,
+																						450,
+																						javax.swing.GroupLayout.PREFERRED_SIZE)
+																				.addComponent(
+																						matrixScrollPane)))
+												.addGroup(
+														layout.createSequentialGroup()
+																.addGroup(
+																		layout.createParallelGroup(
+																				javax.swing.GroupLayout.Alignment.LEADING)
+																				.addGroup(
+																						layout.createSequentialGroup()
+																								.addGap(87,
+																										87,
+																										87)
+																								.addComponent(
+																										modeOneBt))
+																				.addGroup(
+																						layout.createSequentialGroup()
+																								.addGap(65,
+																										65,
+																										65)
+																								.addComponent(
+																										modeOneLabel,
+																										javax.swing.GroupLayout.PREFERRED_SIZE,
+																										140,
+																										javax.swing.GroupLayout.PREFERRED_SIZE)))
+																.addPreferredGap(
+																		javax.swing.LayoutStyle.ComponentPlacement.RELATED,
+																		123,
+																		Short.MAX_VALUE)
+																.addGroup(
+																		layout.createParallelGroup(
+																				javax.swing.GroupLayout.Alignment.LEADING)
+																				.addGroup(
+																						javax.swing.GroupLayout.Alignment.TRAILING,
+																						layout.createSequentialGroup()
+																								.addComponent(
+																										modeTwoLabel)
+																								.addGap(50,
+																										50,
+																										50))
+																				.addGroup(
+																						javax.swing.GroupLayout.Alignment.TRAILING,
+																						layout.createSequentialGroup()
+																								.addComponent(
+																										modeTwoBt)
+																								.addGap(74,
+																										74,
+																										74)))))
+								.addContainerGap(32,
+										javax.swing.GroupLayout.PREFERRED_SIZE)));
+		layout.setVerticalGroup(layout
+				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(
+						layout.createSequentialGroup()
+								.addContainerGap()
+								.addComponent(USTClogo,
+										javax.swing.GroupLayout.PREFERRED_SIZE,
+										90,
+										javax.swing.GroupLayout.PREFERRED_SIZE)
+								.addPreferredGap(
+										javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+								.addGroup(
+										layout.createParallelGroup(
+												javax.swing.GroupLayout.Alignment.BASELINE)
+												.addComponent(
+														commitSizeBt,
+														javax.swing.GroupLayout.PREFERRED_SIZE,
+														27,
+														javax.swing.GroupLayout.PREFERRED_SIZE)
+												.addComponent(
+														sizeInput,
+														javax.swing.GroupLayout.PREFERRED_SIZE,
+														27,
+														javax.swing.GroupLayout.PREFERRED_SIZE)
+												.addComponent(
+														matrixSizeLabel,
+														javax.swing.GroupLayout.PREFERRED_SIZE,
+														30,
+														javax.swing.GroupLayout.PREFERRED_SIZE))
+								.addPreferredGap(
+										javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+								.addComponent(matrixScrollPane,
+										javax.swing.GroupLayout.PREFERRED_SIZE,
+										222,
+										javax.swing.GroupLayout.PREFERRED_SIZE)
+								.addGap(18, 18, 18)
+								.addGroup(
+										layout.createParallelGroup(
+												javax.swing.GroupLayout.Alignment.BASELINE)
+												.addComponent(
+														modeOneLabel,
+														javax.swing.GroupLayout.PREFERRED_SIZE,
+														28,
+														javax.swing.GroupLayout.PREFERRED_SIZE)
+												.addComponent(
+														modeTwoLabel,
+														javax.swing.GroupLayout.PREFERRED_SIZE,
+														28,
+														javax.swing.GroupLayout.PREFERRED_SIZE))
+								.addPreferredGap(
+										javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+								.addGroup(
+										layout.createParallelGroup(
+												javax.swing.GroupLayout.Alignment.BASELINE)
+												.addComponent(modeOneBt)
+												.addComponent(modeTwoBt))
+								.addContainerGap(51, Short.MAX_VALUE)));
 		/*------adding to mainTabbedPane-----*/
 		mainTabbedPane = new JTabbedPane();
 		mainTabbedPane.setTabPlacement(JTabbedPane.TOP);
-		//mainTabbedPane.addChangeListener(this);
 		mainTabbedPane.addTab("Main Page", panel_1);
 	
-		//JButton newButton = new JButton("a New Tab");
-		//newButton.addActionListener(this);
-		//contentPane.add(newButton,BorderLayout.SOUTH);
+
 		mainFrame.setJMenuBar(mainMenu);
 		contentPane.add(mainTabbedPane,BorderLayout.CENTER);
 		mainFrame.setSize(600,400);
@@ -664,17 +855,23 @@ public class main_GUI{
 	private static JFrame mainFrame;
 	private static JTextField sizeInput;
 	private static int matrixsize;
-	private static Button commitSizeBt;
-	private static Button modeOneBt;
-	private static Button modeTwoBt;
+	private static JButton commitSizeBt;
+	private static JButton modeOneBt;
+	private static JButton modeTwoBt;
 	private static JMenuBar mainMenu; 
 	private static JMenu File;
 	private static JMenu Search;
 	private static JMenu Help;
 	private static JMenu About;
 	private static JTabbedPane mainTabbedPane;
-	private Box verticalBox;
+	private static JScrollPane matrixScrollPane;
+	private static JLabel modeOneLabel;
+	private static JLabel modeTwoLabel;
+	private static JLabel USTClogo;
+	private static final int tableSize = 10;
+
 	private static final String PATH = "F:/programs/java/";
+	private static final String USTCLOGO = PATH + "images/logo ustc.png";
 	
 	//JMenuItems for Menu "File"
 	private static JMenuItem New;
