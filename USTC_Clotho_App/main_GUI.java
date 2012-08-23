@@ -14,7 +14,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.File;
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+
+
 
 import java.util.Vector;
 
@@ -78,12 +81,14 @@ public class main_GUI{
 		DefaultTableModel aNewTable = new DefaultTableModel(tableContents,tableColumnString);
 		inputMatrixTable.setModel(aNewTable);
 		inputMatrixTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		inputMatrixTable.setGridColor(new Color(204, 204, 204));
-		inputMatrixTable.setRowHeight(25);
+		inputMatrixTable.setGridColor(new Color(102, 102, 102));
+		inputMatrixTable.setBackground(new Color(255,255,255));
+		inputMatrixTable.setRowHeight(20);
 		for(int i = 0;i < inputMatrixTable.getColumnCount();i++){
-			inputMatrixTable.getColumnModel().getColumn(i).setPreferredWidth(80);
+			inputMatrixTable.getColumnModel().getColumn(i).setPreferredWidth(70);
 		}
 		inputMatrixTable.setSelectionBackground(new Color(204, 204, 204));
+		inputMatrixTable.setToolTipText("Please input regulation in the matrix");
 		JComboBox matrixElement = new JComboBox();
 		matrixElement.addItem("");
 		matrixElement.addItem("0");
@@ -338,7 +343,9 @@ public class main_GUI{
 		mainFrame.setSize(600,400);
 		mainFrame.pack();
 		mainFrame.setVisible(true);
+		mainFrame.setResizable(false);
 		
+		//initiate string buffers
 		outPutBuffers = new Vector<StringBuffer>();
 		for(int i = 0; i < 1000; i++){
 			outPutBuffers.add(null);
@@ -413,7 +420,68 @@ public class main_GUI{
 		}
 		in2.close();
 	}
-	
+	/*------special function for confirm button---------*/
+	public void triggerConfirm(){
+		if(sizeInput.getText().equals("")){
+			System.out.print("Please Input The Matrix Size!\n");
+			JOptionPane.showMessageDialog(null,"Please Input The Matrix Size!","Warning",JOptionPane.WARNING_MESSAGE);
+			return;
+		}
+		int length = sizeInput.getText().length();
+		for(int i = 0;i < length; i++){
+			if(sizeInput.getText().charAt(i) > 57 || sizeInput.getText().charAt(i) < 48){
+				JOptionPane.showMessageDialog(null,"Wrong Input!","Error",JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+		}
+		if(Integer.parseInt(sizeInput.getText()) > 10){
+			JOptionPane.showMessageDialog(null,"Out Of Range!","Error",JOptionPane.ERROR_MESSAGE);
+		}
+		matrixsize = Integer.parseInt(sizeInput.getText());
+		int numRow = inputMatrixTable.getRowCount();
+		int numColumn = inputMatrixTable.getColumnCount();
+		@SuppressWarnings("serial")
+		DefaultTableCellRenderer whiteRenderer = new DefaultTableCellRenderer() { 
+			public Component getTableCellRendererComponent(JTable table,  
+			Object value, boolean isSelected, boolean hasFocus,  
+			int row, int column) { 
+			Component   cell   =   super.getTableCellRendererComponent   
+			(table,   value,   isSelected,   hasFocus,   row,   column); 
+			cell.setBackground(Color.WHITE);
+			return   cell; 
+			} 
+		}; 
+		for(int i = 0;i < numColumn;i++){
+			inputMatrixTable.getColumnModel().getColumn(i).setCellRenderer(whiteRenderer);
+;				}
+		
+		for(int i = 0;i < numRow;i++){
+			for(int j = 0;j < numColumn;j++){
+				inputMatrixTable.setValueAt(null, i, j);
+				
+			}
+		}
+		@SuppressWarnings("serial")
+		DefaultTableCellRenderer grayRenderer = new DefaultTableCellRenderer() { 
+			public Component getTableCellRendererComponent(JTable table,  
+			Object value, boolean isSelected, boolean hasFocus,  
+			int row, int column) { 
+			Component   cell   =   super.getTableCellRendererComponent   
+			(table,   value,   isSelected,   hasFocus,   row,   column); 
+			if(row < matrixsize && column < matrixsize){
+				cell.setBackground(new Color(204,204,204));
+			}
+			else
+				cell.setBackground(Color.WHITE);
+			return   cell; 
+			} 
+		}; 
+		for(int i = 0;i < numColumn;i++){
+			inputMatrixTable.getColumnModel().getColumn(i).setCellRenderer(grayRenderer);
+		}
+		System.out.print(matrixsize+"\n\n");
+		
+	}
 	
 	/*------------method to initiate button events---------*/
 	public void initButtonEvents(){
@@ -421,19 +489,7 @@ public class main_GUI{
 		//initiate commit size button, press it to enter the matrix size//
 		commitSizeBt.addMouseListener(new MouseAdapter(){
 			public void mousePressed(MouseEvent e){
-				if(sizeInput.getText().equals("")){
-					System.out.print("Please Input The Matrix Size!\n");
-					return;
-				}
-				matrixsize = Integer.parseInt(sizeInput.getText());
-				int numRow = inputMatrixTable.getRowCount();
-				int numColumn = inputMatrixTable.getColumnCount();
-				for(int i = 0;i < numRow;i++){
-					for(int j = 0;j < numColumn;j++){
-						inputMatrixTable.setValueAt(null, i, j);
-					}
-				}
-				System.out.print(matrixsize+"\n\n");
+				triggerConfirm();
 			}
 		});
 		
@@ -652,12 +708,7 @@ public class main_GUI{
 		sizeInput.addKeyListener(new KeyAdapter(){
 			public void keyPressed(KeyEvent I){
 				if(I.getKeyCode() == KeyEvent.VK_ENTER){
-					if(sizeInput.getText().equals("")){
-						System.out.print("Please Input The Matrix Size!\n");
-						return;
-					}
-					matrixsize = Integer.parseInt(sizeInput.getText());
-					System.out.print(matrixsize+"\n\n");
+					triggerConfirm();
 				}
 			}
 		}
@@ -855,6 +906,8 @@ public class main_GUI{
 		);
 		
 	}
+	
+	
  /*------    variables in the program --------*/
 	private static JPanel panel_1;
 	private static JLabel matrixSizeLabel;

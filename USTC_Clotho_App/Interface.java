@@ -93,7 +93,7 @@ public class Interface extends javax.swing.JFrame {
 						"Title 2", "Title 3", "Title 4" }));
 		regulateeCandidates
 				.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
-		regulateeCandidates.setGridColor(new java.awt.Color(204, 204, 204));
+		regulateeCandidates.setGridColor(new java.awt.Color(102, 102, 102));
 		regulateeCandidates.setSelectionBackground(new java.awt.Color(204, 204,
 				204));
 		regulateeCanScrollPane.setViewportView(regulateeCandidates);
