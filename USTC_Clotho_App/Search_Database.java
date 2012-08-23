@@ -10,6 +10,8 @@ import java.awt.*;
 import java.awt.event.*;
 
 import javax.swing.*;
+import javax.swing.GroupLayout.*;
+import javax.swing.border.*;
 import javax.swing.table.*;
 
 import java.util.Vector;
@@ -37,14 +39,9 @@ public class Search_Database extends JFrame{
 	private static JTextField regulateeName;
 	
 	//public static JButton searchBt;
-	public JFrame searchFrame;
-	private static JPanel searchPanel;
-	
 	private static JButton searchBt;
-	private Box boxOfRegulator;
-	private Box boxOfRegulatee;
 	
-	private static JLabel regulatorNameLable;
+	private static JLabel regulatorNameLabel;
 	private static JLabel regulateeNameLabel;
 	private static JLabel pictureLabel;
 	
@@ -88,72 +85,330 @@ public class Search_Database extends JFrame{
 	/*---------------method to initiate all the components-------*/
 
 	public void initComponents(){
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		setBackground(new Color(255,255,255));
+		
+		//initiate regulator scrollpane
+		regulatorScrollPane = new JScrollPane();
+		//regulatorScrollPane.setBackground(new Color(255,255,255));
+		regulatorScrollPane.setBorder(BorderFactory
+				.createLineBorder(new Color(204, 204, 204)));
+		regulatorScrollPane.setForeground(new Color(204, 204, 204));
+		regulatorScrollPane.setViewportBorder(BorderFactory
+				.createBevelBorder(BevelBorder.LOWERED));
+		
+		//initiate regulator table
 		regulatorTable = new JTable(numOfRegulator,1){
 			public boolean isCellEditable(int row, int column) { return false; }
 		};
+		regulatorTable.setBorder(BorderFactory
+				.createBevelBorder(BevelBorder.RAISED));
+		regulatorTable.setFont(new Font("Consolas", 0, 12));
+		regulatorTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+		regulatorTable.setGridColor(new Color(204, 204, 204));
 		Object[][] tableContents_1 = new Object[numOfRegulator][1]; 
 		regulatorTable.setModel(new DefaultTableModel(
 				tableContents_1,new String[]{"Regulator"}
 				));
-		regulatorScrollPane = new JScrollPane(regulatorTable);
-
+		regulatorScrollPane.setViewportView(regulatorTable);
 		
-		Object[][] tableContents_2 = new Object[numOfRegulatee][1];
+		//initiate regulator name label
+		regulatorNameLabel = new JLabel("Regulator",10);
+		regulatorNameLabel.setFont(new Font("Consolas", 1, 14));
+		//regulatorNameLabel.setText("Regulator:");
+		regulatorNameLabel.setOpaque(true);
+		
+		//initiate regulator name textfield
+		regulatorName = new JTextField();
+		regulatorName.setFont(new Font("Courier New", 0, 12));
+		
+		//initiate regulatee scroll pane
+		regulateeScrollPane = new JScrollPane();
+		regulateeScrollPane.setBorder(BorderFactory
+				.createLineBorder(new Color(204, 204, 204)));
+		regulateeScrollPane.setForeground(new Color(204, 204, 204));
+		regulateeScrollPane.setViewportBorder(BorderFactory
+				.createBevelBorder(BevelBorder.LOWERED));
+		//initiate regulatee table
 		regulateeTable = new JTable(numOfRegulatee,1){
 			public boolean isCellEditable(int row, int column) { return false; }
 		};
+		regulateeTable.setBorder(BorderFactory
+				.createBevelBorder(BevelBorder.RAISED));
+		regulateeTable.setFont(new Font("Consolas", 0, 12));
+		regulateeTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+		regulateeTable.setGridColor(new Color(204, 204, 204));
+		Object[][] tableContents_2 = new Object[numOfRegulatee][1];
 		regulateeTable.setModel(new DefaultTableModel(
 				tableContents_2,new String[]{"Regulatee"}
 				));
-		regulateeScrollPane = new JScrollPane(regulateeTable);
+		regulateeScrollPane.setViewportView(regulateeTable);
 		
+		//initiate regulatee candidates scrollpane
+		regulateeCanScrollPane = new JScrollPane();
+		regulateeCanScrollPane.setBorder(new LineBorder(
+				new Color(204, 204, 204), 1, true));
+		regulateeCanScrollPane.setForeground(new Color(204, 204, 204));
+		regulateeCanScrollPane.setViewportBorder(BorderFactory
+				.createEtchedBorder());
 		
-		//Object[][] tableContents_3 = new Object[20][2];
+		//initiate regulatee candiates table
+		Object[][] tableContents_3 = new Object[20][2];
 		regulateeCandidates = new JTable(20,2){
 			public boolean isCellEditable(int row, int column) { return false; }
 		};
-		//regulateeCandidates.setModel(new DefaultTableModel(
-				//tableContents_3,new String[]{"Regulatee Candidates","Regulation"}
-				//));
-		regulateeCanScrollPane = new JScrollPane(regulateeCandidates);
+		regulateeCandidates.setModel(new DefaultTableModel(
+				tableContents_3,new String[]{"Regulatees","Regulation"}
+				));
+		regulateeCandidates.setBorder(BorderFactory
+				.createBevelBorder(BevelBorder.RAISED));
+		regulateeCandidates.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		regulateeCanScrollPane.setViewportView(regulateeCandidates);
 		
-		//Object[][] tableContents_4 = new Object[20][2];
+		//initiate regulateeName Label
+		regulateeNameLabel = new JLabel("Regulatee",10);
+		regulateeNameLabel.setFont(new Font("Consolas", 1, 14));
+		//regulateeNameLabel.setText("Regulatee:");
+		regulateeNameLabel.setOpaque(true);
+		
+		//initiate regulatee Name textfield
+		regulateeName = new JTextField();
+		regulateeName.setFont(new Font("Courier New", 0, 12));
+		
+		
+		//initiate regulator candidates scrollpane
+		regulatorCanScrollPane = new JScrollPane();
+		regulatorCanScrollPane.setBorder(new LineBorder(
+				new java.awt.Color(204, 204, 204), 1, true));
+		regulatorCanScrollPane.setForeground(new Color(204, 204, 204));
+		regulatorCanScrollPane.setViewportBorder(BorderFactory
+				.createEtchedBorder());
+		
+		//initiate regulator candidates table
+		Object[][] tableContents_4 = new Object[20][2];
 		regulatorCandidates = new JTable(20,2){
 			public boolean isCellEditable(int row, int column) { return false; }
 		};
-		//regulatorCandidates.setModel(new DefaultTableModel(
-			//	tableContents_4,new String[]{"Regulator Candidates","Regulation"}
-				//));
-		regulatorCanScrollPane = new JScrollPane(regulatorCandidates);
+		regulatorCandidates.setModel(new DefaultTableModel(
+				tableContents_4,new String[]{"Regulators","Regulation"}
+				));
+		regulatorCandidates.setBorder(BorderFactory
+				.createBevelBorder(BevelBorder.RAISED));
+		regulatorCandidates.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		regulatorCanScrollPane.setViewportView(regulatorCandidates);;
 		
-		regulatorName = new JTextField(null,10);
-		regulateeName = new JTextField(null,10);
-		
+		//initiate search button
 		searchBt = new JButton("Search!");
-
-		searchPanel = new JPanel();
-		searchFrame = new JFrame("Search Page");
+		searchBt.setBackground(new Color(153, 153, 153));
+		searchBt.setFont(new Font("Î¢ÈíÑÅºÚ", 1, 14));
+		searchBt.setText("Search!");
+		searchBt.setBorder(BorderFactory
+				.createBevelBorder(BevelBorder.RAISED));
+		searchBt.setOpaque(false);
 		
-		boxOfRegulator = Box.createVerticalBox();
-		boxOfRegulatee = Box.createVerticalBox();
 		
-		boxOfRegulator.add(regulatorName);
-		boxOfRegulator.add(regulateeCanScrollPane);
+		//initiate picture label
+		pictureLabel = new JLabel();
 		
-		boxOfRegulatee.add(regulateeName);
-		boxOfRegulatee.add(regulatorCanScrollPane);
 		
-		searchPanel.setLayout(new GridLayout(1,5));
-		searchPanel.add(regulatorScrollPane);
-		searchPanel.add(boxOfRegulator);
-		searchPanel.add(searchBt);
-		searchPanel.add(boxOfRegulatee);
-		searchPanel.add(regulateeScrollPane);
-
-		Container contentPane = searchFrame.getContentPane();
-		contentPane.add(searchPanel);
-		searchFrame.setSize(600,400);
-		searchFrame.setVisible(true);
+		//set layout
+		GroupLayout layout = new GroupLayout(getContentPane());
+		getContentPane().setLayout(layout);
+		
+		//initializing layout
+		layout.setHorizontalGroup(layout
+				.createParallelGroup(Alignment.LEADING)
+				.addGroup(
+						layout.createSequentialGroup()
+								.addContainerGap()
+								.addComponent(regulatorScrollPane,
+										GroupLayout.PREFERRED_SIZE,
+										121,
+										GroupLayout.PREFERRED_SIZE)
+								.addPreferredGap(
+										LayoutStyle.ComponentPlacement.RELATED)
+								.addGroup(
+										layout.createParallelGroup(
+												Alignment.TRAILING)
+												.addGroup(
+														layout.createSequentialGroup()
+																.addComponent(
+																		regulatorNameLabel,
+																		GroupLayout.PREFERRED_SIZE,
+																		78,
+																		GroupLayout.PREFERRED_SIZE)
+																.addGap(37, 37,
+																		37))
+												.addComponent(
+														regulatorName,
+														GroupLayout.PREFERRED_SIZE,
+														115,
+														GroupLayout.PREFERRED_SIZE)
+												.addComponent(
+														regulateeCanScrollPane,
+														GroupLayout.PREFERRED_SIZE,
+														173,
+														GroupLayout.PREFERRED_SIZE))
+								.addGap(7, 7, 7)
+								.addGroup(
+										layout.createParallelGroup(
+												GroupLayout.Alignment.LEADING)
+												.addGroup(
+														layout.createSequentialGroup()
+																.addComponent(
+																		searchBt,
+																		GroupLayout.DEFAULT_SIZE,
+																		100,
+																		Short.MAX_VALUE)
+																.addPreferredGap(
+																		LayoutStyle.ComponentPlacement.RELATED))
+												.addComponent(
+														pictureLabel,
+														GroupLayout.PREFERRED_SIZE,
+														100,
+														GroupLayout.PREFERRED_SIZE))
+								.addGroup(
+										layout.createParallelGroup(
+												javax.swing.GroupLayout.Alignment.LEADING)
+												.addGroup(
+														layout.createSequentialGroup()
+																.addGap(63, 63,
+																		63)
+																.addComponent(
+																		regulateeNameLabel,
+																		GroupLayout.PREFERRED_SIZE,
+																		70,
+																		GroupLayout.PREFERRED_SIZE))
+												.addGroup(
+														layout.createSequentialGroup()
+																.addGap(5, 5, 5)
+																.addGroup(
+																		layout.createParallelGroup(
+																				javax.swing.GroupLayout.Alignment.LEADING)
+																				.addComponent(
+																						regulateeName,
+																						GroupLayout.PREFERRED_SIZE,
+																						115,
+																						GroupLayout.PREFERRED_SIZE)
+																				.addComponent(
+																						regulatorCanScrollPane,
+																						GroupLayout.PREFERRED_SIZE,
+																						173,
+																						GroupLayout.PREFERRED_SIZE))))
+								.addPreferredGap(
+										LayoutStyle.ComponentPlacement.RELATED)
+								.addComponent(regulateeScrollPane,
+										GroupLayout.PREFERRED_SIZE,
+										114,
+										GroupLayout.PREFERRED_SIZE)
+								.addContainerGap(
+										GroupLayout.DEFAULT_SIZE,
+										Short.MAX_VALUE)));
+		layout.setVerticalGroup(layout
+				.createParallelGroup(Alignment.LEADING)
+				.addGroup(
+						layout.createSequentialGroup()
+								.addGroup(
+										layout.createParallelGroup(
+												Alignment.LEADING)
+												.addGroup(
+														layout.createSequentialGroup()
+																.addContainerGap()
+																.addGroup(
+																		layout.createParallelGroup(
+																				Alignment.LEADING)
+																				.addGroup(
+																						layout.createSequentialGroup()
+																								.addGap(5,
+																										5,
+																										5)
+																								.addGroup(
+																										layout.createParallelGroup(
+																												Alignment.TRAILING)
+																												.addGroup(
+																														layout.createSequentialGroup()
+																																.addComponent(
+																																		regulatorNameLabel,
+																																		GroupLayout.PREFERRED_SIZE,
+																																		27,
+																																		GroupLayout.PREFERRED_SIZE)
+																																.addGap(2,
+																																		2,
+																																		2))
+																												.addGroup(
+																														GroupLayout.Alignment.LEADING,
+																														layout.createSequentialGroup()
+																																.addComponent(
+																																		regulateeNameLabel,
+																																		GroupLayout.PREFERRED_SIZE,
+																																		27,
+																																		GroupLayout.PREFERRED_SIZE)
+																																.addGap(2,
+																																		2,
+																																		2)))
+																								.addGroup(
+																										layout.createParallelGroup(
+																												GroupLayout.Alignment.LEADING)
+																												.addGroup(
+																														layout.createSequentialGroup()
+																																.addGap(2,
+																																		2,
+																																		2)
+																																.addComponent(
+																																		regulatorName,
+																																		GroupLayout.PREFERRED_SIZE,
+																																		29,
+																																		GroupLayout.PREFERRED_SIZE)
+																																.addPreferredGap(
+																																		LayoutStyle.ComponentPlacement.UNRELATED)
+																																.addComponent(
+																																		regulateeCanScrollPane,
+																																		0,
+																																		0,
+																																		Short.MAX_VALUE))
+																												.addGroup(
+																														layout.createSequentialGroup()
+																																.addGap(1,
+																																		1,
+																																		1)
+																																.addComponent(
+																																		regulateeName,
+																																		GroupLayout.PREFERRED_SIZE,
+																																		28,
+																																		GroupLayout.PREFERRED_SIZE)
+																																.addGap(18,
+																																		18,
+																																		18)
+																																.addComponent(
+																																		regulatorCanScrollPane,
+																																		GroupLayout.DEFAULT_SIZE,
+																																		308,
+																																		Short.MAX_VALUE))))
+																				.addComponent(
+																						regulateeScrollPane,
+																						GroupLayout.DEFAULT_SIZE,
+																						389,
+																						Short.MAX_VALUE)
+																				.addComponent(
+																						regulatorScrollPane,
+																						GroupLayout.PREFERRED_SIZE,
+																						385,
+																						GroupLayout.PREFERRED_SIZE)))
+												.addGroup(
+														layout.createSequentialGroup()
+																.addGap(39, 39,
+																		39)
+																.addComponent(
+																		pictureLabel,
+																		GroupLayout.PREFERRED_SIZE,
+																		50,
+																		GroupLayout.PREFERRED_SIZE)
+																.addPreferredGap(
+																		LayoutStyle.ComponentPlacement.UNRELATED)
+																.addComponent(
+																		searchBt)))
+								.addContainerGap()));
+		pack();
 	}
 	
 	
@@ -458,13 +713,15 @@ public class Search_Database extends JFrame{
 		//2¡¢initiate regulator table key events
 		regulatorTable.addKeyListener(new KeyAdapter(){
 			public void keyPressed(KeyEvent I){
-				if(I.getKeyCode() != KeyEvent.VK_UP && I.getKeyCode() != KeyEvent.VK_DOWN)
+				if(I.getKeyCode() != KeyEvent.VK_UP && I.getKeyCode() != KeyEvent.VK_DOWN && I.getKeyCode() != KeyEvent.VK_ENTER)
 					return;
 				int rowPoint = regulatorTable.getSelectedRow();
+				if(I.getKeyCode() == KeyEvent.VK_ENTER && rowPoint == regulatorTable.getRowCount() - 1)
+					triggerRegulatorEvents(0);
 				if(I.getKeyCode() == KeyEvent.VK_UP && rowPoint >= 1){
 					triggerRegulatorEvents(regulatorTable.getSelectedRow() - 1);
 				}
-				else if(I.getKeyCode() == KeyEvent.VK_DOWN && rowPoint < numOfRegulator - 1){
+				else if((I.getKeyCode() == KeyEvent.VK_DOWN || I.getKeyCode() == KeyEvent.VK_ENTER) && rowPoint < numOfRegulator - 1){
 					triggerRegulatorEvents(regulatorTable.getSelectedRow() + 1);
 				}
 			}
@@ -479,18 +736,20 @@ public class Search_Database extends JFrame{
 			}
 		}
 		);
-		
+		 
 		
 		//2¡¢initiate regulatee table key events
 		regulateeTable.addKeyListener(new KeyAdapter(){
 			public void keyPressed(KeyEvent I){
-				if(I.getKeyCode() != KeyEvent.VK_UP && I.getKeyCode() != KeyEvent.VK_DOWN)
+				if(I.getKeyCode() != KeyEvent.VK_UP && I.getKeyCode() != KeyEvent.VK_DOWN && I.getKeyCode() != KeyEvent.VK_ENTER)
 					return;
 				int rowPoint = regulateeTable.getSelectedRow();
+				if(I.getKeyCode() == KeyEvent.VK_ENTER && rowPoint == regulateeTable.getRowCount() - 1)
+					triggerRegulateeEvents(0);
 				if(I.getKeyCode() == KeyEvent.VK_UP && rowPoint >= 1){
 					triggerRegulateeEvents(rowPoint - 1);
 				}
-				else if(I.getKeyCode() == KeyEvent.VK_DOWN && rowPoint < numOfRegulatee - 1){
+				else if((I.getKeyCode() == KeyEvent.VK_DOWN || I.getKeyCode() == KeyEvent.VK_ENTER) && rowPoint < numOfRegulatee - 1){
 					triggerRegulateeEvents(rowPoint + 1);
 				}
 			}
@@ -508,13 +767,15 @@ public class Search_Database extends JFrame{
 		//2¡¢initiate regulator candidates table key events
 		regulatorCandidates.addKeyListener(new KeyAdapter(){
 			public void keyPressed(KeyEvent I){
-				if(I.getKeyCode() != KeyEvent.VK_UP && I.getKeyCode() != KeyEvent.VK_DOWN)
+				if(I.getKeyCode() != KeyEvent.VK_UP && I.getKeyCode() != KeyEvent.VK_DOWN && I.getKeyCode() != KeyEvent.VK_ENTER)
 					return;
 				int rowPoint = regulatorCandidates.getSelectedRow();
+				if(I.getKeyCode() == KeyEvent.VK_ENTER && rowPoint == regulatorCandidates.getRowCount() - 1)
+					triggerRegulatorCanEvents(0);
 				if(I.getKeyCode() == KeyEvent.VK_UP && rowPoint >= 1){
 					triggerRegulatorCanEvents(rowPoint - 1);
 				}
-				else if(I.getKeyCode() == KeyEvent.VK_DOWN && rowPoint < regulatorCandidates.getRowCount() - 1){
+				else if((I.getKeyCode() == KeyEvent.VK_DOWN || I.getKeyCode() == KeyEvent.VK_ENTER) && rowPoint < regulatorCandidates.getRowCount() - 1){
 					if(regulatorCandidates.getValueAt(rowPoint+1, 0)==null){
 						regulatorName.setText(null);
 						DefaultTableModel refreshModel = new DefaultTableModel(20,2);
@@ -538,13 +799,15 @@ public class Search_Database extends JFrame{
 		//2¡¢initiate regulatee candidates table key events
 		regulateeCandidates.addKeyListener(new KeyAdapter(){
 			public void keyPressed(KeyEvent I){
-				if(I.getKeyCode() != KeyEvent.VK_UP && I.getKeyCode() != KeyEvent.VK_DOWN)
+				if(I.getKeyCode() != KeyEvent.VK_UP && I.getKeyCode() != KeyEvent.VK_DOWN && I.getKeyCode() != KeyEvent.VK_ENTER)
 					return;
 				int rowPoint = regulateeCandidates.getSelectedRow();
+				if(I.getKeyCode() == KeyEvent.VK_ENTER && rowPoint == regulateeCandidates.getRowCount() - 1)
+					triggerRegulateeCanEvents(0);
 				if(I.getKeyCode() == KeyEvent.VK_UP && rowPoint >= 1){
 					triggerRegulateeCanEvents(rowPoint - 1);
 				}
-				else if(I.getKeyCode() == KeyEvent.VK_DOWN && rowPoint < regulateeCandidates.getRowCount() - 1){
+				else if((I.getKeyCode() == KeyEvent.VK_DOWN || I.getKeyCode() == KeyEvent.VK_ENTER) && rowPoint < regulateeCandidates.getRowCount() - 1){
 					if(regulateeCandidates.getValueAt(rowPoint+1, 0)==null){
 						regulateeName.setText(null);
 						DefaultTableModel refreshModel = new DefaultTableModel(20,2);

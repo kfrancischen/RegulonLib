@@ -581,7 +581,8 @@ public class main_GUI{
 																operonNames,
 																operonNames,
 																operonDataBase);
-				searchInO_O.searchFrame.setVisible(true);
+				searchInO_O.setTitle("Search Page");
+				searchInO_O.setVisible(true);
 			}
 		}
 		);
@@ -594,7 +595,8 @@ public class main_GUI{
 																geneNames,
 																promoterNames,
 																genepromoterDataBase);
-				searchInG_P.searchFrame.setVisible(true);
+				searchInG_P.setTitle("Search Page");
+				searchInG_P.setVisible(true);
 			}
 		}
 		);
