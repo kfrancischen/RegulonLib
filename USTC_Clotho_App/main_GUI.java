@@ -426,6 +426,13 @@ public class main_GUI{
 					return;
 				}
 				matrixsize = Integer.parseInt(sizeInput.getText());
+				int numRow = inputMatrixTable.getRowCount();
+				int numColumn = inputMatrixTable.getColumnCount();
+				for(int i = 0;i < numRow;i++){
+					for(int j = 0;j < numColumn;j++){
+						inputMatrixTable.setValueAt(null, i, j);
+					}
+				}
 				System.out.print(matrixsize+"\n\n");
 			}
 		});
