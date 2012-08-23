@@ -45,6 +45,14 @@ public class Search_Database extends JFrame{
 	private static JLabel regulateeNameLabel;
 	private static JLabel pictureLabel;
 	
+	private static final int columnCount = 20;
+	private static final String PATH = "F:/programs/java/images/";
+	private static final String POSITIVE = PATH + "positive.png";
+	private static final String NEGTIVE = PATH + "negtive.png";
+	private static final String POSANDNEG = PATH + "positive and negtive.png";
+	private static final String UNKNOWN = PATH + "unknown.png";
+	private static final String NORELATION = PATH + "norelation.png";
+	
 	/*------------constructor---------*/
 	public Search_Database(int NumOfRegulator,
 						int NumOfRegulatee,
@@ -79,13 +87,15 @@ public class Search_Database extends JFrame{
 		initTableEvents();
 		//initiate button events
 		initButtonEvents();
+		//initiate text events
+		initTextEvents();
 	}
 	
 	
 	/*---------------method to initiate all the components-------*/
 
 	public void initComponents(){
-		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
 		setBackground(new Color(255,255,255));
 		
 		//initiate regulator scrollpane
@@ -153,8 +163,8 @@ public class Search_Database extends JFrame{
 				.createEtchedBorder());
 		
 		//initiate regulatee candiates table
-		Object[][] tableContents_3 = new Object[20][2];
-		regulateeCandidates = new JTable(20,2){
+		Object[][] tableContents_3 = new Object[columnCount][2];
+		regulateeCandidates = new JTable(columnCount,2){
 			public boolean isCellEditable(int row, int column) { return false; }
 		};
 		regulateeCandidates.setModel(new DefaultTableModel(
@@ -166,9 +176,9 @@ public class Search_Database extends JFrame{
 		regulateeCanScrollPane.setViewportView(regulateeCandidates);
 		
 		//initiate regulateeName Label
-		regulateeNameLabel = new JLabel("Regulatee",10);
+		regulateeNameLabel = new JLabel();
 		regulateeNameLabel.setFont(new Font("Consolas", 1, 14));
-		//regulateeNameLabel.setText("Regulatee:");
+		regulateeNameLabel.setText("Regulatee");
 		regulateeNameLabel.setOpaque(true);
 		
 		//initiate regulatee Name textfield
@@ -185,8 +195,8 @@ public class Search_Database extends JFrame{
 				.createEtchedBorder());
 		
 		//initiate regulator candidates table
-		Object[][] tableContents_4 = new Object[20][2];
-		regulatorCandidates = new JTable(20,2){
+		Object[][] tableContents_4 = new Object[columnCount][2];
+		regulatorCandidates = new JTable(columnCount,2){
 			public boolean isCellEditable(int row, int column) { return false; }
 		};
 		regulatorCandidates.setModel(new DefaultTableModel(
@@ -225,34 +235,45 @@ public class Search_Database extends JFrame{
 										GroupLayout.PREFERRED_SIZE,
 										121,
 										GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(
-										LayoutStyle.ComponentPlacement.RELATED)
 								.addGroup(
 										layout.createParallelGroup(
-												Alignment.TRAILING)
+												GroupLayout.Alignment.LEADING,
+												false)
 												.addGroup(
 														layout.createSequentialGroup()
+																.addPreferredGap(
+																		LayoutStyle.ComponentPlacement.RELATED)
+																.addGroup(
+																		layout.createParallelGroup(
+																				GroupLayout.Alignment.TRAILING)
+																				.addComponent(
+																						regulatorName,
+																						GroupLayout.PREFERRED_SIZE,
+																						115,
+																						GroupLayout.PREFERRED_SIZE)
+																				.addComponent(
+																						regulateeCanScrollPane,
+																						GroupLayout.PREFERRED_SIZE,
+																						173,
+																						GroupLayout.PREFERRED_SIZE))
+																.addGap(7, 7, 7))
+												.addGroup(
+														Alignment.TRAILING,
+														layout.createSequentialGroup()
+																.addPreferredGap(
+																		LayoutStyle.ComponentPlacement.RELATED,
+																		GroupLayout.DEFAULT_SIZE,
+																		Short.MAX_VALUE)
 																.addComponent(
 																		regulatorNameLabel,
 																		GroupLayout.PREFERRED_SIZE,
 																		78,
 																		GroupLayout.PREFERRED_SIZE)
-																.addGap(37, 37,
-																		37))
-												.addComponent(
-														regulatorName,
-														GroupLayout.PREFERRED_SIZE,
-														115,
-														GroupLayout.PREFERRED_SIZE)
-												.addComponent(
-														regulateeCanScrollPane,
-														GroupLayout.PREFERRED_SIZE,
-														173,
-														GroupLayout.PREFERRED_SIZE))
-								.addGap(7, 7, 7)
+																.addGap(27, 27,
+																		27)))
 								.addGroup(
 										layout.createParallelGroup(
-												GroupLayout.Alignment.LEADING)
+												Alignment.LEADING)
 												.addGroup(
 														layout.createSequentialGroup()
 																.addComponent(
@@ -267,34 +288,32 @@ public class Search_Database extends JFrame{
 														GroupLayout.PREFERRED_SIZE,
 														100,
 														GroupLayout.PREFERRED_SIZE))
+								.addGap(5, 5, 5)
 								.addGroup(
 										layout.createParallelGroup(
-												javax.swing.GroupLayout.Alignment.LEADING)
+												GroupLayout.Alignment.LEADING)
+												.addComponent(
+														regulatorCanScrollPane,
+														GroupLayout.PREFERRED_SIZE,
+														173,
+														GroupLayout.PREFERRED_SIZE)
+												.addComponent(
+														regulateeName,
+														GroupLayout.PREFERRED_SIZE,
+														115,
+														GroupLayout.PREFERRED_SIZE)
 												.addGroup(
+														GroupLayout.Alignment.TRAILING,
 														layout.createSequentialGroup()
-																.addGap(63, 63,
-																		63)
+																.addPreferredGap(
+																		LayoutStyle.ComponentPlacement.UNRELATED)
 																.addComponent(
 																		regulateeNameLabel,
 																		GroupLayout.PREFERRED_SIZE,
-																		70,
-																		GroupLayout.PREFERRED_SIZE))
-												.addGroup(
-														layout.createSequentialGroup()
-																.addGap(5, 5, 5)
-																.addGroup(
-																		layout.createParallelGroup(
-																				javax.swing.GroupLayout.Alignment.LEADING)
-																				.addComponent(
-																						regulateeName,
-																						GroupLayout.PREFERRED_SIZE,
-																						115,
-																						GroupLayout.PREFERRED_SIZE)
-																				.addComponent(
-																						regulatorCanScrollPane,
-																						GroupLayout.PREFERRED_SIZE,
-																						173,
-																						GroupLayout.PREFERRED_SIZE))))
+																		93,
+																		GroupLayout.PREFERRED_SIZE)
+																.addGap(73, 73,
+																		73)))
 								.addPreferredGap(
 										LayoutStyle.ComponentPlacement.RELATED)
 								.addComponent(regulateeScrollPane,
@@ -324,31 +343,23 @@ public class Search_Database extends JFrame{
 																										5)
 																								.addGroup(
 																										layout.createParallelGroup(
-																												Alignment.TRAILING)
-																												.addGroup(
-																														layout.createSequentialGroup()
-																																.addComponent(
-																																		regulatorNameLabel,
-																																		GroupLayout.PREFERRED_SIZE,
-																																		27,
-																																		GroupLayout.PREFERRED_SIZE)
-																																.addGap(2,
-																																		2,
-																																		2))
-																												.addGroup(
-																														GroupLayout.Alignment.LEADING,
-																														layout.createSequentialGroup()
-																																.addComponent(
-																																		regulateeNameLabel,
-																																		GroupLayout.PREFERRED_SIZE,
-																																		27,
-																																		GroupLayout.PREFERRED_SIZE)
-																																.addGap(2,
-																																		2,
-																																		2)))
+																												Alignment.LEADING)
+																												.addComponent(
+																														regulateeNameLabel,
+																														GroupLayout.PREFERRED_SIZE,
+																														27,
+																														GroupLayout.PREFERRED_SIZE)
+																												.addComponent(
+																														regulatorNameLabel,
+																														GroupLayout.PREFERRED_SIZE,
+																														27,
+																														GroupLayout.PREFERRED_SIZE))
+																								.addGap(2,
+																										2,
+																										2)
 																								.addGroup(
 																										layout.createParallelGroup(
-																												GroupLayout.Alignment.LEADING)
+																												Alignment.LEADING)
 																												.addGroup(
 																														layout.createSequentialGroup()
 																																.addGap(2,
@@ -426,6 +437,7 @@ public class Search_Database extends JFrame{
 ////////////////////////////////////////////////////////////////////////////////	
 	/*-----triggering functions: for regulator table------*/
 	public static void triggerRegulatorEvents(int RowPoint){
+		pictureLabel.setIcon(null);
 		int numRow = regulateeCandidates.getRowCount();
 		regulatorName.setText(null);
 		
@@ -433,7 +445,8 @@ public class Search_Database extends JFrame{
 			regulateeCandidates.setValueAt(null, i, 0);
 			regulateeCandidates.setValueAt(null, i, 1);
 		}
-		DefaultTableModel refreshModel = new DefaultTableModel(20,2);
+		Object[][] tableContents = new Object[columnCount][2];
+		DefaultTableModel refreshModel = new DefaultTableModel(tableContents,new String[]{"Regulatees","Regulation"});
 		regulateeCandidates.setModel(refreshModel);
 		
 		int rowPoint = RowPoint;
@@ -445,7 +458,8 @@ public class Search_Database extends JFrame{
 				allRegulateeCanRow++;
 		}
 		if(allRegulateeCanRow > 20){
-			DefaultTableModel aNewModel = new DefaultTableModel(allRegulateeCanRow,2);
+			Object[][] tableContents_1 = new Object[allRegulateeCanRow][2];
+			DefaultTableModel aNewModel = new DefaultTableModel(tableContents_1,new String[]{"Regulatees","Regulation"});
 			regulateeCandidates.setModel(aNewModel);
 		}
 		int newRegulateeCanRow = 0;
@@ -475,12 +489,14 @@ public class Search_Database extends JFrame{
 	
 	/*------triggering functions: for regulatee table ----*/
 	public static void triggerRegulateeEvents(int RowPoint){
+		pictureLabel.setIcon(null);
 		int numRow = regulatorCandidates.getRowCount();
 		for(int i = 0;i < numRow;i++){
 			regulatorCandidates.setValueAt(null, i, 0);
 			regulatorCandidates.setValueAt(null, i, 1);
 		}
-		DefaultTableModel refreshModel = new DefaultTableModel(20,2);
+		Object[][] tableContents = new Object[columnCount][2];
+		DefaultTableModel refreshModel = new DefaultTableModel(tableContents,new String[]{"Regulators","Regulation"});
 		regulatorCandidates.setModel(refreshModel);
 		regulateeName.setText(null);
 		
@@ -493,7 +509,8 @@ public class Search_Database extends JFrame{
 				allRegulatorCanRow++;
 		}
 		if(allRegulatorCanRow > 20){
-			DefaultTableModel aNewModel = new DefaultTableModel(allRegulatorCanRow,2);
+			Object[][] tableContents_1 = new Object[allRegulatorCanRow][2];
+			DefaultTableModel aNewModel = new DefaultTableModel(tableContents_1,new String[]{"Regulators","Regulation"});
 			regulatorCandidates.setModel(aNewModel);
 		};
 		int newRegulatorCanRow = 0;
@@ -526,6 +543,7 @@ public class Search_Database extends JFrame{
 	
 	public static void triggerRegulatorCanEvents(int RowPoint){
 		int rowPoint = RowPoint;
+		pictureLabel.setIcon(null);
 		if(regulatorCandidates.getValueAt(rowPoint, 0)==null)
 			return;
 		
@@ -535,7 +553,8 @@ public class Search_Database extends JFrame{
 			regulateeCandidates.setValueAt(null, i ,1);
 		}
 		regulatorName.setText(null);
-		DefaultTableModel refreshModel = new DefaultTableModel(20,2);
+		Object[][] tableContents = new Object[columnCount][2];
+		DefaultTableModel refreshModel = new DefaultTableModel(tableContents, new String[]{"Regulatees","Regulation"});
 		regulateeCandidates.setModel(refreshModel);
 		
 		String selectedRegulator = (String) regulatorCandidates.getValueAt(rowPoint, 0);
@@ -554,7 +573,8 @@ public class Search_Database extends JFrame{
 				allRegulateeCanRow++;
 		}
 		if(allRegulateeCanRow > 20){
-			DefaultTableModel aNewModel = new DefaultTableModel(allRegulateeCanRow,2);
+			Object[][] tableContents_1 = new Object[allRegulateeCanRow][2];
+			DefaultTableModel aNewModel = new DefaultTableModel(tableContents_1,new String[]{"Regulatees","Regulation"});
 			regulateeCandidates.setModel(aNewModel);
 		}
 		int newRegulateeCanRow = 0;
@@ -585,6 +605,7 @@ public class Search_Database extends JFrame{
 	/*------triggering function: regulatee candidates table------*/
 	public static void triggerRegulateeCanEvents(int RowPoint){
 		int rowPoint = RowPoint;
+		pictureLabel.setIcon(null);
 		if(regulateeCandidates.getValueAt(rowPoint, 0)==null)
 			return;
 		
@@ -594,7 +615,8 @@ public class Search_Database extends JFrame{
 			regulatorCandidates.setValueAt(null, i, 0);
 			regulatorCandidates.setValueAt(null, i, 1);
 		}
-		DefaultTableModel refreshModel = new DefaultTableModel(20,2);
+		Object[][] tableContents = new Object[columnCount][2];
+		DefaultTableModel refreshModel = new DefaultTableModel(tableContents,new String[]{"Regulators","Regulation"});
 		regulatorCandidates.setModel(refreshModel);
 		
 		String selectedRegulatee = (String) regulateeCandidates.getValueAt(rowPoint, 0);
@@ -613,7 +635,8 @@ public class Search_Database extends JFrame{
 				allRegulatorCanRow++;
 		}
 		if(allRegulatorCanRow > 20){
-			DefaultTableModel aNewModel = new DefaultTableModel(allRegulatorCanRow,2);
+			Object[][] tableContents_1 = new Object[allRegulatorCanRow][2];
+			DefaultTableModel aNewModel = new DefaultTableModel(tableContents_1,new String[]{"Regulators","Regulation"});
 			regulatorCandidates.setModel(aNewModel);
 		}
 		int newRegulatorCanRow = 0;
@@ -678,22 +701,32 @@ public class Search_Database extends JFrame{
 			return;
 		}
 		
-		int temp = database[regulatorPosition][regulateePosition];
+		int temp = database[regulateePosition][regulatorPosition];
 		switch(temp){
 		case 1:
-			JOptionPane.showMessageDialog(null,"Positive Regulation","Result",JOptionPane.PLAIN_MESSAGE);
+			//JOptionPane.showMessageDialog(null,"Positive Regulation","Result",JOptionPane.PLAIN_MESSAGE);
+			pictureLabel.setIcon(null);
+			pictureLabel.setIcon(new ImageIcon(POSITIVE));
 			break;
 		case -1:
-			JOptionPane.showMessageDialog(null,"Negative Regulation","Result",JOptionPane.PLAIN_MESSAGE);
+			//JOptionPane.showMessageDialog(null,"Negative Regulation","Result",JOptionPane.PLAIN_MESSAGE);
+			pictureLabel.setIcon(null);
+			pictureLabel.setIcon(new ImageIcon(NEGTIVE));
 			break;
 		case 2:
-			JOptionPane.showMessageDialog(null,"Positive&Negative Regulation","Result",JOptionPane.PLAIN_MESSAGE);
+			//JOptionPane.showMessageDialog(null,"Positive&Negative Regulation","Result",JOptionPane.PLAIN_MESSAGE);
+			pictureLabel.setIcon(null);
+			pictureLabel.setIcon(new ImageIcon(POSANDNEG));
 			break;
 		case -2:
-			JOptionPane.showMessageDialog(null,"Unknown Regulation","Result",JOptionPane.PLAIN_MESSAGE);
+			//JOptionPane.showMessageDialog(null,"Unknown Regulation","Result",JOptionPane.PLAIN_MESSAGE);
+			pictureLabel.setIcon(null);
+			pictureLabel.setIcon(new ImageIcon(UNKNOWN));
 			break;
 		default:
-			JOptionPane.showMessageDialog(null,"No Regulation","Result",JOptionPane.PLAIN_MESSAGE);
+			//JOptionPane.showMessageDialog(null,"No Regulation","Result",JOptionPane.PLAIN_MESSAGE);
+			pictureLabel.setIcon(null);
+			pictureLabel.setIcon(new ImageIcon(NORELATION));
 			break;
 		}
 		
@@ -778,7 +811,8 @@ public class Search_Database extends JFrame{
 				else if((I.getKeyCode() == KeyEvent.VK_DOWN || I.getKeyCode() == KeyEvent.VK_ENTER) && rowPoint < regulatorCandidates.getRowCount() - 1){
 					if(regulatorCandidates.getValueAt(rowPoint+1, 0)==null){
 						regulatorName.setText(null);
-						DefaultTableModel refreshModel = new DefaultTableModel(20,2);
+						Object[][] tableContents = new Object[columnCount][2];
+						DefaultTableModel refreshModel = new DefaultTableModel(tableContents,new String[]{"Regulatees","Regulation"});
 						regulateeCandidates.setModel(refreshModel);
 						return;
 					}		
@@ -810,7 +844,8 @@ public class Search_Database extends JFrame{
 				else if((I.getKeyCode() == KeyEvent.VK_DOWN || I.getKeyCode() == KeyEvent.VK_ENTER) && rowPoint < regulateeCandidates.getRowCount() - 1){
 					if(regulateeCandidates.getValueAt(rowPoint+1, 0)==null){
 						regulateeName.setText(null);
-						DefaultTableModel refreshModel = new DefaultTableModel(20,2);
+						Object[][] tableContents = new Object[columnCount][2];
+						DefaultTableModel refreshModel = new DefaultTableModel(tableContents,new String[]{"Regulators","Regulation"});
 						regulatorCandidates.setModel(refreshModel);
 						return;
 					}
@@ -842,6 +877,23 @@ public class Search_Database extends JFrame{
 			}
 		}
 		);
+	}
+	
+	/*--------------------initializing text events----------*/
+	public void initTextEvents(){
+		regulatorName.addKeyListener(new KeyAdapter(){
+			public void keyPressed(KeyEvent I){
+				pictureLabel.setIcon(null);
+			}
+		}
+		);
+		regulateeName.addKeyListener(new KeyAdapter(){
+			public void keyPressed(KeyEvent I){
+				pictureLabel.setIcon(null);
+			}
+		}
+		);
+		
 	}
 
 }

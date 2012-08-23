@@ -25,6 +25,7 @@ public class main_GUI{
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			JOptionPane.showMessageDialog(null,"Unable To Load The Database","Error!",JOptionPane.ERROR_MESSAGE);
+			return;
 		}
 		initComponents();
 		initFrameEvents();

@@ -97,6 +97,8 @@ public class Interface extends javax.swing.JFrame {
 				204));
 		regulateeCanScrollPane.setViewportView(regulateeCandidates);
 
+		pictureLabel.setIcon(new javax.swing.ImageIcon(
+				"F:\\programs\\java\\images\\negtive.png")); // NOI18N
 		pictureLabel.setText("picture");
 
 		regulateeNameLabel.setFont(new java.awt.Font("Consolas", 1, 14));
@@ -163,31 +165,42 @@ public class Interface extends javax.swing.JFrame {
 										javax.swing.GroupLayout.PREFERRED_SIZE,
 										121,
 										javax.swing.GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(
-										javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 								.addGroup(
 										layout.createParallelGroup(
-												javax.swing.GroupLayout.Alignment.TRAILING)
+												javax.swing.GroupLayout.Alignment.LEADING,
+												false)
 												.addGroup(
 														layout.createSequentialGroup()
+																.addPreferredGap(
+																		javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																.addGroup(
+																		layout.createParallelGroup(
+																				javax.swing.GroupLayout.Alignment.TRAILING)
+																				.addComponent(
+																						regulatorName,
+																						javax.swing.GroupLayout.PREFERRED_SIZE,
+																						115,
+																						javax.swing.GroupLayout.PREFERRED_SIZE)
+																				.addComponent(
+																						regulateeCanScrollPane,
+																						javax.swing.GroupLayout.PREFERRED_SIZE,
+																						173,
+																						javax.swing.GroupLayout.PREFERRED_SIZE))
+																.addGap(7, 7, 7))
+												.addGroup(
+														javax.swing.GroupLayout.Alignment.TRAILING,
+														layout.createSequentialGroup()
+																.addPreferredGap(
+																		javax.swing.LayoutStyle.ComponentPlacement.RELATED,
+																		javax.swing.GroupLayout.DEFAULT_SIZE,
+																		Short.MAX_VALUE)
 																.addComponent(
 																		regulatorNameLabel,
 																		javax.swing.GroupLayout.PREFERRED_SIZE,
 																		78,
 																		javax.swing.GroupLayout.PREFERRED_SIZE)
-																.addGap(37, 37,
-																		37))
-												.addComponent(
-														regulatorName,
-														javax.swing.GroupLayout.PREFERRED_SIZE,
-														115,
-														javax.swing.GroupLayout.PREFERRED_SIZE)
-												.addComponent(
-														regulateeCanScrollPane,
-														javax.swing.GroupLayout.PREFERRED_SIZE,
-														173,
-														javax.swing.GroupLayout.PREFERRED_SIZE))
-								.addGap(7, 7, 7)
+																.addGap(27, 27,
+																		27)))
 								.addGroup(
 										layout.createParallelGroup(
 												javax.swing.GroupLayout.Alignment.LEADING)
@@ -205,34 +218,32 @@ public class Interface extends javax.swing.JFrame {
 														javax.swing.GroupLayout.PREFERRED_SIZE,
 														100,
 														javax.swing.GroupLayout.PREFERRED_SIZE))
+								.addGap(5, 5, 5)
 								.addGroup(
 										layout.createParallelGroup(
 												javax.swing.GroupLayout.Alignment.LEADING)
+												.addComponent(
+														regulatorCanScrollPane,
+														javax.swing.GroupLayout.PREFERRED_SIZE,
+														173,
+														javax.swing.GroupLayout.PREFERRED_SIZE)
+												.addComponent(
+														regulateeName,
+														javax.swing.GroupLayout.PREFERRED_SIZE,
+														115,
+														javax.swing.GroupLayout.PREFERRED_SIZE)
 												.addGroup(
+														javax.swing.GroupLayout.Alignment.TRAILING,
 														layout.createSequentialGroup()
-																.addGap(63, 63,
-																		63)
+																.addPreferredGap(
+																		javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
 																.addComponent(
 																		regulateeNameLabel,
 																		javax.swing.GroupLayout.PREFERRED_SIZE,
-																		70,
-																		javax.swing.GroupLayout.PREFERRED_SIZE))
-												.addGroup(
-														layout.createSequentialGroup()
-																.addGap(5, 5, 5)
-																.addGroup(
-																		layout.createParallelGroup(
-																				javax.swing.GroupLayout.Alignment.LEADING)
-																				.addComponent(
-																						regulateeName,
-																						javax.swing.GroupLayout.PREFERRED_SIZE,
-																						115,
-																						javax.swing.GroupLayout.PREFERRED_SIZE)
-																				.addComponent(
-																						regulatorCanScrollPane,
-																						javax.swing.GroupLayout.PREFERRED_SIZE,
-																						173,
-																						javax.swing.GroupLayout.PREFERRED_SIZE))))
+																		93,
+																		javax.swing.GroupLayout.PREFERRED_SIZE)
+																.addGap(73, 73,
+																		73)))
 								.addPreferredGap(
 										javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 								.addComponent(regulateeScrollPane,
@@ -262,28 +273,20 @@ public class Interface extends javax.swing.JFrame {
 																										5)
 																								.addGroup(
 																										layout.createParallelGroup(
-																												javax.swing.GroupLayout.Alignment.TRAILING)
-																												.addGroup(
-																														layout.createSequentialGroup()
-																																.addComponent(
-																																		regulatorNameLabel,
-																																		javax.swing.GroupLayout.PREFERRED_SIZE,
-																																		27,
-																																		javax.swing.GroupLayout.PREFERRED_SIZE)
-																																.addGap(2,
-																																		2,
-																																		2))
-																												.addGroup(
-																														javax.swing.GroupLayout.Alignment.LEADING,
-																														layout.createSequentialGroup()
-																																.addComponent(
-																																		regulateeNameLabel,
-																																		javax.swing.GroupLayout.PREFERRED_SIZE,
-																																		27,
-																																		javax.swing.GroupLayout.PREFERRED_SIZE)
-																																.addGap(2,
-																																		2,
-																																		2)))
+																												javax.swing.GroupLayout.Alignment.LEADING)
+																												.addComponent(
+																														regulateeNameLabel,
+																														javax.swing.GroupLayout.PREFERRED_SIZE,
+																														27,
+																														javax.swing.GroupLayout.PREFERRED_SIZE)
+																												.addComponent(
+																														regulatorNameLabel,
+																														javax.swing.GroupLayout.PREFERRED_SIZE,
+																														27,
+																														javax.swing.GroupLayout.PREFERRED_SIZE))
+																								.addGap(2,
+																										2,
+																										2)
 																								.addGroup(
 																										layout.createParallelGroup(
 																												javax.swing.GroupLayout.Alignment.LEADING)
