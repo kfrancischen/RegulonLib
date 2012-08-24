@@ -48,20 +48,25 @@ public class main_GUI{
 	public static void main(String args[]){
 
 		new main_GUI();
-		System.out.print("Enter the Matrix size:\n");	
+		//System.out.print(aTest.panel_1.getWidth()+"\t"+aTest.panel_1.getHeight());	
 	}
 
 		
 	
 	/*-----------method to initiate the mainFrame GUI--------*/
 	
+	@SuppressWarnings("serial")
 	private void initComponents(){
 		/*---------Initializing mainFrame and its container---*/
 		mainFrame = new JFrame("USTC_Clotho_App");
 		Container contentPane = mainFrame.getContentPane();
 		
 		/*------Initializing main panel---------*/
-		panel_1 = new JPanel();
+		panel_1 = new JPanel(){
+			public void paintComponent(Graphics g){
+				g.drawImage(panelbackground.getImage(),0,0,getSize().width,getSize().height,this);
+			}
+		};
 
 		/*-----Initializing JTable----------*/
 		
@@ -116,6 +121,7 @@ public class main_GUI{
 		
 		/*------initializing JMenu "File"----*/
 		File = new JMenu("File");
+		File.setForeground(new Color(255, 255, 255));
 		New = new JMenuItem("New",'N');
 		save = new JMenuItem("Save",'S');
 		save.setEnabled(false);
@@ -128,6 +134,7 @@ public class main_GUI{
 		
 		/*------initializing JMenu "Search"----*/
 		Search = new JMenu("Search");
+		Search.setForeground(new Color(255, 255, 255));
 		Operon_Operon = new JMenuItem("Search in Operon-Operon");
 		Gene_Promoter = new JMenuItem("Search in Gene-Promoter");
 		Search.add(Operon_Operon);
@@ -135,6 +142,7 @@ public class main_GUI{
 		
 		/*-------initializing JMenu "Help"----*/
 		Help = new JMenu("Help");
+		Help.setForeground(new Color(255, 255, 255));
 		howToUse = new JMenuItem("How To Use");
 		aboutDatabase = new JMenu("About Database");
 		Help.add(howToUse);
@@ -142,6 +150,7 @@ public class main_GUI{
 		
 		/*------initializing JMenu "About"----*/
 		About = new JMenu("About");
+		About.setForeground(new Color(255, 255, 255));
 		aboutUSTC_2012 = new JMenuItem("About 2012 USTC-Software Team");
 		aboutUSTC = new JMenuItem("About USTC");
 		About.add(aboutUSTC_2012);
@@ -154,7 +163,7 @@ public class main_GUI{
 		mainMenu.add(Search);
 		mainMenu.add(Help);
 		mainMenu.add(About);
-		
+		mainMenu.setBackground(new Color(69,68,68));
 		
 		/*-----initializing  Buttons---------*/
 		commitSizeBt = new JButton();
@@ -332,6 +341,7 @@ public class main_GUI{
 												.addComponent(modeOneBt)
 												.addComponent(modeTwoBt))
 								.addContainerGap(51, Short.MAX_VALUE)));
+
 		/*------adding to mainTabbedPane-----*/
 		mainTabbedPane = new JTabbedPane();
 		mainTabbedPane.setTabPlacement(JTabbedPane.TOP);
@@ -344,7 +354,10 @@ public class main_GUI{
 		mainFrame.pack();
 		mainFrame.setVisible(true);
 		mainFrame.setResizable(false);
-		
+		mainFrame.getLayeredPane().add(framebackLabel,new Integer(Integer.MIN_VALUE));
+		framebackLabel.setBounds(0, 0, framebackground.getIconWidth(),framebackground.getIconHeight());
+		((JPanel)mainFrame.getContentPane()).setOpaque(false);
+		panel_1.getRootPane().setOpaque(false);
 		//initiate string buffers
 		outPutBuffers = new Vector<StringBuffer>();
 		for(int i = 0; i < 1000; i++){
@@ -932,6 +945,12 @@ public class main_GUI{
 
 	private static final String PATH = "F:/programs/java/";
 	private static final String USTCLOGO = PATH + "images/logo ustc.png";
+	private static final String FRAMEBACKGROUND = PATH + "images/frameBack.png";
+	private static final String PANELBACKGROUND = PATH + "images/panelBack.png";
+	private static ImageIcon framebackground = new ImageIcon(FRAMEBACKGROUND);
+	private static JLabel framebackLabel = new JLabel(framebackground);
+	
+	private static ImageIcon panelbackground = new ImageIcon(PANELBACKGROUND);
 	
 	//JMenuItems for Menu "File"
 	private static JMenuItem New;
