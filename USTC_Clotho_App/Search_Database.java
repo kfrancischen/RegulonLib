@@ -104,7 +104,7 @@ public class Search_Database extends JFrame{
 		regulatorScrollPane = new JScrollPane();
 		//regulatorScrollPane.setBackground(new Color(255,255,255));
 		regulatorScrollPane.setBorder(BorderFactory
-				.createLineBorder(new Color(204, 204, 204)));
+				.createLineBorder(new Color(204, 204, 204),0));
 		regulatorScrollPane.setForeground(new Color(204, 204, 204));
 		regulatorScrollPane.setViewportBorder(BorderFactory
 				.createBevelBorder(BevelBorder.LOWERED));
@@ -133,13 +133,14 @@ public class Search_Database extends JFrame{
 		regulatorTable.setModel(new DefaultTableModel(
 				tableContents_1,new String[]{"Regulator Lib"}
 				));
+		regulatorTable.setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0),0));
 		regulatorScrollPane.setViewportView(regulatorTable);
 		
 		//initiate regulator name label
 		regulatorNameLabel = new JLabel("Regulator",10);
-		regulatorNameLabel.setFont(new Font("Consolas", 1, 14));
+		regulatorNameLabel.setFont(new Font("Consolas", 3, 14));
 		//regulatorNameLabel.setText("Regulator:");
-		regulatorNameLabel.setOpaque(true);
+		regulatorNameLabel.setOpaque(false);
 		
 		//initiate regulator name textfield
 		regulatorName = new JTextField();
@@ -149,7 +150,7 @@ public class Search_Database extends JFrame{
 		regulateeScrollPane = new JScrollPane();
 		regulateeScrollPane.setOpaque(false);
 		regulateeScrollPane.setBorder(BorderFactory
-				.createLineBorder(new Color(204, 204, 204)));
+				.createLineBorder(new Color(204, 204, 204),0));
 		regulateeScrollPane.setForeground(new Color(204, 204, 204));
 		regulateeScrollPane.setViewportBorder(BorderFactory
 				.createBevelBorder(BevelBorder.LOWERED));
@@ -166,13 +167,14 @@ public class Search_Database extends JFrame{
 		regulateeTable.setModel(new DefaultTableModel(
 				tableContents_2,new String[]{"Regulatee Lib"}
 				));
+		regulateeTable.setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0),0));
 		regulateeScrollPane.setViewportView(regulateeTable);
 		
 		//initiate regulatee candidates scrollpane
 		regulateeCanScrollPane = new JScrollPane();
 		regulateeCanScrollPane.setOpaque(false);
 		regulateeCanScrollPane.setBorder(new LineBorder(
-				new Color(204, 204, 204), 1, true));
+				new Color(204, 204, 204), 0, true));
 		regulateeCanScrollPane.setForeground(new Color(204, 204, 204));
 		regulateeCanScrollPane.setViewportBorder(BorderFactory
 				.createEtchedBorder());
@@ -186,16 +188,16 @@ public class Search_Database extends JFrame{
 				tableContents_3,new String[]{"Regulatees","Relation"}
 				));
 		regulateeCandidates.setBorder(BorderFactory
-				.createBevelBorder(BevelBorder.RAISED));
+				.createLineBorder(new Color(0, 0, 0),0));
 		regulateeCandidates.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		regulateeCandidates.setFont(new Font("Consolas",0,12));
 		regulateeCanScrollPane.setViewportView(regulateeCandidates);
 		
 		//initiate regulateeName Label
 		regulateeNameLabel = new JLabel();
-		regulateeNameLabel.setFont(new Font("Consolas", 1, 14));
+		regulateeNameLabel.setFont(new Font("Consolas", 3, 14));
 		regulateeNameLabel.setText("Regulatee");
-		regulateeNameLabel.setOpaque(true);
+		regulateeNameLabel.setOpaque(false);
 		
 		//initiate regulatee Name textfield
 		regulateeName = new JTextField();
@@ -206,7 +208,7 @@ public class Search_Database extends JFrame{
 		regulatorCanScrollPane = new JScrollPane();
 		regulatorCanScrollPane.setOpaque(false);
 		regulatorCanScrollPane.setBorder(new LineBorder(
-				new java.awt.Color(204, 204, 204), 1, true));
+				new java.awt.Color(204, 204, 204), 0, true));
 		regulatorCanScrollPane.setForeground(new Color(204, 204, 204));
 		regulatorCanScrollPane.setViewportBorder(BorderFactory
 				.createEtchedBorder());
@@ -220,7 +222,7 @@ public class Search_Database extends JFrame{
 				tableContents_4,new String[]{"Regulators","Relation"}
 				));
 		regulatorCandidates.setBorder(BorderFactory
-				.createBevelBorder(BevelBorder.RAISED));
+				.createLineBorder(new Color(0,0,0),0));
 		regulatorCandidates.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		regulatorCandidates.setFont(new Font("Consolas",0,12));
 		regulatorCanScrollPane.setViewportView(regulatorCandidates);;
