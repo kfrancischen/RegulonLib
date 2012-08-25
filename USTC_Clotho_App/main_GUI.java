@@ -34,27 +34,38 @@ public class main_GUI{
 			JOptionPane.showMessageDialog(null,"Unable To Load The Database","Error!",JOptionPane.ERROR_MESSAGE);
 			return;
 		}
+		//method to initiate main GUI components
 		initComponents();
+		//method to initiate main frame events
 		initFrameEvents();
+		//method to initiate tab panel events
 		initTabEvents();
+		//method to initiate text field events
 		initTextEvents();
+		//method to initiate all the button events
 		initButtonEvents();
+		//method to initiate file menu events
 		initFileMenuEvents();
-		initDatabaseMenuEvents();
+		//method to initiate search menu events
+		initSearchMenuEvents();
+		//method to initiate help menu events
 		initHelpMenuEvents();
+		//method to initiate about menu events
 		initAboutMenuEvents();
+		//method to initiate popup menu events
+		initPopupMenuEvents();
 	}
 
 	
 	/*-----main function of the class------*/
 	public static void main(String args[]){
 
-		new main_GUI();
-		//System.out.print(aTest.panel_1.getWidth()+"\t"+aTest.panel_1.getHeight());	
+		main_GUI aTest = new main_GUI();
+		//System.out.print(aTest.modeTwoBt.getWidth()+"\t"+aTest.modeTwoBt.getHeight());	
 	}
 
 		
-	
+	//////////////////////////////////////////////////////////////////////////////////////////////////////
 	/*-----------method to initiate the mainFrame GUI--------*/
 	
 	@SuppressWarnings("serial")
@@ -119,9 +130,11 @@ public class main_GUI{
 		matrixSizeLabel = new JLabel();
 		matrixSizeLabel.setText("Matrix Size");
 		matrixSizeLabel.setFont(new Font("Consolas", 1, 14));
-		//initiate USTClogo label
+		
+		//initiate USTClogo label and input size text field
 		USTClogo = new JLabel();
 		sizeInput = new JTextField();
+		sizeInput.setBorder(new LineBorder(new Color(224, 210, 181), 0,true));
 		
 		/*------initializing JMenu "File"----*/
 		File = new JMenu("File");
@@ -163,9 +176,14 @@ public class main_GUI{
 		
 		/*------initializing JPopupMenu "aNewMenu"-----*/
 		aNewMenu = new JPopupMenu();
-		aNewMenu.add(save);
-		aNewMenu.add(New);
-		aNewMenu.add(exit);
+		save_1 = new JMenuItem("save");
+		New_1 = new JMenuItem("new");
+		clear_1 = new JMenuItem("clear");
+		exit_1 = new JMenuItem("exit");
+		aNewMenu.add(save_1);
+		aNewMenu.add(New_1);
+		aNewMenu.add(clear_1);
+		aNewMenu.add(exit_1);
 		
 		/*------initializing JMenuBar mainMenu-------*/
 		mainMenu = new JMenuBar();
@@ -178,21 +196,35 @@ public class main_GUI{
 		
 		/*-----initializing  Buttons---------*/
 		commitSizeBt = new JButton();
-		commitSizeBt.setText("confirm");
+		//commitSizeBt.setText("confirm");
+		commitSizeBt.setBackground(new Color(153, 153, 153));
 		commitSizeBt.setFont(new java.awt.Font("Consolas", 1, 14));
 		commitSizeBt.setBorder(new javax.swing.border.LineBorder(
-				new Color(204, 204, 204), 1, true));
+				new Color(204, 204, 204), 0, true));
 		commitSizeBt.setToolTipText("Press it to confirm matrix size");
+		commitSizeBt.setOpaque(false);
+		commitSizeBt.setIcon(confirmbackground);
 		
 		modeOneBt = new JButton();
+		modeOneBt.setBackground(new Color(153, 153, 153));
 		modeOneBt.setFont(new java.awt.Font("Consolas", 1, 14));
-		modeOneBt.setText("Mode 1");
+		//modeOneBt.setText("Mode 1");
+		modeOneBt.setBorder(new javax.swing.border.LineBorder(
+				new Color(204, 204, 204), 0, true));
 		modeOneBt.setToolTipText("Press it to search in Operon-Operon database");
+		modeOneBt.setIcon(modeonebackground);
+		modeOneBt.setOpaque(false);
+		
 		
 		modeTwoBt = new JButton();
+		modeTwoBt.setBackground(new Color(153, 153, 153));
 		modeTwoBt.setFont(new java.awt.Font("Consolas", 1, 14));
-		modeTwoBt.setText("Mode 2");
+		//modeTwoBt.setText("Mode 2");
+		modeTwoBt.setBorder(new javax.swing.border.LineBorder(
+				new Color(204, 204, 204), 0, true));
 		modeTwoBt.setToolTipText("Press it to search in Gene-Promter database");
+		modeTwoBt.setOpaque(false);
+		modeTwoBt.setIcon(modetwobackground);
 		
 		/*------initializing labels--------*/
 		modeOneLabel = new JLabel();
@@ -375,7 +407,7 @@ public class main_GUI{
 			outPutBuffers.add(null);
 		}
 	}
-	
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	/*-------------method to load the Operon_Operon database-------*/
 	
@@ -384,8 +416,7 @@ public class main_GUI{
 		/*---------First Part: Loading Operon_Operon Database-------*/
 		
 		//-----------------read file-----------------------//
-		String filePath1 = PATH + "USTC_SOFTWARE_PARTS_DATA.txt";
-		FileReader infile1 = new FileReader(filePath1);
+		FileReader infile1 = new FileReader(PATHFORPARTS);
 		BufferedReader in1 = new BufferedReader(infile1);
 		
 		
@@ -413,8 +444,7 @@ public class main_GUI{
 		/*--------Second part: Loading Gene_Promoter Database------*/
 		
 		//-----------------read file-----------------------//
-		String filePath2 = PATH + "USTC_SOFTWARE_BIOBRICKS_DATA.txt";
-		FileReader infile2 = new FileReader(filePath2);
+		FileReader infile2 = new FileReader(PATHFORBIOBRICKS);
 		BufferedReader in2 = new BufferedReader(infile2);
 		
 		//------------- initializing numOfGenes and numOfPromoters-------//
@@ -444,7 +474,9 @@ public class main_GUI{
 		}
 		in2.close();
 	}
-	/*------special function for confirm button---------*/
+	
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	/*------special function for confirm button and file menu---------*/
 	public void triggerConfirm(){
 		if(sizeInput.getText().equals("")){
 			System.out.print("Please Input The Matrix Size!\n");
@@ -493,7 +525,7 @@ public class main_GUI{
 			Component   cell   =   super.getTableCellRendererComponent   
 			(table,   value,   isSelected,   hasFocus,   row,   column); 
 			if(row < matrixsize && column < matrixsize){
-				cell.setBackground(new Color(204,204,204));
+				cell.setBackground(new Color(201,160,96));
 			}
 			else
 				cell.setBackground(Color.WHITE);
@@ -507,6 +539,150 @@ public class main_GUI{
 		
 	}
 	
+	/*--------trigger functions: trigger new event for main menu and popup menu---*/
+	public void triggerNew(){
+		int numOfTabs = mainTabbedPane.getTabCount();
+		if(numOfTabs == 1){
+			save.setEnabled(false);
+		}
+		mainTabbedPane.setSelectedComponent(panel_1);
+		sizeInput.setText(null);
+		int numRow = inputMatrixTable.getRowCount();
+		int numColumn = inputMatrixTable.getColumnCount();
+		for(int i = 0; i < numRow; i++){
+			for(int j = 0; j < numColumn; j++){
+				inputMatrixTable.setValueAt(null,i, j);
+			}
+		}
+		@SuppressWarnings("serial")
+		DefaultTableCellRenderer whiteRenderer = new DefaultTableCellRenderer() { 
+			public Component getTableCellRendererComponent(JTable table,  
+			Object value, boolean isSelected, boolean hasFocus,  
+			int row, int column) { 
+			Component   cell   =   super.getTableCellRendererComponent   
+			(table,   value,   isSelected,   hasFocus,   row,   column); 
+			cell.setBackground(Color.WHITE);
+			return   cell; 
+			} 
+		}; 
+		for(int i = 0; i < numColumn;i++){
+			inputMatrixTable.getColumnModel().getColumn(i).setCellRenderer(whiteRenderer);
+		}
+	}
+	/*--------trigger functions: trigger save event for main menu and popup menu---*/
+	public void triggerSave(){
+		int numOfTabs = mainTabbedPane.getTabCount();
+		int currentTab = 0;
+		for(int i = 0; i < numOfTabs; i++){
+			if(mainTabbedPane.getComponent(i) == mainTabbedPane.getSelectedComponent()){
+				currentTab = i;
+				break;
+			}
+		}
+		if(numOfTabs == 1){
+			JOptionPane.showMessageDialog(null,"No Result To Be Saved!\n","Warning!",JOptionPane.WARNING_MESSAGE);
+			return;
+		}
+		if(currentTab == 0){
+			JOptionPane.showMessageDialog(null,"Please Turn To The Result Tab!\n","Warning!",JOptionPane.WARNING_MESSAGE);
+			return;
+		}
+		
+		String currentTitle = mainTabbedPane.getTitleAt(currentTab);
+		String temp = String.valueOf(currentTitle.charAt(currentTitle.length()-1));
+		int currentIndex = Integer.parseInt(temp);
+		
+		JFileChooser saveFile = new JFileChooser();
+		saveFile.setFileSelectionMode(JFileChooser.FILES_ONLY);
+		saveFile.setApproveButtonText("Save");
+		saveFile.setFileHidingEnabled(false);
+		saveFile.setFileFilter(new FileFilter(){
+			@Override
+			public String getDescription(){ 
+				return "*.dat";
+			}
+
+			@Override
+			public boolean accept(File f) {
+				return true;
+			}
+		}
+		);
+		saveFile.addChoosableFileFilter(new FileFilter(){
+			@Override
+			public String getDescription(){ 
+				return "*.txt";
+			}
+
+			@Override
+			public boolean accept(java.io.File f) {
+				// TODO Auto-generated method stub
+				return true;
+			}
+		}
+		);
+		int result = saveFile.showSaveDialog(null);
+		if (result == JFileChooser.CANCEL_OPTION)
+			return;
+		File targetFile = saveFile.getSelectedFile(); 
+		String path = targetFile.getPath(); 
+		
+		//String fileName = saveFile.getName(targetFile);
+		File newFile = new File(path);
+		try {
+			FileWriter out = new FileWriter(newFile);
+			out.write(outPutBuffers.get(currentIndex).toString());
+			out.close();
+		}
+		catch (IOException e1) {
+			// TODO Auto-generated catch block
+			JOptionPane.showMessageDialog(null,"Failed to save the file!","Error!",JOptionPane.ERROR_MESSAGE);
+		}
+	}
+	
+	/*--------trigger functions: trigger clear event for main menu and popup menu---*/
+	public void triggerClear(){
+		sizeInput.setText(null);
+		save.setEnabled(false);
+		index = 1;
+		outPutBuffers.removeAllElements(); //remove all the string buffers
+		int numRow = inputMatrixTable.getRowCount();
+		int numColumn = inputMatrixTable.getColumnCount();
+		for(int i = 0; i < numRow; i++){
+			for(int j = 0; j < numColumn; j++){
+				inputMatrixTable.setValueAt(null,i, j);
+			}
+		}
+		int numOfTabs = mainTabbedPane.getTabCount();
+		if(numOfTabs <= 1)
+			return;
+		else{
+			for(int i = 1; i < numOfTabs; i++){
+				mainTabbedPane.remove(i);
+			}
+		}
+		@SuppressWarnings("serial")
+		DefaultTableCellRenderer whiteRenderer = new DefaultTableCellRenderer() { 
+			public Component getTableCellRendererComponent(JTable table,  
+			Object value, boolean isSelected, boolean hasFocus,  
+			int row, int column) { 
+			Component   cell   =   super.getTableCellRendererComponent   
+			(table,   value,   isSelected,   hasFocus,   row,   column); 
+			cell.setBackground(Color.WHITE);
+			return   cell; 
+			} 
+		}; 
+		for(int i = 0; i < numColumn;i++){
+			inputMatrixTable.getColumnModel().getColumn(i).setCellRenderer(whiteRenderer);
+		}
+	}
+	/*--------trigger functions: trigger exit event for main menu and popup menu----*/
+	public void triggerExit(){
+		System.exit(0);
+	}
+
+	
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	/*------------method to initiate button events---------*/
 	public void initButtonEvents(){
 		 
@@ -710,7 +886,7 @@ public class main_GUI{
 		});
 	}
 	
-	
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	/*--------method to initiate frame close events-----*/
 	public void initFrameEvents(){
 		/*-----when press X, close the frame -------*/
@@ -721,7 +897,7 @@ public class main_GUI{
 			 }
 		);
 	}
-	
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	/*---------method to initiate tab events----------*/
 	public void initTabEvents(){
 		
@@ -742,7 +918,7 @@ public class main_GUI{
 		}
 		);
 	}
-	
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	/*--------method to initiate text events---------*/
 	public void initTextEvents(){
 		sizeInput.addKeyListener(new KeyAdapter(){
@@ -755,40 +931,14 @@ public class main_GUI{
 		);	
 	}
 	
-	
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	/*--------method to initiate file menu events-------*/
 	public void initFileMenuEvents(){
 		
 		//initiate JMenuItem "New"
 		New.addMouseListener(new MouseAdapter(){
 			public void mousePressed(MouseEvent e){
-				int numOfTabs = mainTabbedPane.getTabCount();
-				if(numOfTabs == 1){
-					save.setEnabled(false);
-				}
-				mainTabbedPane.setSelectedComponent(panel_1);
-				sizeInput.setText(null);
-				int numRow = inputMatrixTable.getRowCount();
-				int numColumn = inputMatrixTable.getColumnCount();
-				for(int i = 0; i < numRow; i++){
-					for(int j = 0; j < numColumn; j++){
-						inputMatrixTable.setValueAt(null,i, j);
-					}
-				}
-				@SuppressWarnings("serial")
-				DefaultTableCellRenderer whiteRenderer = new DefaultTableCellRenderer() { 
-					public Component getTableCellRendererComponent(JTable table,  
-					Object value, boolean isSelected, boolean hasFocus,  
-					int row, int column) { 
-					Component   cell   =   super.getTableCellRendererComponent   
-					(table,   value,   isSelected,   hasFocus,   row,   column); 
-					cell.setBackground(Color.WHITE);
-					return   cell; 
-					} 
-				}; 
-				for(int i = 0; i < numColumn;i++){
-					inputMatrixTable.getColumnModel().getColumn(i).setCellRenderer(whiteRenderer);
-				}
+				triggerNew();
 			}
 			
 		});
@@ -797,129 +947,28 @@ public class main_GUI{
 		
 		save.addMouseListener(new MouseAdapter(){
 			public void mousePressed(MouseEvent e){
-				int numOfTabs = mainTabbedPane.getTabCount();
-				int currentTab = 0;
-				for(int i = 0; i < numOfTabs; i++){
-					if(mainTabbedPane.getComponent(i) == mainTabbedPane.getSelectedComponent()){
-						currentTab = i;
-						break;
-					}
-				}
-				if(numOfTabs == 1){
-					JOptionPane.showMessageDialog(null,"No Result To Be Saved!\n","Warning!",JOptionPane.WARNING_MESSAGE);
-					return;
-				}
-				if(currentTab == 0){
-					JOptionPane.showMessageDialog(null,"Please Turn To The Result Tab!\n","Warning!",JOptionPane.WARNING_MESSAGE);
-					return;
-				}
-				
-				
-			
-
-				String currentTitle = mainTabbedPane.getTitleAt(currentTab);
-				String temp = String.valueOf(currentTitle.charAt(currentTitle.length()-1));
-				int currentIndex = Integer.parseInt(temp);
-				
-				JFileChooser saveFile = new JFileChooser();
-				saveFile.setFileSelectionMode(JFileChooser.FILES_ONLY);
-				saveFile.setApproveButtonText("Save");
-				saveFile.setFileHidingEnabled(false);
-				saveFile.setFileFilter(new FileFilter(){
-					@Override
-					public String getDescription(){ 
-						return "*.dat";
-					}
-
-					@Override
-					public boolean accept(File f) {
-						return true;
-					}
-				}
-				);
-				saveFile.addChoosableFileFilter(new FileFilter(){
-					@Override
-					public String getDescription(){ 
-						return "*.txt";
-					}
-
-					@Override
-					public boolean accept(java.io.File f) {
-						// TODO Auto-generated method stub
-						return true;
-					}
-				}
-				);
-				int result = saveFile.showSaveDialog(null);
-				if (result == JFileChooser.CANCEL_OPTION)
-					return;
-				File targetFile = saveFile.getSelectedFile(); 
-				String path = targetFile.getPath(); 
-				
-				//String fileName = saveFile.getName(targetFile);
-				File newFile = new File(path);
-				try {
-					FileWriter out = new FileWriter(newFile);
-					out.write(outPutBuffers.get(currentIndex).toString());
-					out.close();
-				}
-				catch (IOException e1) {
-					// TODO Auto-generated catch block
-					JOptionPane.showMessageDialog(null,"Failed to save the file!","Error!",JOptionPane.ERROR_MESSAGE);
-				}
-				
+				triggerSave();
 			}
 		});
 		
 		//initiate JMenuItem "clear"
 		clear.addMouseListener(new MouseAdapter(){
 			public void mousePressed(MouseEvent e){
-				sizeInput.setText(null);
-				save.setEnabled(false);
-				index = 1;
-				outPutBuffers.removeAllElements(); //remove all the string buffers
-				int numRow = inputMatrixTable.getRowCount();
-				int numColumn = inputMatrixTable.getColumnCount();
-				for(int i = 0; i < numRow; i++){
-					for(int j = 0; j < numColumn; j++){
-						inputMatrixTable.setValueAt(null,i, j);
-					}
-				}
-				int numOfTabs = mainTabbedPane.getTabCount();
-				if(numOfTabs <= 1)
-					return;
-				else{
-					for(int i = 1; i < numOfTabs; i++){
-						mainTabbedPane.remove(i);
-					}
-				}
-				@SuppressWarnings("serial")
-				DefaultTableCellRenderer whiteRenderer = new DefaultTableCellRenderer() { 
-					public Component getTableCellRendererComponent(JTable table,  
-					Object value, boolean isSelected, boolean hasFocus,  
-					int row, int column) { 
-					Component   cell   =   super.getTableCellRendererComponent   
-					(table,   value,   isSelected,   hasFocus,   row,   column); 
-					cell.setBackground(Color.WHITE);
-					return   cell; 
-					} 
-				}; 
-				for(int i = 0; i < numColumn;i++){
-					inputMatrixTable.getColumnModel().getColumn(i).setCellRenderer(whiteRenderer);
-				}
+				triggerClear();
 			}	
 		});
 		
 		//initiate JMenuItem "Exit"
 		exit.addMouseListener(new MouseAdapter(){
 			public void mousePressed(MouseEvent e){
-				System.exit(0);
+				triggerExit();
 			}
 		});
 	}
 	
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	/*---------method to initiate Search menu events----*/
-	public void initDatabaseMenuEvents(){
+	public void initSearchMenuEvents(){
 		
 		//initializing JMenuItem "Operon_Operon"
 		Operon_Operon.addMouseListener(new MouseAdapter(){
@@ -952,7 +1001,7 @@ public class main_GUI{
 		);
 	}
 	
-	
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	/*-------method to initiate help menu events----*/
 	public void initHelpMenuEvents(){
 		
@@ -1004,9 +1053,41 @@ public class main_GUI{
 		);
 		
 	}
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	/*---------method to initiate popup menu events-------*/
+	public void initPopupMenuEvents(){
+			//initiate JMenuItem "New_1"
+			New_1.addMouseListener(new MouseAdapter(){
+				public void mousePressed(MouseEvent e){
+					triggerNew();
+				}
+				
+			});
+			
+			//initiate JMenuItem "Save_1"		
+			save_1.addMouseListener(new MouseAdapter(){
+				public void mousePressed(MouseEvent e){
+					triggerSave();
+				}
+			});
+			
+			//initiate JMenuItem "clear_1"
+			clear_1.addMouseListener(new MouseAdapter(){
+				public void mousePressed(MouseEvent e){
+					triggerClear();
+				}	
+			});	
+			//initiate JMenuItem "Exit_1"
+			exit_1.addMouseListener(new MouseAdapter(){
+				public void mousePressed(MouseEvent e){
+					triggerExit();
+				}
+			});
+	}
 	
-	
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
  /*------    variables in the program --------*/
+	//variables for gui components
 	private static JPanel panel_1;
 	private static JLabel matrixSizeLabel;
 	private static JTable inputMatrixTable;
@@ -1028,16 +1109,23 @@ public class main_GUI{
 	private static JLabel modeTwoLabel;
 	private static JLabel USTClogo;
 	private static final int tableSize = 10;
-
+	
+	//variables for gui pictures
 	private static final String PATH = "F:/programs/java/";
 	private static final String USTCLOGO = PATH + "images/logo ustc.png";
 	private static final String FRAMEBACKGROUND = PATH + "images/frameBack.png";
 	private static final String PANELBACKGROUND = PATH + "images/panelBack.png";
+	private static final String CONFIRMBUTTON = PATH + "images/confirm.png";
+	private static final String MODEONE = PATH + "images/mode1.png";
+	private static final String MODETWO = PATH + "images/mode2.png";
 	private static ImageIcon framebackground = new ImageIcon(FRAMEBACKGROUND);
 	private static JLabel framebackLabel = new JLabel(framebackground);
 	
 	private static ImageIcon panelbackground = new ImageIcon(PANELBACKGROUND);
-	
+	private static ImageIcon confirmbackground = new ImageIcon(CONFIRMBUTTON);
+	private static ImageIcon modeonebackground = new ImageIcon(MODEONE);
+	private static ImageIcon modetwobackground = new ImageIcon(MODETWO);
+
 	//JMenuItems for Menu "File"
 	private static JMenuItem New;
 	private static JMenuItem save;
@@ -1057,6 +1145,13 @@ public class main_GUI{
 	private static JMenuItem aboutUSTC_2012;
 	private static JMenuItem aboutUSTC;
 	
+	
+	//JMenuItems for JPopupMenu "aNewMenu"
+	private static JMenuItem New_1;
+	private static JMenuItem save_1;
+	private static JMenuItem clear_1;
+	private static JMenuItem exit_1;
+	
 	static int index = 1;    //tab index
 	
 	/*------variables for Operon_Operon database-------*/
@@ -1071,6 +1166,8 @@ public class main_GUI{
 	public static int numOfGenes;
 	public static Vector<String> geneNames;
 	public static Vector<String> promoterNames;
-	
 	public static Vector<StringBuffer> outPutBuffers;
+	
+	private static String PATHFORPARTS = PATH + "USTC_SOFTWARE_PARTS_DATA.txt";
+	private static String PATHFORBIOBRICKS = PATH + "USTC_SOFTWARE_BIOBRICKS_DATA.txt";
 }

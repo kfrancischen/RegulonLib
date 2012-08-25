@@ -18,43 +18,7 @@ import java.util.Vector;
 @SuppressWarnings("serial")
 public class Search_Database extends JFrame{
 	
-	private static Vector<String> regulatorNames;
-	private static Vector<String> regulateeNames;
-	private static int numOfRegulator;
-	private static int numOfRegulatee;
-	private static int[][] database;
 	
-	private static JTable regulatorTable;
-	private static JScrollPane regulatorScrollPane;
-	private static JTable regulateeTable;
-	private static JScrollPane regulateeScrollPane;
-	
-	private static JTable regulateeCandidates;
-	private static JScrollPane regulateeCanScrollPane;
-	private static JTable regulatorCandidates;
-	private static JScrollPane regulatorCanScrollPane;
-	
-	private static JTextField regulatorName;
-	private static JTextField regulateeName;
-	
-	//public static JButton searchBt;
-	private static JButton searchBt;
-	
-	private static JLabel regulatorNameLabel;
-	private static JLabel regulateeNameLabel;
-	private static JLabel pictureLabel;
-	
-	private static final int columnCount = 20;
-	private static final String PATH = "F:/programs/java/images/";
-	private static final String POSITIVE = PATH + "positive.png";
-	private static final String NEGTIVE = PATH + "negtive.png";
-	private static final String POSANDNEG = PATH + "positive and negtive.png";
-	private static final String UNKNOWN = PATH + "unknown.png";
-	private static final String NORELATION = PATH + "norelation.png";
-	private static final String BACKGROUND = PATH + "background.png";
-	private static final String SEARCHBUTTON = PATH + "searchButton.png";
-	private static ImageIcon background = new ImageIcon(BACKGROUND);
-	private static JLabel backLabel = new JLabel(background);
 	/*------------constructor---------*/
 	public Search_Database(int NumOfRegulator,
 						int NumOfRegulatee,
@@ -93,7 +57,7 @@ public class Search_Database extends JFrame{
 		initTextEvents();
 	}
 	
-	
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	/*---------------method to initiate all the components-------*/
 
 	public void initComponents(){
@@ -145,6 +109,7 @@ public class Search_Database extends JFrame{
 		//initiate regulator name textfield
 		regulatorName = new JTextField();
 		regulatorName.setFont(new Font("Consolas", 0, 12));
+		regulatorName.setBorder(new LineBorder(new Color(224, 210, 181), 0,true));
 		
 		//initiate regulatee scroll pane
 		regulateeScrollPane = new JScrollPane();
@@ -202,7 +167,7 @@ public class Search_Database extends JFrame{
 		//initiate regulatee Name textfield
 		regulateeName = new JTextField();
 		regulateeName.setFont(new Font("Consolas", 0, 12));
-		
+		regulateeName.setBorder(new LineBorder(new Color(224, 210, 181), 0,true));
 		
 		//initiate regulator candidates scrollpane
 		regulatorCanScrollPane = new JScrollPane();
@@ -443,7 +408,7 @@ public class Search_Database extends JFrame{
 		((JPanel)getContentPane()).setOpaque(false);
 		pack();
 	}
-	
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	
 	/*------method to initiate regulator names and regulatee names--*/
@@ -456,7 +421,7 @@ public class Search_Database extends JFrame{
 		}
 	}
 	
-////////////////////////////////////////////////////////////////////////////////	
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
 	/*-----triggering functions: for regulator table------*/
 	public static void triggerRegulatorEvents(int RowPoint){
 		pictureLabel.setIcon(null);
@@ -753,7 +718,7 @@ public class Search_Database extends JFrame{
 		}
 		
 	}
-////////////////////////////////////////////////////////////////////////////////////////////	
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
 	/*------method to initiate all the table events----*/
 	public void initTableEvents(){
 		
@@ -880,7 +845,7 @@ public class Search_Database extends JFrame{
 		
 		
 	}
-	
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	/*-------------------initializing button events---------*/
 	public void initButtonEvents(){
 		//1¡¢initializing search button mouse events
@@ -901,6 +866,7 @@ public class Search_Database extends JFrame{
 		);
 	}
 	
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	/*--------------------initializing text events----------*/
 	public void initTextEvents(){
 		regulatorName.addKeyListener(new KeyAdapter(){
@@ -923,5 +889,46 @@ public class Search_Database extends JFrame{
 		);
 		
 	}
+	
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	/*------variables in the class--------------------*/
+	//variables for initiating components
+	private static Vector<String> regulatorNames;
+	private static Vector<String> regulateeNames;
+	private static int numOfRegulator;
+	private static int numOfRegulatee;
+	private static int[][] database;
+	
+	
+	//variables for initiating gui components
+	private static JTable regulatorTable;
+	private static JScrollPane regulatorScrollPane;
+	private static JTable regulateeTable;
+	private static JScrollPane regulateeScrollPane;
+	private static JTable regulateeCandidates;
+	private static JScrollPane regulateeCanScrollPane;
+	private static JTable regulatorCandidates;
+	private static JScrollPane regulatorCanScrollPane;
+	private static JTextField regulatorName;
+	private static JTextField regulateeName;
+	private static JButton searchBt;
+	
+	private static JLabel regulatorNameLabel;
+	private static JLabel regulateeNameLabel;
+	private static JLabel pictureLabel;
+	
+	private static final int columnCount = 20;
+	
+	//variables for initiating gui pictures
+	private static final String PATH = "F:/programs/java/images/";
+	private static final String POSITIVE = PATH + "positive.png";
+	private static final String NEGTIVE = PATH + "negtive.png";
+	private static final String POSANDNEG = PATH + "positive and negtive.png";
+	private static final String UNKNOWN = PATH + "unknown.png";
+	private static final String NORELATION = PATH + "norelation.png";
+	private static final String BACKGROUND = PATH + "searchBack.png";
+	private static final String SEARCHBUTTON = PATH + "searchButton.png";
+	private static ImageIcon background = new ImageIcon(BACKGROUND);
+	private static JLabel backLabel = new JLabel(background);
 
 }
