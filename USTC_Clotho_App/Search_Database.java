@@ -920,7 +920,7 @@ public class Search_Database extends JFrame{
 	private static final int columnCount = 20;
 	
 	//variables for initiating gui pictures
-	private static final String PATH = "F:/programs/java/images/";
+	private static final String PATH = "images/";
 	private static final String POSITIVE = PATH + "positive.png";
 	private static final String NEGTIVE = PATH + "negtive.png";
 	private static final String POSANDNEG = PATH + "positive and negtive.png";

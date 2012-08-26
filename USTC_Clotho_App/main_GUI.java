@@ -8,7 +8,7 @@ package USTC_Clotho_App;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.BufferedReader;
-
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -18,11 +18,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-
-
-
 import java.util.Vector;
-
 
 public class main_GUI{
 
@@ -479,7 +475,7 @@ public class main_GUI{
 	/*------special function for confirm button and file menu---------*/
 	public void triggerConfirm(){
 		if(sizeInput.getText().equals("")){
-			System.out.print("Please Input The Matrix Size!\n");
+			//System.out.print("Please Input The Matrix Size!\n");
 			JOptionPane.showMessageDialog(null,"Please Input The Matrix Size!","Warning",JOptionPane.WARNING_MESSAGE);
 			return;
 		}
@@ -535,7 +531,7 @@ public class main_GUI{
 		for(int i = 0;i < numColumn;i++){
 			inputMatrixTable.getColumnModel().getColumn(i).setCellRenderer(grayRenderer);
 		}
-		System.out.print(matrixsize+"\n\n");
+		//System.out.print(matrixsize+"\n\n");
 		
 	}
 	
@@ -593,8 +589,10 @@ public class main_GUI{
 		int currentIndex = Integer.parseInt(temp);
 		
 		JFileChooser saveFile = new JFileChooser();
-		saveFile.setFileSelectionMode(JFileChooser.FILES_ONLY);
+		//saveFile.setFileSelectionMode(JFileChooser.SAVE_DIALOG);
 		saveFile.setApproveButtonText("Save");
+		String defaultFileName = currentTitle + ".txt";
+		saveFile.setSelectedFile(new File(defaultFileName));
 		saveFile.setFileHidingEnabled(false);
 		saveFile.setFileFilter(new FileFilter(){
 			@Override
@@ -621,11 +619,24 @@ public class main_GUI{
 			}
 		}
 		);
-		int result = saveFile.showSaveDialog(null);
+		int result = saveFile.showDialog(null,"Save");
 		if (result == JFileChooser.CANCEL_OPTION)
 			return;
 		File targetFile = saveFile.getSelectedFile(); 
 		String path = targetFile.getPath(); 
+		Boolean existFile = true;
+		try {
+			@SuppressWarnings("unused")
+			FileReader tempReader = new FileReader(path);
+			
+		} catch (FileNotFoundException e) {
+			existFile = false;
+		}
+		
+		if(existFile){
+			JOptionPane.showMessageDialog(null,"The File Already Exists!","Error!",JOptionPane.ERROR_MESSAGE);
+			return;
+		}
 		
 		//String fileName = saveFile.getName(targetFile);
 		File newFile = new File(path);
@@ -699,7 +710,7 @@ public class main_GUI{
 			public void mousePressed(MouseEvent e){
 	
 				if(matrixsize == 0){
-					System.out.println("Please Input Matrix Size First!\n");
+					//System.out.println("Please Input Matrix Size First!\n");
 					JOptionPane.showMessageDialog(null,"Please Input Matrix Size First!\n","Error!",JOptionPane.ERROR_MESSAGE);
 					return;
 				}
@@ -721,9 +732,9 @@ public class main_GUI{
 							JOptionPane.showMessageDialog(null,"Please Enter Matrix In The Right Place!\n","Error!",JOptionPane.ERROR_MESSAGE);
 							return;
 						}
-						System.out.print(TargetMatrix[i][j]+"\t");	
+						//System.out.print(TargetMatrix[i][j]+"\t");	
 					}
-					System.out.print("\n");
+					//System.out.print("\n");
 				}
 			
 				try {
@@ -735,7 +746,7 @@ public class main_GUI{
 					StringBuffer aBuffer = new StringBuffer();
 					JTextPane newTextPanel = new JTextPane();
 					JScrollPane newScrollPane = new JScrollPane(newTextPanel);
-					System.out.println("There are "+aTest.numberPossibleChoices[0]+" possible choices\n");
+					//System.out.println("There are "+aTest.numberPossibleChoices[0]+" possible choices\n");
 					newTextPanel.replaceSelection("Mode 1 is used:\n All these data are from Operon-Operon database.\n\n");
 					aBuffer.append("Mode 1 is used:\n All these data are from Operon_Operon database.\n\n");
 					String result = "";
@@ -752,16 +763,16 @@ public class main_GUI{
 					aBuffer.append(result);
 					newTextPanel.replaceSelection(result);
 					for(int i = 0;i < aTest.numberPossibleChoices[0]; i++){
-						System.out.print(i+"\n");
+						//System.out.print(i+"\n");
 						newTextPanel.replaceSelection("choice "+(i+1)+":\n");
 						aBuffer.append("Choice"+(i+1)+"\n");
 						for(int j = 0;j<matrixsize ; j++){
-							System.out.print(aTest.result[i][j]+"\t");
-							System.out.println(operonNames.get(aTest.result[i][j])+"\t");
+							//System.out.print(aTest.result[i][j]+"\t");
+							//System.out.println(operonNames.get(aTest.result[i][j])+"\t");
 							newTextPanel.replaceSelection(aTest.result[i][j]+"\t"+operonNames.get(aTest.result[i][j])+"\n");
 							aBuffer.append(aTest.result[i][j]+"\t"+operonNames.get(aTest.result[i][j])+"\n");
 						}
-						System.out.print("\n\n");
+						//System.out.print("\n\n");
 						newTextPanel.replaceSelection("\n");
 						aBuffer.append("\n");
 					}
@@ -832,7 +843,7 @@ public class main_GUI{
 					StringBuffer aBuffer = new StringBuffer();
 					JTextPane newTextPanel = new JTextPane();
 					JScrollPane newScrollPane = new JScrollPane(newTextPanel);
-					System.out.println("There are "+aTest.numberPossibleChoices[0]+" possible choices\n");
+					//System.out.println("There are "+aTest.numberPossibleChoices[0]+" possible choices\n");
 					newTextPanel.replaceSelection("Mode 2 is used:\n All these data are from Gene_Promoter database.\n\n");
 					aBuffer.append("Mode 2 is used:\n All these data are from Gene_Promoter database.\n\n");
 					String result = "";
@@ -849,18 +860,18 @@ public class main_GUI{
 					aBuffer.append(result);
 					newTextPanel.replaceSelection(result);
 					for(int i = 0; i < aTest.numberPossibleChoices[0];i++){
-						System.out.print(i+"\n");
+						//System.out.print(i+"\n");
 						newTextPanel.replaceSelection("choice "+(i+1)+":\n");
 						aBuffer.append("Choice"+(i+1)+"\n");
 						for(int j = 0; j < matrixsize; j++){
-							System.out.println(aTest.result[i][0][j]+"\t"+promoterNames.get(aTest.result[i][0][j])+"\n");
-							System.out.println(aTest.result[i][1][j]+"\t"+geneNames.get(aTest.result[i][1][j])+"\n");
+							//System.out.println(aTest.result[i][0][j]+"\t"+promoterNames.get(aTest.result[i][0][j])+"\n");
+							//System.out.println(aTest.result[i][1][j]+"\t"+geneNames.get(aTest.result[i][1][j])+"\n");
 							newTextPanel.replaceSelection(aTest.result[i][0][j]+"\t"+promoterNames.get(aTest.result[i][0][j])+"\n");
 							aBuffer.append(aTest.result[i][0][j]+"\t"+promoterNames.get(aTest.result[i][0][j])+"\n");
 							newTextPanel.replaceSelection(aTest.result[i][1][j]+"\t"+geneNames.get(aTest.result[i][1][j])+"\n");
 							aBuffer.append(aTest.result[i][1][j]+"\t"+geneNames.get(aTest.result[i][1][j])+"\n");
 						}
-						System.out.print("\n\n");
+						//System.out.print("\n\n");
 						newTextPanel.replaceSelection("\n");
 						aBuffer.append("\n");
 					}
@@ -1111,7 +1122,7 @@ public class main_GUI{
 	private static final int tableSize = 10;
 	
 	//variables for gui pictures
-	private static final String PATH = "F:/programs/java/";
+	private static final String PATH = "";
 	private static final String USTCLOGO = PATH + "images/logo ustc.png";
 	private static final String FRAMEBACKGROUND = PATH + "images/frameBack.png";
 	private static final String PANELBACKGROUND = PATH + "images/panelBack.png";
@@ -1168,6 +1179,6 @@ public class main_GUI{
 	public static Vector<String> promoterNames;
 	public static Vector<StringBuffer> outPutBuffers;
 	
-	private static String PATHFORPARTS = PATH + "USTC_SOFTWARE_PARTS_DATA.txt";
-	private static String PATHFORBIOBRICKS = PATH + "USTC_SOFTWARE_BIOBRICKS_DATA.txt";
+	private static String PATHFORPARTS = PATH + "database/USTC_SOFTWARE_PARTS_DATA.txt";
+	private static String PATHFORBIOBRICKS = PATH + "database/USTC_SOFTWARE_BIOBRICKS_DATA.txt";
 }
