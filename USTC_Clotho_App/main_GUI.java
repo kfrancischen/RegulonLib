@@ -18,6 +18,9 @@ import javax.swing.border.LineBorder;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Vector;
 
 public class main_GUI{
@@ -56,7 +59,7 @@ public class main_GUI{
 	/*-----main function of the class------*/
 	public static void main(String args[]){
 
-		main_GUI aTest = new main_GUI();
+		new main_GUI();
 		//System.out.print(aTest.modeTwoBt.getWidth()+"\t"+aTest.modeTwoBt.getHeight());	
 	}
 
@@ -98,9 +101,9 @@ public class main_GUI{
 		inputMatrixTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		inputMatrixTable.setGridColor(new Color(102, 102, 102));
 		inputMatrixTable.setBackground(new Color(255,255,255));
-		inputMatrixTable.setRowHeight(20);
+		inputMatrixTable.setRowHeight(25);
 		for(int i = 0;i < inputMatrixTable.getColumnCount();i++){
-			inputMatrixTable.getColumnModel().getColumn(i).setPreferredWidth(70);
+			inputMatrixTable.getColumnModel().getColumn(i).setPreferredWidth(75);
 		}
 		inputMatrixTable.setSelectionBackground(new Color(204, 204, 204));
 		inputMatrixTable.setToolTipText("Please input regulation in the matrix");
@@ -183,7 +186,6 @@ public class main_GUI{
 		
 		/*------initializing JMenuBar mainMenu-------*/
 		mainMenu = new JMenuBar();
-		
 		mainMenu.add(File);
 		mainMenu.add(Search);
 		mainMenu.add(Help);
@@ -747,8 +749,14 @@ public class main_GUI{
 					JTextPane newTextPanel = new JTextPane();
 					JScrollPane newScrollPane = new JScrollPane(newTextPanel);
 					//System.out.println("There are "+aTest.numberPossibleChoices[0]+" possible choices\n");
-					newTextPanel.replaceSelection("Mode 1 is used:\n All these data are from Operon-Operon database.\n\n");
-					aBuffer.append("Mode 1 is used:\n All these data are from Operon_Operon database.\n\n");
+					newTextPanel.replaceSelection("(Mode 1 is used:\nAll these data are from Operon-Operon database.)\n\n");
+					aBuffer.append("(Mode 1 is used:\nAll these data are from Operon_Operon database.)\n\n");
+					Date currentDate = new Date();
+					SimpleDateFormat timeForm = new SimpleDateFormat( 
+							"yyyy-MM-dd HH:mm:ss");
+					String currentTimes = timeForm.format(currentDate);
+					newTextPanel.replaceSelection("Data Generated Time: " + currentTimes + "\n\n");
+					aBuffer.append("Data Generated Time: " + currentTimes + "\n\n");
 					String result = "";
 					switch(aTest.numberPossibleChoices[0]){
 					case 0:
@@ -769,8 +777,8 @@ public class main_GUI{
 						for(int j = 0;j<matrixsize ; j++){
 							//System.out.print(aTest.result[i][j]+"\t");
 							//System.out.println(operonNames.get(aTest.result[i][j])+"\t");
-							newTextPanel.replaceSelection(aTest.result[i][j]+"\t"+operonNames.get(aTest.result[i][j])+"\n");
-							aBuffer.append(aTest.result[i][j]+"\t"+operonNames.get(aTest.result[i][j])+"\n");
+							newTextPanel.replaceSelection("Operon " + (j+1) + ": " + operonNames.get(aTest.result[i][j])+"\n");
+							aBuffer.append("Operon " + (j+1) + ": " + operonNames.get(aTest.result[i][j])+"\n");
 						}
 						//System.out.print("\n\n");
 						newTextPanel.replaceSelection("\n");
@@ -844,8 +852,14 @@ public class main_GUI{
 					JTextPane newTextPanel = new JTextPane();
 					JScrollPane newScrollPane = new JScrollPane(newTextPanel);
 					//System.out.println("There are "+aTest.numberPossibleChoices[0]+" possible choices\n");
-					newTextPanel.replaceSelection("Mode 2 is used:\n All these data are from Gene_Promoter database.\n\n");
-					aBuffer.append("Mode 2 is used:\n All these data are from Gene_Promoter database.\n\n");
+					newTextPanel.replaceSelection("(Mode 2 is used:\nAll these data are from Gene_Promoter database.)\n\n");
+					aBuffer.append("(Mode 2 is used:\nAll these data are from Gene_Promoter database.)\n\n");
+					Date currentDate = new Date();
+					SimpleDateFormat timeForm = new SimpleDateFormat( 
+							"yyyy-MM-dd HH:mm:ss");
+					String currentTimes = timeForm.format(currentDate);
+					newTextPanel.replaceSelection("Data Generated Time: " + currentTimes + "\n\n");
+					aBuffer.append("Data Generated Time: " + currentTimes + "\n\n");
 					String result = "";
 					switch(aTest.numberPossibleChoices[0]){
 					case 0:
@@ -866,10 +880,12 @@ public class main_GUI{
 						for(int j = 0; j < matrixsize; j++){
 							//System.out.println(aTest.result[i][0][j]+"\t"+promoterNames.get(aTest.result[i][0][j])+"\n");
 							//System.out.println(aTest.result[i][1][j]+"\t"+geneNames.get(aTest.result[i][1][j])+"\n");
-							newTextPanel.replaceSelection(aTest.result[i][0][j]+"\t"+promoterNames.get(aTest.result[i][0][j])+"\n");
-							aBuffer.append(aTest.result[i][0][j]+"\t"+promoterNames.get(aTest.result[i][0][j])+"\n");
-							newTextPanel.replaceSelection(aTest.result[i][1][j]+"\t"+geneNames.get(aTest.result[i][1][j])+"\n");
-							aBuffer.append(aTest.result[i][1][j]+"\t"+geneNames.get(aTest.result[i][1][j])+"\n");
+							newTextPanel.replaceSelection("Biobrick " + (j+1) + ": ");
+							aBuffer.append("Biobrick " + (j+1) + ": ");
+							newTextPanel.replaceSelection(promoterNames.get(aTest.result[i][0][j]) + " + ");
+							aBuffer.append(promoterNames.get(aTest.result[i][0][j]) + " + ");
+							newTextPanel.replaceSelection(geneNames.get(aTest.result[i][1][j]) + "\n");
+							aBuffer.append(geneNames.get(aTest.result[i][1][j]) + "\n");
 						}
 						//System.out.print("\n\n");
 						newTextPanel.replaceSelection("\n");
