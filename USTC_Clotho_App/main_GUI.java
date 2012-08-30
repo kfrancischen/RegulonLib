@@ -658,7 +658,9 @@ public class main_GUI{
 		sizeInput.setText(null);
 		save.setEnabled(false);
 		index = 1;
-		outPutBuffers.removeAllElements(); //remove all the string buffers
+		for(int i = 0;i < outPutBuffers.size();i++){
+			outPutBuffers.setElementAt(null, i);
+		}
 		int numRow = inputMatrixTable.getRowCount();
 		int numColumn = inputMatrixTable.getColumnCount();
 		for(int i = 0; i < numRow; i++){
@@ -670,7 +672,7 @@ public class main_GUI{
 		if(numOfTabs <= 1)
 			return;
 		else{
-			for(int i = 1; i < numOfTabs; i++){
+			for(int i = numOfTabs-1; i >= 1; i--){
 				mainTabbedPane.remove(i);
 			}
 		}
@@ -814,7 +816,7 @@ public class main_GUI{
 			public void mousePressed(MouseEvent e){
 				
 				if(matrixsize == 0){
-					System.out.println("Please Input Matrix Size First!\n");
+					//System.out.println("Please Input Matrix Size First!\n");
 					JOptionPane.showMessageDialog(null,"Please Input Matrix Size First!\n","Error!",JOptionPane.ERROR_MESSAGE);
 					return;
 				}
@@ -836,9 +838,9 @@ public class main_GUI{
 							JOptionPane.showMessageDialog(null,"Please Enter Matrix In The Right Place!\n","Error!",JOptionPane.ERROR_MESSAGE);
 							return;
 						}
-						System.out.print(TargetMatrix[i][j]+"\t");	
+						//System.out.print(TargetMatrix[i][j]+"\t");	
 					}
-					System.out.print("\n");
+					//System.out.print("\n");
 				}
 				try{
 					Gene_Promoter aTest = new Gene_Promoter(matrixsize,
